@@ -3,12 +3,11 @@
 # ~~~~
 
 # Home page
-GET         /                    controllers.PersonController.index
-POST        /person              controllers.PersonController.addPerson
-GET         /persons             controllers.PersonController.getPersons
+GET         /                    autopos.web.HomeController.index
 
 GET         /brands              autopos.item.web.rest.BrandController.getBrands
 POST        /brands              autopos.item.web.rest.BrandController.addBrand
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /*file               controllers.Assets.versioned(path="/public", file: Asset)
