@@ -1,38 +1,30 @@
-dl {
-  clear: both;
-  padding: 10px;
+@import "base/_bootstrap.less";
 
-  dt {
-    float: left;
-    width: 60px;
-    font-weight: bold;
+body {
+  margin-top: 40px;
+  line-height: 1.5;
+}
+
+.basics-nav {
+  background-color: #7ece25;
+  border-bottom-color: #D3E2C8;
+  .navbar-brand {
+    color: lighten(@link-color, 20%);
   }
-
-  dd {
-    float: left;
-    margin-left: 10px;
-  }
-
-  .info {
-    display: none;
-  }
-
-  .error {
-    color: red;
+  .navbar-nav {
+    li a {
+      color: lighten(@link-color, 20%);
+    }
+    .dropdown-menu {
+      a {
+        color: #000;
+      }
+    }
   }
 }
 
-.buttons {
-  clear: both;
-  padding: 10px;
-}
 
-#persons {
-  .name {
-    display: inline-block;
-    width: 60px;
-  }
-  .age {
-    display: inline-block;
-  }
+/* AngularJS */
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
 }
