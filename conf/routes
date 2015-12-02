@@ -3,23 +3,16 @@
 # ~~~~
 
 # Home page
-#GET         /                    autopos.web.HomeController.index
-
-#GET         /brands              autopos.item.web.rest.BrandController.getBrands
-#POST        /brands              autopos.item.web.rest.BrandController.addBrand
-
-# Map static resources from the /public folder to the /assets URL path
-#GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
-#GET         /*file               controllers.Assets.versioned(path="/public", file: Asset)
-
+GET           /                    autopos.web.HomeController.index
 
 # JavaScript routes object
 GET           /jsroutes.js         controllers.Application.jsRoutes()
 
-# Routes used by Angular
-# ~~~~
 
-GET           /                    controllers.Application.index()
+# Brands
+GET           /brands              autopos.item.web.rest.BrandController.getBrands
+POST          /brands              autopos.item.web.rest.BrandController.addBrand
+
 
 # Authentication
 POST          /login               controllers.Application.login()

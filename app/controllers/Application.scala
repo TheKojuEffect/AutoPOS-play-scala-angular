@@ -3,7 +3,6 @@ package controllers
 import javax.inject.Inject
 
 import models._
-import play.api.Routes
 import play.api.cache._
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads._
@@ -25,12 +24,6 @@ class Application @Inject()(val cache: CacheApi) extends Controller with Securit
     new Cached(cache)
       .status(_ => key, OK, okDuration.toSeconds.toInt)
       .includeStatus(NOT_FOUND, 5.minutes.toSeconds.toInt)
-
-  /** Serves the index page, see views/index.scala.html */
-  def index = Action {
-    log.debug("Index called")
-    Ok(views.html.index())
-  }
 
   /**
    * Retrieves all routes via reflection.
