@@ -10,5 +10,5 @@ define(['angular', 'home', 'user', 'dashboard'], function(angular) {
 
   // We must already declare most dependencies here (except for common), or the submodules' routes
   // will not be resolved
-  return angular.module('app', ['autopos.home', 'autopos.user', 'autopos.dashboard']);
+  return angular.module('autopos', ['autopos.home', 'autopos.user', 'autopos.dashboard']);
 });
