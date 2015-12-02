@@ -19,6 +19,8 @@
       },
       'angular-route': ['angular'],
       'angular-cookies': ['angular'],
+      'ui-router': ['angular'],
+      'ui-bootstrap': ['angular'],
       'bootstrap': ['jquery']
     },
     paths: {
@@ -27,6 +29,8 @@
       'angular': ['../lib/angularjs/angular'],
       'angular-route': ['../lib/angularjs/angular-route'],
       'angular-cookies': ['../lib/angularjs/angular-cookies'],
+      'ui-router': ['../lib/angular-ui-router/angular-ui-router'],
+      'ui-bootstrap': ['../lib/angular-ui-bootstrap/ui-bootstrap'],
       'bootstrap': ['../lib/bootstrap/js/bootstrap'],
       'jsRoutes': ['/jsroutes']
     }
@@ -37,7 +41,7 @@
   };
 
   // Load the app. This is kept minimal so it doesn't need much updating.
-  require(['angular', 'angular-cookies', 'angular-route', 'jquery', 'bootstrap', './app'],
+  require(['angular', 'angular-cookies', 'angular-route', 'ui-router', 'ui-bootstrap', 'jquery', 'bootstrap', './app'],
     function (angular) {
       angular.bootstrap(document, ['autopos']);
     }
