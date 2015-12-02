@@ -4,7 +4,7 @@
 define(['angular', 'common'], function (angular) {
   'use strict';
 
-  var mod = angular.module('user.services', ['yourprefix.common', 'ngCookies']);
+  var mod = angular.module('user.services', ['autopos.common', 'ngCookies']);
   mod.factory('userService', ['$http', '$q', 'playRoutes', '$cookies', '$log', function ($http, $q, playRoutes, $cookies, $log) {
     var user, token = $cookies.get('XSRF-TOKEN');
 
