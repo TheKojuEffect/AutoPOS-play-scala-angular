@@ -3,12 +3,14 @@
 angular.module('autopos')
     .factory('AuthServerProvider', function loginService($http, localStorageService, Base64) {
         return {
-            login: function(credentials) {
-                var data = "username=" + credentials.username + "&password="
-                    + credentials.password;
-                return $http.post('api/authenticate', data, {
+            login: function (credentials) {
+                var data = {
+                    username: credentials.username,
+                    password: credentials.password
+                };
+                return $http.post('authenticate', data, {
                     headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Content-Type": "application/json",
                         "Accept": "application/json"
                     }
                 }).success(function (response) {
@@ -16,7 +18,7 @@ angular.module('autopos')
                     return response;
                 });
             },
-            logout: function() {
+            logout: function () {
                 //Stateless API : No server logout
                 localStorageService.clearAll();
             },

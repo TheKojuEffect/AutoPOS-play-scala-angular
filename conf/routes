@@ -15,7 +15,7 @@ POST          /brands              autopos.item.web.rest.BrandController.addBran
 
 
 # Authentication
-POST          /login               controllers.Application.login()
+POST          /authenticate        autopos.auth.web.rest.AuthApi.authenticate
 POST          /logout              controllers.Application.logout()
 
 # Users
@@ -30,4 +30,4 @@ GET           /authuser            controllers.Users.authUser()
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
-GET           /*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET           /*file               controllers.Assets.versioned(path="/public", file: Asset)
