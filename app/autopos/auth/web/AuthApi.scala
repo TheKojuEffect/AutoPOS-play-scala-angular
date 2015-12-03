@@ -1,8 +1,8 @@
-package autopos.auth.web.rest
+package autopos.auth.web
 
 import autopos.auth.UserDetails
 import autopos.auth.service.TokenProvider
-import autopos.auth.web.rest.schema.Credential
+import autopos.auth.web.schema.Credential
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
 

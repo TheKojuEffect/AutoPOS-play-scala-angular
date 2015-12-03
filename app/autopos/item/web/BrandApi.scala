@@ -1,8 +1,8 @@
-package autopos.item.web.rest
+package autopos.item.web
 
 import javax.inject.Inject
 
-import autopos.item.service.BrandRepository
+import autopos.item.service.BrandRepo
 import autopos.item.web.assembler.BrandAssembler
 import autopos.item.web.schema.BrandDto
 import play.api.libs.json.{JsError, Json}
@@ -10,12 +10,12 @@ import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.ExecutionContext
 
-class BrandController @Inject()(brandRepository: BrandRepository, brandAssembler: BrandAssembler)
-                               (implicit ec: ExecutionContext)
+class BrandApi @Inject()(brandRepo: BrandRepo, brandAssembler: BrandAssembler)
+                        (implicit ec: ExecutionContext)
   extends Controller {
 
   def getBrands = Action.async {
-    brandRepository.list()
+    brandRepo.list()
       .map {
         brandAssembler.assemble
       }
@@ -32,7 +32,7 @@ class BrandController @Inject()(brandRepository: BrandRepository, brandAssembler
         BadRequest(Json.obj("status" -> "OK", "message" -> JsError.toJson(errors)))
       },
       brandDto => {
-        brandRepository.create(brandDto.name)
+        brandRepo.create(brandDto.name)
         Ok(Json.obj("status" -> "OK"))
       }
     )

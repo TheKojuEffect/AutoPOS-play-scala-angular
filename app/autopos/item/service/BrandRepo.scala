@@ -8,7 +8,7 @@ import slick.driver.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class BrandRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ed: ExecutionContext) {
+class BrandRepo @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ed: ExecutionContext) {
 
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 

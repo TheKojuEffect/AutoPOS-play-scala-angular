@@ -1,4 +1,4 @@
-package autopos.user.web.rest
+package autopos.user.web
 
 import javax.inject.Inject
 

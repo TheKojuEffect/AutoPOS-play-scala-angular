@@ -3,7 +3,7 @@ package autopos.auth.service
 import java.security.MessageDigest
 
 import autopos.auth.UserDetails
-import autopos.auth.web.rest.schema.AuthToken
+import autopos.auth.web.schema.AuthToken
 import org.apache.commons.codec.binary.Hex
 
 object TokenProvider {

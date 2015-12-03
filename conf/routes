@@ -10,16 +10,16 @@ GET           /jsroutes.js         controllers.Application.jsRoutes()
 
 
 # Brands
-GET           /brands              autopos.item.web.rest.BrandController.getBrands
-POST          /brands              autopos.item.web.rest.BrandController.addBrand
+GET           /brands              autopos.item.web.BrandApi.getBrands
+POST          /brands              autopos.item.web.BrandApi.addBrand
 
 
 # Authentication
-POST          /authenticate        autopos.auth.web.rest.AuthApi.authenticate
+POST          /authenticate        autopos.auth.web.AuthApi.authenticate
 POST          /logout              controllers.Application.logout()
 
 # Users
-GET           /users/:id           autopos.user.web.rest.UserApi.getUser(id: Int)
+GET           /users/:id           autopos.user.web.UserApi.getUser(id: Int)
 POST          /users               controllers.Users.createUser()
 PUT           /users/:id           controllers.Users.updateUser(id: Long)
 DELETE        /users/:id           controllers.Users.deleteUser(id: Long)
