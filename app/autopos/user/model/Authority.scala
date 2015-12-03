@@ -15,6 +15,6 @@ object Authority {
 
 object Role extends Enumeration {
   type Role = Value
-  val ADMIN, USER = Value
+  val ROLE_ADMIN, ROLE_USER = Value
 }
 

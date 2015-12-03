@@ -16,8 +16,8 @@ trait UserRepo {
 class UserRepoImpl extends UserRepo {
 
   val users = Seq(
-    User(1, "chuck", "norris", Set(Authority(ADMIN)), "Chuck", "Norris", true, "chuck_norris"),
-    User(2, "john", "doe", Set(Authority(USER)), "John", "Doe", true, "john_doe")
+    User(1, "chuck", "norris", Set(Authority(ROLE_ADMIN)), "Chuck", "Norris", true, "chuck_norris"),
+    User(2, "john", "doe", Set(Authority(ROLE_USER)), "John", "Doe", true, "john_doe")
   )
 
   override def get(id: Int): Option[User] =
