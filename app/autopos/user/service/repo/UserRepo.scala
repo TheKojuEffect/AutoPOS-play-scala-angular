@@ -9,6 +9,8 @@ trait UserRepo {
 
   def get(id: Int): Option[User]
 
+  def findByUsername(username: String): Option[User]
+
 }
 
 class UserRepoImpl extends UserRepo {
@@ -20,4 +22,7 @@ class UserRepoImpl extends UserRepo {
 
   override def get(id: Int): Option[User] =
     users.filter(_.id == id).headOption
+
+  override def findByUsername(username: String): Option[User] =
+    users.filter(_.username == username).headOption
 }

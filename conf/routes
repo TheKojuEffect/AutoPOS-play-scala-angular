@@ -18,6 +18,9 @@ POST          /brands              autopos.item.web.BrandApi.addBrand
 POST          /authenticate        autopos.auth.web.AuthApi.authenticate
 POST          /logout              controllers.Application.logout()
 
+# Account
+GET           /account             autopos.auth.web.AccountApi.getAccount(username = "chuck")
+
 # Users
 GET           /users/:id           autopos.user.web.UserApi.getUser(id: Int)
 POST          /users               controllers.Users.createUser()

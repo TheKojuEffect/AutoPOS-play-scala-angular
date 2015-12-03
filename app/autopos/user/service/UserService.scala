@@ -11,10 +11,14 @@ trait UserService {
 
   def getUser(id: Int): Option[User]
 
+  def getUser(username: String): Option[User]
+
 }
 
 
 class UserServiceImpl @Inject()(userRepo: UserRepo) extends UserService {
 
   override def getUser(id: Int): Option[User] = userRepo.get(id)
+
+  override def getUser(username: String): Option[User] = userRepo.findByUsername(username)
 }

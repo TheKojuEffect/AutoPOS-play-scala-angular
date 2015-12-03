@@ -2,7 +2,7 @@
 
 angular.module('autopos')
     .factory('Account', function Account($resource) {
-        return $resource('api/account', {}, {
+        return $resource('account', {}, {
             'get': { method: 'GET', params: {}, isArray: false,
                 interceptor: {
                     response: function(response) {
