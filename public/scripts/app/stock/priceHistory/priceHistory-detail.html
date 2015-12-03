@@ -1,0 +1,55 @@
+
+<div>
+    <h2><span>PriceHistory</span> {{priceHistory.id}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span>MarkedPrice</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{priceHistory.markedPrice}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Date</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{priceHistory.date}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Remarks</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{priceHistory.remarks}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>item</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{priceHistory.item.id}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="priceHistory"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

@@ -1,0 +1,63 @@
+
+<div>
+    <h2><span>Item</span> {{item.id}}</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <span>Name</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{item.name}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Description</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{item.description}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>MarkedPrice</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{item.markedPrice}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>category</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{item.category.shortName}}" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>brand</span>
+                    </td>
+                    <td>
+                        <input type="text" class="input-sm form-control" value="{{item.brand.name}}" readonly>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="item"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

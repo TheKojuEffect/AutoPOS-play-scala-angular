@@ -26,6 +26,13 @@ libraryDependencies ++= Seq(
   "org.webjars" % "underscorejs" % "1.6.0-3",
   "org.webjars" % "jquery" % "1.11.1",
 
+  "org.webjars" % "modernizr" % "2.8.3",
+  "org.webjars" % "json3" % "3.3.2-1",
+  "org.webjars" % "angular-local-storage" % "0.2.1",
+  "org.webjars.bower" % "angular-cache-buster" % "0.4.3",
+  "org.webjars.npm" % "ng-infinite-scroll" % "1.2.0",
+  "org.webjars.bower" % "angular-ui-router-tabs" % "1.7.0",
+
   specs2 % Test
 )
 
