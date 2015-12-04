@@ -8,7 +8,7 @@ angular.module('autopos')
                     username: credentials.username,
                     password: credentials.password
                 };
-                return $http.post('authenticate', data, {
+                return $http.post('api/authenticate', data, {
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
