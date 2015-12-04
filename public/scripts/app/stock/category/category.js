@@ -8,7 +8,7 @@ angular.module('autopos')
                 url: '/categories',
                 data: {
                     roles: ['ROLE_USER'],
-                    pageTitle: 'Categorys'
+                    pageTitle: 'Categories'
                 },
                 templateUrl: 'scripts/app/stock/category/categorys.html',
                 controller: 'CategoryController',
