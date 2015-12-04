@@ -8,6 +8,8 @@ scalaVersion in ThisBuild := "2.11.7"
 
 resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 
+resolvers += "Madoushi sbt-plugins" at "https://dl.bintray.com/madoushi/sbt-plugins/"
+
 libraryDependencies ++= Seq(
   filters,
   cache,
