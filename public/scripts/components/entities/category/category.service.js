@@ -2,8 +2,8 @@
 
 angular.module('autopos')
     .factory('Category', function ($resource, DateUtils) {
-        return $resource('api/categorys/:id', {}, {
-            'query': { method: 'GET', isArray: true},
+        return $resource('api/categories/:id', {}, {
+            'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -11,6 +11,6 @@ angular.module('autopos')
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': {method: 'PUT'}
         });
     });

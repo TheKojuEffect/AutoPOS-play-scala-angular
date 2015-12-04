@@ -4,13 +4,24 @@ import javax.inject.Singleton
 
 import autopos.item.model.Brand
 import autopos.item.web.schema.BrandResource
+import com.google.inject.ImplementedBy
+
+@ImplementedBy(classOf[BrandAssemblerImpl])
+trait BrandAssembler {
+
+  def assemble(brand: Brand): BrandResource
+
+  def assemble(brands: Seq[Brand]): Seq[BrandResource]
+}
+
 
 @Singleton
-class BrandAssembler {
+class BrandAssemblerImpl extends BrandAssembler {
 
-  def assemble(brand: Brand) =
-    new BrandResource(id = brand.id, name = brand.name)
+  override def assemble(brands: Seq[Brand]): Seq[BrandResource] =
+    brands map assemble
 
-  def assemble(brands: Seq[Brand]): Seq[BrandResource] = brands.map(assemble)
+  override def assemble(b: Brand) =
+    BrandResource(b.id, b.name)
 
 }

@@ -8,12 +8,6 @@ GET           /                        controllers.Assets.at(path="/public", fil
 # JavaScript routes object
 GET           /jsroutes.js             controllers.Application.jsRoutes()
 
-
-# Brands
-GET           /api/brands              autopos.item.web.BrandApi.getBrands
-POST          /api/brands              autopos.item.web.BrandApi.addBrand
-
-
 # Authentication
 POST          /api/authenticate        autopos.auth.web.AuthApi.authenticate
 POST          /logout                  controllers.Application.logout()
@@ -27,6 +21,13 @@ POST          /users                   controllers.Users.createUser()
 PUT           /users/:id               controllers.Users.updateUser(id: Long)
 DELETE        /users/:id               controllers.Users.deleteUser(id: Long)
 GET           /authuser                controllers.Users.authUser()
+
+# Brands
+GET           /api/brands              autopos.item.web.BrandApi.getBrands
+POST          /api/brands              autopos.item.web.BrandApi.addBrand
+
+# Categories
+GET           /api/categories          autopos.item.web.CategoryApi.getCategories
 
 # Static
 # ~~~~
