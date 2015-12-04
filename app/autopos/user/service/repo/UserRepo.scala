@@ -5,7 +5,7 @@ import autopos.user.model.{Authority, User}
 import com.google.inject.ImplementedBy
 
 @ImplementedBy(classOf[UserRepoImpl])
-trait UserRepo {
+private[service] trait UserRepo {
 
   def get(id: Int): Option[User]
 
@@ -13,7 +13,7 @@ trait UserRepo {
 
 }
 
-class UserRepoImpl extends UserRepo {
+private[repo] class UserRepoImpl extends UserRepo {
 
   val users = Seq(
     User(1, "chuck", "norris", Set(Authority(ROLE_ADMIN)), "Chuck", "Norris", true, "chuck_norris"),
