@@ -29,6 +29,10 @@ POST          /api/brands              autopos.item.web.BrandApi.addBrand
 # Categories
 GET           /api/categories          autopos.item.web.CategoryApi.getCategories
 
+# Tags
+GET           /api/tags                autopos.item.web.TagApi.getTags
+
+
 # Static
 # ~~~~
 
