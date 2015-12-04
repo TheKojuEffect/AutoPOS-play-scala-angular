@@ -4,6 +4,8 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model.Tag
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
+import slick.driver.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -16,17 +18,32 @@ trait TagRepo {
 }
 
 @Singleton
-class TagRepoImpl @Inject()(implicit ed: ExecutionContext)
+class TagRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+                           (implicit ed: ExecutionContext)
   extends TagRepo {
 
-  val tags = Seq(
-    Tag(1, "Engine"),
-    Tag(2, "Gear")
-  )
+  private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
-  override def list(): Future[Seq[Tag]] =
-    Future {
-      tags
-    }
+  import dbConfig._
+  import driver.api.{Tag => _, _}
+
+  private val tags = TableQuery[TagTable]
+
+  override def list(): Future[Seq[Tag]] = db.run {
+    tags.result
+  }
+
+
+  import slick.lifted.{Tag => SlickTag}
+
+  private class TagTable(tag: SlickTag) extends Table[Tag](tag, "Tag") {
+
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def name = column[String]("name")
+
+    def * = (id, name) <>((Tag.apply _).tupled, Tag.unapply)
+
+  }
 
 }
