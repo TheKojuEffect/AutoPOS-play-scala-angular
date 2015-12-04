@@ -24,6 +24,10 @@ angular.module('autopos')
                     return false;
                 }
 
+                if (_identity.roles.indexOf('ROLE_ADMIN') !== -1) {
+                    return true;
+                }
+
                 for (var i = 0; i < roles.length; i++) {
                     if (this.isInRole(roles[i])) {
                         return true;
