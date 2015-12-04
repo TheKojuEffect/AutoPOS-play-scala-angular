@@ -4,6 +4,8 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model.Category
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
+import slick.driver.JdbcProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,18 +17,34 @@ trait CategoryRepo {
 
 }
 
+
 @Singleton
-class CategoryRepoImpl @Inject()(implicit ed: ExecutionContext)
+class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+                                (implicit ed: ExecutionContext)
   extends CategoryRepo {
 
-  val categories = Seq(
-    Category(1, "MN", "Mahindra Nissan"),
-    Category(2, "SM", "Swaraj Mazda")
-  )
+  private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
-  override def list(): Future[Seq[Category]] =
-    Future {
-      categories
-    }
+  import dbConfig._
+  import driver.api._
+
+  private val categories = TableQuery[CategoryTable]
+
+  override def list(): Future[Seq[Category]] = db.run {
+    categories.result
+  }
+
+  private class CategoryTable(tag: Tag) extends Table[Category](tag, "Category") {
+
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def shortName = column[String]("shortName")
+
+    def name = column[String]("name")
+
+    def * = (id, shortName, name) <>((Category.apply _).tupled, Category.unapply)
+
+  }
 
 }
+
