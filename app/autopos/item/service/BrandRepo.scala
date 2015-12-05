@@ -19,6 +19,8 @@ trait BrandRepo {
 
   def create(brand: Brand): Future[Brand]
 
+  def update(brand: Brand): Future[Int]
+
 }
 
 
@@ -33,7 +35,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
   private val brands = TableQuery[BrandTable]
 
 
-  override def findById(id: Int)  = db.run {
+  override def findById(id: Int) = db.run {
     brands.filter(_.id === id).result.headOption
   }
 
@@ -45,6 +47,12 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
     (brands returning (brands.map(_.id))
       into ((brand, id) => brand.copy(id = id))
       ) += brand
+
+  }
+
+  override def update(brand: Brand) = db.run {
+    brands.filter(_.id === brand.id)
+      .update(brand)
   }
 
 

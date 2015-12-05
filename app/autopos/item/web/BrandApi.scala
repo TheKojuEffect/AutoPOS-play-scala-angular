@@ -47,6 +47,23 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
             Ok(toJson(brand))
         }.getOrElse(NotFound)
       }
+  }
 
+
+  def updateBrand(id: Int) = Action.async(parse.json) { request =>
+    request.body.validate[Brand]
+      .fold(
+        errors => {
+          Future.successful(
+            BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
+          )
+        },
+        brand => {
+          brandRepo.update(brand.copy(id = Some(id)))
+            .map {
+              _ => Accepted
+            }
+        }
+      )
   }
 }
