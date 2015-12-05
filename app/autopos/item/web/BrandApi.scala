@@ -8,7 +8,7 @@ import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{Future, ExecutionContext}
 
 class BrandApi @Inject()(brandRepo: BrandRepo)
                         (implicit ec: ExecutionContext)
@@ -21,16 +21,21 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
       }
   }
 
-  def addBrand = Action(parse.json) { request =>
+  def addBrand = Action.async(parse.json) { request =>
 
     request.body.validate[Brand]
       .fold(
         errors => {
-          BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
+          Future.successful(
+            BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
+          )
         },
         brandDto => {
-          brandRepo.create(brandDto.name)
-          Ok(Json.obj("status" -> "OK"))
+          brandRepo.create(brandDto)
+            .map {
+              brand =>
+                Ok(toJson(brand))
+            }
         }
       )
   }
