@@ -2,34 +2,31 @@ package autopos.item.web
 
 import javax.inject.Inject
 
+import autopos.item.model.Brand
 import autopos.item.service.BrandRepo
-import autopos.item.web.assembler.BrandAssembler
-import autopos.item.web.schema.BrandDto
+import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.ExecutionContext
 
-class BrandApi @Inject()(brandRepo: BrandRepo, brandAssembler: BrandAssembler)
+class BrandApi @Inject()(brandRepo: BrandRepo)
                         (implicit ec: ExecutionContext)
   extends Controller {
 
   def getBrands = Action.async {
     brandRepo.list()
       .map {
-        brandAssembler.assemble
-      }
-      .map {
-        brandResources => Ok(Json.toJson(brandResources))
+        brands => Ok(toJson(brands))
       }
   }
 
   def addBrand = Action(parse.json) { request =>
 
-    val b = request.body.validate[BrandDto]
+    val b = request.body.validate[Brand]
     b.fold(
       errors => {
-        BadRequest(Json.obj("status" -> "OK", "message" -> JsError.toJson(errors)))
+        BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
       },
       brandDto => {
         brandRepo.create(brandDto.name)
@@ -37,5 +34,4 @@ class BrandApi @Inject()(brandRepo: BrandRepo, brandAssembler: BrandAssembler)
       }
     )
   }
-
 }

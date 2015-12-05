@@ -44,7 +44,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
 
     def * = (id, name) <>((Brand.apply _).tupled, Brand.unapply)
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Option[Int]]("id", O.PrimaryKey, O.AutoInc)
 
     def name = column[String]("name")
   }
