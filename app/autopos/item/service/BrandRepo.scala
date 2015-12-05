@@ -46,7 +46,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
 
     def id = column[Option[Int]]("id", O.PrimaryKey, O.AutoInc)
 
-    def name = column[String]("name")
+    def name = column[String]("name", O.Length(50))
   }
 
 }

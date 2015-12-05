@@ -38,9 +38,9 @@ class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-    def shortName = column[String]("shortName")
+    def shortName = column[String]("shortName", O.Length(3))
 
-    def name = column[String]("name")
+    def name = column[String]("name", O.Length(50))
 
     def * = (id, shortName, name) <>((Category.apply _).tupled, Category.unapply)
 

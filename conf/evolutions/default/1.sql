@@ -1,9 +1,10 @@
 # --- !Ups
 
 CREATE TABLE `Brand` (
-  `id`   INT(5) PRIMARY KEY  AUTO_INCREMENT,
+  `id`   INTEGER AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(50) UNIQUE NOT NULL
 );
+
 
 # --- !Downs
 

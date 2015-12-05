@@ -40,7 +40,7 @@ class TagRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-    def name = column[String]("name")
+    def name = column[String]("name", O.Length(50))
 
     def * = (id, name) <>((Tag.apply _).tupled, Tag.unapply)
 

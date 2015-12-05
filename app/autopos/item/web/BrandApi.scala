@@ -23,15 +23,15 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
 
   def addBrand = Action(parse.json) { request =>
 
-    val b = request.body.validate[Brand]
-    b.fold(
-      errors => {
-        BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
-      },
-      brandDto => {
-        brandRepo.create(brandDto.name)
-        Ok(Json.obj("status" -> "OK"))
-      }
-    )
+    request.body.validate[Brand]
+      .fold(
+        errors => {
+          BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors)))
+        },
+        brandDto => {
+          brandRepo.create(brandDto.name)
+          Ok(Json.obj("status" -> "OK"))
+        }
+      )
   }
 }
