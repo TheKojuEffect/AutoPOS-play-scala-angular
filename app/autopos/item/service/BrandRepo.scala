@@ -13,6 +13,8 @@ import scala.concurrent.{ExecutionContext, Future}
 @ImplementedBy(classOf[BrandRepoImpl])
 trait BrandRepo {
 
+  def findById(id: Int): Future[Option[Brand]]
+
   def list(): Future[Seq[Brand]]
 
   def create(brand: Brand): Future[Brand]
@@ -30,6 +32,10 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
 
   private val brands = TableQuery[BrandTable]
 
+
+  override def findById(id: Int)  = db.run {
+    brands.filter(_.id === id).result.headOption
+  }
 
   override def list(): Future[Seq[Brand]] = db.run {
     brands.result

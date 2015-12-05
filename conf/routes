@@ -25,6 +25,7 @@ GET           /authuser                controllers.Users.authUser()
 # Brands
 GET           /api/brands              autopos.item.web.BrandApi.getBrands
 POST          /api/brands              autopos.item.web.BrandApi.addBrand
+GET           /api/brands/:id          autopos.item.web.BrandApi.getBrand(id: Int)
 
 # Categories
 GET           /api/categories          autopos.item.web.CategoryApi.getCategories

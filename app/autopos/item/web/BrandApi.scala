@@ -8,7 +8,7 @@ import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
 
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 class BrandApi @Inject()(brandRepo: BrandRepo)
                         (implicit ec: ExecutionContext)
@@ -22,7 +22,6 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
   }
 
   def addBrand = Action.async(parse.json) { request =>
-
     request.body.validate[Brand]
       .fold(
         errors => {
@@ -34,9 +33,20 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
           brandRepo.create(brandDto)
             .map {
               brand =>
-                Ok(toJson(brand))
+                Created(toJson(brand))
             }
         }
       )
+  }
+
+  def getBrand(id: Int) = Action.async {
+    brandRepo.findById(id)
+      .map {
+        brandOption => brandOption.map {
+          brand =>
+            Ok(toJson(brand))
+        }.getOrElse(NotFound)
+      }
+
   }
 }
