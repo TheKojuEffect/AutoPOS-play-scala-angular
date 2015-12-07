@@ -35,7 +35,8 @@ libraryDependencies ++= Seq(
   "org.webjars.npm" % "ng-infinite-scroll" % "1.2.0",
   "org.webjars.bower" % "angular-ui-router-tabs" % "1.7.0",
 
-  specs2 % Test
+  specs2 % Test,
+  "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
