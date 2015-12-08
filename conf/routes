@@ -3,46 +3,50 @@
 # ~~~~
 
 # Home page
-GET           /                        controllers.Assets.at(path="/public", file= "index.html")
+GET           /                          controllers.Assets.at(path="/public", file= "index.html")
 
 # JavaScript routes object
-GET           /jsroutes.js             controllers.Application.jsRoutes()
+GET           /jsroutes.js               controllers.Application.jsRoutes()
 
 # Authentication
-POST          /api/authenticate        autopos.auth.web.AuthApi.authenticate
-POST          /logout                  controllers.Application.logout()
+POST          /api/authenticate          autopos.auth.web.AuthApi.authenticate
+POST          /logout                    controllers.Application.logout()
 
 # Account
-GET           /api/account             autopos.auth.web.AccountApi.getAccount(username = "chuck")
+GET           /api/account               autopos.auth.web.AccountApi.getAccount(username = "chuck")
 
 # Users
-GET           /api/users/:id           autopos.user.web.UserApi.getUser(id: Int)
-POST          /users                   controllers.Users.createUser()
-PUT           /users/:id               controllers.Users.updateUser(id: Long)
-DELETE        /users/:id               controllers.Users.deleteUser(id: Long)
-GET           /authuser                controllers.Users.authUser()
+GET           /api/users/:id             autopos.user.web.UserApi.getUser(id: Int)
+POST          /users                     controllers.Users.createUser()
+PUT           /users/:id                 controllers.Users.updateUser(id: Long)
+DELETE        /users/:id                 controllers.Users.deleteUser(id: Long)
+GET           /authuser                  controllers.Users.authUser()
 
 # Brands
-GET           /api/brands              autopos.item.web.BrandApi.getBrands
-POST          /api/brands              autopos.item.web.BrandApi.addBrand
-GET           /api/brands/:id          autopos.item.web.BrandApi.getBrand(id: Int)
-PUT           /api/brands/:id          autopos.item.web.BrandApi.updateBrand(id: Int)
-DELETE        /api/brands/:id          autopos.item.web.BrandApi.deleteBrand(id: Int)
+GET           /api/brands                autopos.item.web.BrandApi.getBrands
+POST          /api/brands                autopos.item.web.BrandApi.addBrand
+GET           /api/brands/:id            autopos.item.web.BrandApi.getBrand(id: Int)
+PUT           /api/brands/:id            autopos.item.web.BrandApi.updateBrand(id: Int)
+DELETE        /api/brands/:id            autopos.item.web.BrandApi.deleteBrand(id: Int)
 
 # Categories
-GET           /api/categories          autopos.item.web.CategoryApi.getCategories
+GET           /api/categories            autopos.item.web.CategoryApi.getCategories
+POST          /api/categories            autopos.item.web.CategoryApi.addCategory
+GET           /api/categories/:id        autopos.item.web.CategoryApi.getCategory(id:Int)
+PUT           /api/categories/:id        autopos.item.web.CategoryApi.updateCategory(id: Int)
+DELETE        /api/categories/:id        autopos.item.web.CategoryApi.deleteCategory(id: Int)
 
 # Tags
-GET           /api/tags                autopos.item.web.TagApi.getTags
-POST          /api/tags                autopos.item.web.TagApi.addTag
-GET           /api/tags/:id            autopos.item.web.TagApi.getTag(id: Int)
-PUT           /api/tags/:id            autopos.item.web.TagApi.updateTag(id: Int)
-DELETE        /api/tags/:id            autopos.item.web.TagApi.deleteTag(id: Int)
+GET           /api/tags                  autopos.item.web.TagApi.getTags
+POST          /api/tags                  autopos.item.web.TagApi.addTag
+GET           /api/tags/:id              autopos.item.web.TagApi.getTag(id: Int)
+PUT           /api/tags/:id              autopos.item.web.TagApi.updateTag(id: Int)
+DELETE        /api/tags/:id              autopos.item.web.TagApi.deleteTag(id: Int)
 
 
 # Static
 # ~~~~
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file            controllers.Assets.versioned(path="/public", file: Asset)
-GET           /*file                   controllers.Assets.versioned(path="/public", file: Asset)
+GET           /assets/*file              controllers.Assets.versioned(path="/public", file: Asset)
+GET           /*file                     controllers.Assets.versioned(path="/public", file: Asset)
