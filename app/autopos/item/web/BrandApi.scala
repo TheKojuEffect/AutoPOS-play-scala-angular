@@ -66,4 +66,11 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
         }
       )
   }
+
+  def deleteBrand(id: Int) = Action.async {
+    brandRepo.delete(id)
+      .map {
+        _ => NoContent
+      }
+  }
 }

@@ -21,6 +21,7 @@ trait BrandRepo {
 
   def update(brand: Brand): Future[Int]
 
+  def delete(id: Int): Future[Int]
 }
 
 
@@ -34,6 +35,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
 
   private val brands = TableQuery[BrandTable]
 
+  /* ********************************* */
 
   override def findById(id: Int) = db.run {
     brands.filter(_.id === id).result.headOption
@@ -55,6 +57,12 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
       .update(brand)
   }
 
+  override def delete(id: Int) = db.run {
+    brands.filter(_.id === id)
+      .delete
+  }
+
+  /* ********************************* */
 
   private class BrandTable(tag: Tag) extends Table[Brand](tag, "Brand") {
 
