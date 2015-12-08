@@ -33,6 +33,10 @@ GET           /api/categories          autopos.item.web.CategoryApi.getCategorie
 
 # Tags
 GET           /api/tags                autopos.item.web.TagApi.getTags
+POST          /api/tags                autopos.item.web.TagApi.addTag
+GET           /api/tags/:id            autopos.item.web.TagApi.getTag(id: Int)
+PUT           /api/tags/:id            autopos.item.web.TagApi.updateTag(id: Int)
+DELETE        /api/tags/:id            autopos.item.web.TagApi.deleteTag(id: Int)
 
 
 # Static
