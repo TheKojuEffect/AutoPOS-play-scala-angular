@@ -59,7 +59,7 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
           )
         },
         brand => {
-          brandRepo.update(brand.copy(id = Some(id)))
+          brandRepo.update(brand.copy(id = id))
             .map {
               _ => Accepted
             }

@@ -66,7 +66,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
 
   private class BrandTable(tag: Tag) extends Table[Brand](tag, "Brand") {
 
-    def id = column[Option[Int]]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
     def name = column[String]("name", O.Length(50))
 
