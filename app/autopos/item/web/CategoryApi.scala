@@ -3,7 +3,7 @@ package autopos.item.web
 import javax.inject.Inject
 
 import autopos.item.model.Category
-import autopos.item.service.CategoryRepo
+import autopos.item.service.repo.CategoryRepo
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}

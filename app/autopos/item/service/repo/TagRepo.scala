@@ -1,4 +1,4 @@
-package autopos.item.service
+package autopos.item.service.repo
 
 import javax.inject.{Inject, Singleton}
 

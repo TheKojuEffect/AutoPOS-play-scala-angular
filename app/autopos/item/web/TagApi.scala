@@ -3,7 +3,7 @@ package autopos.item.web
 import javax.inject.Inject
 
 import autopos.item.model.Tag
-import autopos.item.service.TagRepo
+import autopos.item.service.repo.TagRepo
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
