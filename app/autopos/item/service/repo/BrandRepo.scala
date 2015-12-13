@@ -4,6 +4,7 @@ import javax.inject.Singleton
 
 import autopos.common.service.repo.HasDbConfig
 import autopos.item.model.Brand
+import autopos.item.model.Brand.BrandTable
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -30,21 +31,8 @@ class BrandRepoImpl
 
   import driver.api._
 
-  /* ********************************* */
-
-  class BrandTable(tag: Tag) extends Table[Brand](tag, "Brand") {
-
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-
-    def name = column[String]("name", O.Length(50))
-
-    def * = (id, name) <>((Brand.apply _).tupled, Brand.unapply)
-
-  }
-
   private val brands = TableQuery[BrandTable]
 
-  /* ********************************* */
 
   override def findById(id: Int) = db.run {
     brands.filter(_.id === id).result.headOption
@@ -70,6 +58,5 @@ class BrandRepoImpl
     brands.filter(_.id === id)
       .delete
   }
-
 
 }

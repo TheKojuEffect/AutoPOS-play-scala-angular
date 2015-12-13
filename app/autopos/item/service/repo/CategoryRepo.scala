@@ -4,6 +4,7 @@ import javax.inject.Singleton
 
 import autopos.common.service.repo.BaseRepo
 import autopos.item.model.Category
+import autopos.item.model.Category.CategoryTable
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -30,22 +31,6 @@ class CategoryRepoImpl
   extends CategoryRepo {
 
   import driver.api._
-
-  /* ****************************** */
-
-   class CategoryTable(tag: Tag) extends Table[Category](tag, "Category") {
-
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-
-    def shortName = column[String]("shortName", O.Length(3))
-
-    def name = column[String]("name", O.Length(50))
-
-    def * = (id, shortName, name) <>((Category.apply _).tupled, Category.unapply)
-
-  }
-
-  /* ****************************** */
 
   private val categories = TableQuery[CategoryTable]
 

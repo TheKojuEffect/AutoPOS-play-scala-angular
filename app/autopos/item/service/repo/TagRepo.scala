@@ -3,6 +3,7 @@ package autopos.item.service.repo
 import javax.inject.Singleton
 
 import autopos.common.service.repo.HasDbConfig
+import autopos.item.model.Tag.TagTable
 import autopos.item.model.{Tag => ItemTag}
 import com.google.inject.ImplementedBy
 
@@ -56,20 +57,4 @@ class TagRepoImpl
   override def delete(id: Int) = db.run {
     tags.filter(_.id === id).delete
   }
-
-
-  /* ***************************** */
-
-  import driver.api.{Tag => SlickTag}
-
-  private class TagTable(tag: SlickTag) extends Table[ItemTag](tag, "Tag") {
-
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-
-    def name = column[String]("name", O.Length(50))
-
-    def * = (id, name) <>((ItemTag.apply _).tupled, ItemTag.unapply)
-
-  }
-
 }

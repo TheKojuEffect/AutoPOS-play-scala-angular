@@ -1,11 +1,14 @@
 package autopos.item.model
 
+import autopos.common.service.repo.HasDbConfig
+import autopos.item.model.Tag._
+
 case class Category(id: Int,
                     shortName: String,
                     name: String)
 
 
-object Category {
+object Category extends HasDbConfig {
 
   def readDto(idOpt: Option[Int], shortName: String, name: String) =
     Category(idOpt getOrElse 0, shortName, name)
@@ -21,4 +24,22 @@ object Category {
     ) (readDto _)
 
   implicit val categoryWrites = Json.writes[Category]
+
+
+  /* ****************************** */
+
+  import driver.api.{Tag => SlickTag, _}
+
+  class CategoryTable(tag: SlickTag) extends Table[Category](tag, "Category") {
+
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def shortName = column[String]("shortName", O.Length(3))
+
+    def name = column[String]("name", O.Length(50))
+
+    def * = (id, shortName, name) <>((Category.apply _).tupled, Category.unapply)
+
+  }
+
 }
