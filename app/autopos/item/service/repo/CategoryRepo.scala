@@ -1,17 +1,16 @@
 package autopos.item.service.repo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Singleton
 
+import autopos.common.service.repo.BaseRepo
 import autopos.item.model.Category
 import com.google.inject.ImplementedBy
-import play.api.db.slick.DatabaseConfigProvider
-import slick.driver.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[CategoryRepoImpl])
-trait CategoryRepo {
+trait CategoryRepo extends BaseRepo {
 
   def list(): Future[Seq[Category]]
 
@@ -27,18 +26,14 @@ trait CategoryRepo {
 
 
 @Singleton
-class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
-                                (implicit ed: ExecutionContext)
+class CategoryRepoImpl
   extends CategoryRepo {
 
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
-
-  import dbConfig._
   import driver.api._
 
   /* ****************************** */
 
-  private class CategoryTable(tag: Tag) extends Table[Category](tag, "Category") {
+   class CategoryTable(tag: Tag) extends Table[Category](tag, "Category") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
@@ -80,4 +75,6 @@ class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
   }
 
 }
+
+
 

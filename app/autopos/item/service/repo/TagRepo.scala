@@ -1,17 +1,16 @@
 package autopos.item.service.repo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Singleton
 
+import autopos.common.service.repo.HasDbConfig
 import autopos.item.model.{Tag => ItemTag}
 import com.google.inject.ImplementedBy
-import play.api.db.slick.DatabaseConfigProvider
-import slick.driver.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[TagRepoImpl])
-trait TagRepo {
+trait TagRepo extends HasDbConfig {
 
   def list(): Future[Seq[ItemTag]]
 
@@ -26,13 +25,9 @@ trait TagRepo {
 
 
 @Singleton
-class TagRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
-                           (implicit ed: ExecutionContext)
+class TagRepoImpl
   extends TagRepo {
 
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
-
-  import dbConfig._
   import driver.api._
 
   private val tags = TableQuery[TagTable]

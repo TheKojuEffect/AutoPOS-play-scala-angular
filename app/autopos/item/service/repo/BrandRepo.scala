@@ -1,17 +1,16 @@
 package autopos.item.service.repo
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.Singleton
 
+import autopos.common.service.repo.HasDbConfig
 import autopos.item.model.Brand
 import com.google.inject.ImplementedBy
-import play.api.db.slick.DatabaseConfigProvider
-import slick.driver.JdbcProfile
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[BrandRepoImpl])
-trait BrandRepo {
+trait BrandRepo extends HasDbConfig {
 
   def findById(id: Int): Future[Option[Brand]]
 
@@ -26,12 +25,22 @@ trait BrandRepo {
 
 
 @Singleton
-class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ed: ExecutionContext) extends BrandRepo {
+class BrandRepoImpl
+  extends BrandRepo {
 
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
-
-  import dbConfig._
   import driver.api._
+
+  /* ********************************* */
+
+  class BrandTable(tag: Tag) extends Table[Brand](tag, "Brand") {
+
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def name = column[String]("name", O.Length(50))
+
+    def * = (id, name) <>((Brand.apply _).tupled, Brand.unapply)
+
+  }
 
   private val brands = TableQuery[BrandTable]
 
@@ -62,16 +71,5 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit
       .delete
   }
 
-  /* ********************************* */
-
-  private class BrandTable(tag: Tag) extends Table[Brand](tag, "Brand") {
-
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-
-    def name = column[String]("name", O.Length(50))
-
-    def * = (id, name) <>((Brand.apply _).tupled, Brand.unapply)
-
-  }
 
 }
