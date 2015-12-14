@@ -43,6 +43,8 @@ GET           /api/tags/:id              autopos.item.web.TagApi.getTag(id: Int)
 PUT           /api/tags/:id              autopos.item.web.TagApi.updateTag(id: Int)
 DELETE        /api/tags/:id              autopos.item.web.TagApi.deleteTag(id: Int)
 
+# Items
+GET           /api/items                 autopos.item.web.ItemApi.getItems
 
 # Static
 # ~~~~

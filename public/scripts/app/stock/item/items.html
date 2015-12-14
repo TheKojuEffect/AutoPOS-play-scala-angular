@@ -42,9 +42,9 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>MarkedPrice</th>
-                <th>category</th>
-                <th>brand</th>
+                <th>Marked Price</th>
+                <th>Category</th>
+                <th>Brand</th>
                 <th></th>
             </tr>
             </thead>
@@ -54,8 +54,8 @@
                 <td>{{item.name}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.markedPrice}}</td>
-                <td>{{item.category.shortName}}</td>
-                <td>{{item.brand.name}}</td>
+                <td>{{item.categoryId}}</td>
+                <td>{{item.brandId}}</td>
                 <td>
                     <button type="submit"
                             ui-sref="item.detail({id:item.id})"
