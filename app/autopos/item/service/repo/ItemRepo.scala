@@ -13,8 +13,9 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def update(item: Item): Future[Int]
+  def create(item: Item): Future[Item]
 
+  def update(item: Item): Future[Int]
 
   def findById(id: Long): Future[Option[Item]]
 
@@ -50,5 +51,11 @@ class ItemRepoImpl
   override def update(item: Item) = db.run {
     items.filter(_.id === item.id)
       .update(item)
+  }
+
+  override def create(item: Item) = db.run {
+    (items returning items.map(_.id)
+      into ((item, id) => item.copy(id = id))
+      ) += item
   }
 }

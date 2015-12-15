@@ -11,6 +11,8 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemServiceImpl])
 trait ItemService {
 
+  def addItem(item: Item): Future[Item]
+
   def updateItem(item: Item): Future[Int]
 
   def getItems(): Future[Seq[Item]]
@@ -29,7 +31,10 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def getItem(id: Long) =
     itemRepo.findById(id)
 
-
   override def updateItem(item: Item) =
     itemRepo.update(item)
+
+  override def addItem(item: Item) =
+    itemRepo.create(item)
+
 }

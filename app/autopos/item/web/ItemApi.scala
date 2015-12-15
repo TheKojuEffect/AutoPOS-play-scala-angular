@@ -46,4 +46,19 @@ class ItemApi @Inject()(itemService: ItemService)
       )
   }
 
+
+  def addItem = Action.async(parse.json) { request =>
+    request.body.validate[Item]
+      .fold(
+        errors => {
+          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+        },
+        itemDto => {
+          itemService.addItem(itemDto)
+            .map { item =>
+              Ok(toJson(item))
+            }
+        }
+      )
+  }
 }
