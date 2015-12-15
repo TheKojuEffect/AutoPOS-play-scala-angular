@@ -20,24 +20,14 @@ object Item extends HasDbConfig {
   import Reads.{maxLength, minLength}
   import play.api.libs.functional.syntax._
 
-  def readDto(id: Option[Long],
-              name: String,
-              description: Option[String],
-              remarks: Option[String],
-              markedPrice: BigDecimal,
-              categoryId: Option[Int],
-              brandId: Option[Int]) =
-    Item(id getOrElse 0L, name, description, remarks, markedPrice, categoryId, brandId)
-
   implicit val itemReads = (
-    (__ \ "id").readNullable[Long] ~
-      (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
+    (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
       (__ \ "description").readNullable(maxLength[String](250)) ~
       (__ \ "remarks").readNullable(maxLength[String](250)) ~
       (__ \ "markedPrice").read[BigDecimal] ~
       (__ \ "categoryId").readNullable[Int] ~
       (__ \ "brandId").readNullable[Int]
-    ) (readDto _)
+    ) (Item(0L, _, _, _, _, _, _))
 
   implicit val itemWrites = Json.writes[Item]
 
