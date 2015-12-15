@@ -13,6 +13,8 @@ trait ItemService {
 
   def getItems(): Future[Seq[Item]]
 
+  def getItem(id: Long): Future[Option[Item]]
+
 }
 
 @Singleton
@@ -21,4 +23,7 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
 
   override def getItems() =
     itemRepo.list()
+
+  override def getItem(id: Long) =
+    itemRepo.findById(id)
 }
