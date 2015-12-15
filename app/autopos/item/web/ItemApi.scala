@@ -2,11 +2,14 @@ package autopos.item.web
 
 import javax.inject.Inject
 
+import autopos.item.model.Item
 import autopos.item.service.ItemService
 import play.api.libs.json.Json.toJson
+import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class ItemApi @Inject()(itemService: ItemService)
   extends Controller {
@@ -26,6 +29,21 @@ class ItemApi @Inject()(itemService: ItemService)
           Ok(toJson(item))
         } getOrElse BadRequest
       }
+  }
+
+  def updateItem(id: Long) = Action.async(parse.json) { request =>
+    request.body.validate[Item]
+      .fold(
+        errors => {
+          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+        },
+        itemDto => {
+          itemService.updateItem(itemDto.copy(id = id))
+            .map { _ =>
+              Accepted
+            }
+        }
+      )
   }
 
 }

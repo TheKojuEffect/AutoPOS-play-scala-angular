@@ -13,6 +13,9 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
+  def update(item: Item): Future[Int]
+
+
   def findById(id: Long): Future[Option[Item]]
 
   def list(): Future[Seq[Item]]
@@ -42,5 +45,10 @@ class ItemRepoImpl
     (for {
       (i1, it1) <- items filter (_.id === id) joinLeft itemTags on (_.id === _.itemId)
     } yield i1).result.headOption
+  }
+
+  override def update(item: Item) = db.run {
+    items.filter(_.id === item.id)
+      .update(item)
   }
 }
