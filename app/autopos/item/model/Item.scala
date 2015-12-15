@@ -3,6 +3,7 @@ package autopos.item.model
 import autopos.common.service.repo.HasDbConfig
 import autopos.item.model.Brand.BrandTable
 import autopos.item.model.Category.CategoryTable
+import autopos.item.model.Tag.TagTable
 
 case class Item(id: Long,
                 name: String,
@@ -59,11 +60,11 @@ object Item extends HasDbConfig {
 
     def categoryId = column[Option[Int]]("categoryId")
 
-    def category = foreignKey("ItemCategory", categoryId, TableQuery[CategoryTable])(_.id)
+    def category = foreignKey("Item_Category_FK", categoryId, TableQuery[CategoryTable])(_.id)
 
     def brandId = column[Option[Int]]("brandId")
 
-    def brand = foreignKey("ItemBrand", brandId, TableQuery[BrandTable])(_.id)
+    def brand = foreignKey("Item_Brand_FK", brandId, TableQuery[BrandTable])(_.id)
 
     def * = (
       id,
@@ -73,6 +74,23 @@ object Item extends HasDbConfig {
       markedPrice,
       categoryId,
       brandId) <>((Item.apply _).tupled, Item.unapply)
+  }
+
+
+  /* ******************************** */
+
+  class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Int)](slickTag, "Item_Tag") {
+
+    def itemId = column[Long]("itemId")
+
+    def item = foreignKey("ItemTag_Item_FK", itemId, TableQuery[ItemTable])(_.id)
+
+    def tagId = column[Int]("tagId")
+
+    def tag = foreignKey("ItemTag_Tag_FK", tagId, TableQuery[TagTable])(_.id)
+
+    def * = (itemId, tagId)
+
   }
 
 

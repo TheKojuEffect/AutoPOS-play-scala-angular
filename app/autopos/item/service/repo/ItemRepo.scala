@@ -4,7 +4,8 @@ import javax.inject.Singleton
 
 import autopos.common.service.repo.BaseRepo
 import autopos.item.model.Item
-import autopos.item.model.Item.ItemTable
+import autopos.item.model.Item.{ItemTable, ItemTagTable}
+import autopos.item.model.Tag.TagTable
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -25,7 +26,14 @@ class ItemRepoImpl
 
   private val items = TableQuery[ItemTable]
 
+  private val itemTags = TableQuery[ItemTagTable]
+
+  private val tags = TableQuery[TagTable]
+
   override def list(): Future[Seq[Item]] = db.run {
-    items.result
+    (for {
+      (i1, it1) <- (items.joinLeft(itemTags).on { (i, it) => i.id === it.itemId })
+    } yield (i1)).result
   }
+
 }
