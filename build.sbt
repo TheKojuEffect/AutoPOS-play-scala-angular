@@ -14,7 +14,9 @@ libraryDependencies ++= Seq(
   filters,
   cache,
 
-  "mysql" % "mysql-connector-java" % "5.1.38",
+  "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
+  "com.github.tminglei" %% "slick-pg" % "0.10.2",
+  "com.github.tminglei" %% "slick-pg_date2" % "0.10.2",
 
   "com.typesafe.play" %% "play-slick" % "1.1.1",
   "com.typesafe.play" %% "play-slick-evolutions" % "1.1.1",

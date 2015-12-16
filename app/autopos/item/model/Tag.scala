@@ -27,7 +27,7 @@ object Tag extends HasDbConfig {
 
   import driver.api.{Tag => SlickTag, _}
 
-  class TagTable(tag: SlickTag) extends Table[Tag](tag, "Tag") {
+  class TagTable(tag: SlickTag) extends Table[Tag](tag, "tag") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
@@ -36,7 +36,5 @@ object Tag extends HasDbConfig {
     def * = (id, name) <>((Tag.apply _).tupled, Tag.unapply)
 
   }
-
-
 
 }

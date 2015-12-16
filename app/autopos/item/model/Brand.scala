@@ -30,7 +30,7 @@ object Brand extends HasDbConfig {
 
   import driver.api.{Tag => SlickTag, _}
 
-  class BrandTable(tag: SlickTag) extends Table[Brand](tag, "Brand") {
+  class BrandTable(tag: SlickTag) extends Table[Brand](tag, "brand") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 

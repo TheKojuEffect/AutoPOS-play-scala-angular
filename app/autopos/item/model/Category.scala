@@ -30,11 +30,11 @@ object Category extends HasDbConfig {
 
   import driver.api.{Tag => SlickTag, _}
 
-  class CategoryTable(tag: SlickTag) extends Table[Category](tag, "Category") {
+  class CategoryTable(tag: SlickTag) extends Table[Category](tag, "category") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
-    def shortName = column[String]("shortName", O.Length(3))
+    def shortName = column[String]("short_name", O.Length(3))
 
     def name = column[String]("name", O.Length(50))
 

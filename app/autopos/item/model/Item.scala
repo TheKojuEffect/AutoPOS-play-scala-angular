@@ -36,7 +36,7 @@ object Item extends HasDbConfig {
 
   import driver.api.{Tag => SlickTag, _}
 
-  class ItemTable(tag: SlickTag) extends Table[Item](tag, "Item") {
+  class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
@@ -46,15 +46,15 @@ object Item extends HasDbConfig {
 
     def remarks = column[Option[String]]("remarks", O.Length(250))
 
-    def markedPrice = column[BigDecimal]("markedPrice")
+    def markedPrice = column[BigDecimal]("marked_price")
 
-    def categoryId = column[Option[Int]]("categoryId")
+    def categoryId = column[Option[Int]]("category_id")
 
-    def category = foreignKey("Item_Category_FK", categoryId, TableQuery[CategoryTable])(_.id)
+    def category = foreignKey("item_category_id_fkey", categoryId, TableQuery[CategoryTable])(_.id)
 
-    def brandId = column[Option[Int]]("brandId")
+    def brandId = column[Option[Int]]("brand_id")
 
-    def brand = foreignKey("Item_Brand_FK", brandId, TableQuery[BrandTable])(_.id)
+    def brand = foreignKey("item_brand_id_fkey", brandId, TableQuery[BrandTable])(_.id)
 
     def * = (
       id,
@@ -69,15 +69,15 @@ object Item extends HasDbConfig {
 
   /* ******************************** */
 
-  class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Int)](slickTag, "Item_Tag") {
+  class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Int)](slickTag, "item_tag") {
 
-    def itemId = column[Long]("itemId")
+    def itemId = column[Long]("item_id")
 
-    def item = foreignKey("ItemTag_Item_FK", itemId, TableQuery[ItemTable])(_.id)
+    def item = foreignKey("item_tag_item_id_fkey", itemId, TableQuery[ItemTable])(_.id)
 
-    def tagId = column[Int]("tagId")
+    def tagId = column[Int]("tag_id")
 
-    def tag = foreignKey("ItemTag_Tag_FK", tagId, TableQuery[TagTable])(_.id)
+    def tag = foreignKey("item_tag_tag_id_fkey", tagId, TableQuery[TagTable])(_.id)
 
     def * = (itemId, tagId)
 
