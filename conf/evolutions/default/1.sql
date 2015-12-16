@@ -1,12 +1,10 @@
 # --- !Ups
 
-CREATE TABLE `Brand` (
-  `id`   INTEGER AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(50) UNIQUE NOT NULL
+CREATE TABLE brand (
+  id   SERIAL PRIMARY KEY,
+  name VARCHAR(50) UNIQUE NOT NULL
 );
-
 
 # --- !Downs
 
-DROP TABLE IF EXISTS `Brand`;
-
+DROP TABLE IF EXISTS brand;

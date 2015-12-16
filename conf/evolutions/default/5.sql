@@ -1,13 +1,13 @@
 # --- !Ups
 
-CREATE TABLE AutoPOS.Item_Tag
+CREATE TABLE item_tag
 (
-  itemId bigint NOT NULL,
-  tagId int NOT NULL,
-  FOREIGN KEY (itemId) REFERENCES Item (id),
-  FOREIGN KEY (tagId) REFERENCES Tag (id)
+  item_id BIGINT  NOT NULL REFERENCES item (id),
+  tag_id  INTEGER NOT NULL REFERENCES tag (id),
+  CONSTRAINT item_tag_pkey PRIMARY KEY (item_id, tag_id)
 );
+
 
 # -- !Downs
 
-DROP TABLE IF EXISTS `Item_Tag`;
+DROP TABLE IF EXISTS item_tag;
