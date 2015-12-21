@@ -13,7 +13,7 @@ export const APP_BASE             = argv['base']        || '/';
 
 export const APP_TITLE            = 'AutoPOS';
 
-export const APP_SRC              = 'app';
+export const APP_SRC              = 'autopos';
 export const ASSETS_SRC           = `${APP_SRC}/assets`;
 
 export const TOOLS_DIR            = 'tools';
