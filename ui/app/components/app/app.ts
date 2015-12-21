@@ -10,15 +10,15 @@ import {AboutCmp} from '../about/about';
 import {NameList} from '../../services/name_list';
 
 @Component({
-  selector: 'app',
+  selector: 'autopos',
   viewProviders: [NameList],
   templateUrl: './components/app/app.html',
   styleUrls: ['./components/app/app.css'],
   encapsulation: ViewEncapsulation.None,
   directives: [ROUTER_DIRECTIVES]
 })
-@RouteConfig(Array(
+@RouteConfig([
   { path: '/', component: HomeCmp, as: 'Home' },
   { path: '/about', component: AboutCmp, as: 'About' }
-))
+])
 export class AppCmp {}
