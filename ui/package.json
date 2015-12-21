@@ -1,9 +1,9 @@
 {
-  "name": "angular2-seed",
-  "version": "0.0.0",
-  "description": "Seed for Angular 2 apps",
+  "name": "AutoPOS",
+  "version": "0.0.1",
+  "description": "Auto Point of Sale",
   "repository": {
-    "url": "https://github.com/mgechev/angular2-seed"
+    "url": "https://bitbucket.org/TheKojuEffect/autopos"
   },
   "scripts": {
     "build.dev": "gulp build.dev",
@@ -24,8 +24,8 @@
     "test": "gulp test",
     "tsd": "tsd"
   },
-  "author": "Minko Gechev <mgechev>",
-  "license": "MIT",
+  "author": "Kapil Koju <TheKojuEffect>",
+  "license": "Copyright",
   "devDependencies": {
     "async": "^1.4.2",
     "chalk": "^1.1.1",
