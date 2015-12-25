@@ -1,8 +1,21 @@
-<section class="sample-app-content">
-  <nav>
-    <a [routerLink]="['/Home']">Home</a>
-    <a [routerLink]="['/About']">About</a>
-  </nav>
+<navigation></navigation>
 
-  <router-outlet></router-outlet>
-</section>
+<div class="container">
+
+  <div class="well">
+    <router-outlet></router-outlet>
+  </div>
+
+  <footer class="pull-right">
+    <em>@TheKojuEffect</em>
+  </footer>
+</div>
+
+<!--<section class="sample-app-content">-->
+<!--<nav>-->
+<!--<a [routerLink]="['/Home']">Home</a>-->
+<!--<a [routerLink]="['/About']">About</a>-->
+<!--</nav>-->
+
+<!--<router-outlet></router-outlet>-->
+<!--</section>-->
