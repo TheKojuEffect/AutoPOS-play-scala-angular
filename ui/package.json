@@ -25,7 +25,6 @@
     "tsd": "tsd"
   },
   "author": "Kapil Koju <TheKojuEffect>",
-  "license": "Copyright",
   "devDependencies": {
     "async": "^1.4.2",
     "chalk": "^1.1.1",
