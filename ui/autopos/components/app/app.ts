@@ -5,8 +5,9 @@ import {
 } from 'angular2/router';
 // import {HTTP_PROVIDERS} from 'angular2/http';
 
-import {HomeCmp} from '../home/home';
-import {NavigationCmp} from '../navigation/navigation';
+import {HomeCmp} from '../home/home-cmp';
+import {NavigationCmp} from '../navigation/navigation-cmp';
+import {ItemCmp} from '../item/item-cmp';
 
 
 @Component({
@@ -17,7 +18,8 @@ import {NavigationCmp} from '../navigation/navigation';
 
 
 @RouteConfig([
-  {path: '/', component: HomeCmp, as: 'Home'}
+  {path: '/', component: HomeCmp, as: 'Home'},
+  {path: '/items', component: ItemCmp, as: 'Item'}
 ])
 
 
