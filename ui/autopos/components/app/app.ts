@@ -7,19 +7,19 @@ import {
 
 import {HomeCmp} from '../home/home-cmp';
 import {NavigationCmp} from '../navigation/navigation-cmp';
-import {ItemCmp} from '../item/item-cmp';
+import {ItemListCmp} from '../item/item-list-cmp';
 
 
 @Component({
   selector: 'autopos',
   templateUrl: './components/app/app.html',
-  directives: [NavigationCmp, ROUTER_DIRECTIVES]
+  directives: [ItemListCmp, NavigationCmp, ROUTER_DIRECTIVES]
 })
 
 
 @RouteConfig([
   {path: '/', component: HomeCmp, as: 'Home'},
-  {path: '/items', component: ItemCmp, as: 'Item'}
+  {path: '/items', component: ItemListCmp, as: 'ItemList'}
 ])
 
 
