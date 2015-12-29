@@ -8,6 +8,9 @@ import {
 import {HomeCmp} from '../home/home-cmp';
 import {NavigationCmp} from '../navigation/navigation-cmp';
 import {ItemListCmp} from '../item/item-list-cmp';
+import {CategoryListCmp} from '../category/category-list-cmp';
+import {BrandListCmp} from '../brand/brand-list-cmp';
+import {TagListCmp} from '../tag/tag-list-cmp';
 
 
 @Component({
@@ -19,7 +22,10 @@ import {ItemListCmp} from '../item/item-list-cmp';
 
 @RouteConfig([
   {path: '/', component: HomeCmp, as: 'Home'},
-  {path: '/items', component: ItemListCmp, as: 'ItemList'}
+  {path: '/items', component: ItemListCmp, as: 'ItemList'},
+  {path: '/categories', component: CategoryListCmp, as: 'CategoryList'},
+  {path: '/brands', component: BrandListCmp, as: 'BrandList'},
+  {path: '/tags', component: TagListCmp, as: 'TagList'}
 ])
 
 
