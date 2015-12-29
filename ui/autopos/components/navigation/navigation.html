@@ -14,22 +14,22 @@
 
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav nav-pills navbar-right">
-        <li>
+        <li [ngClass]="{active:hasPath('items')}">
           <a [routerLink]="['ItemList']">
             <span>Items</span>
           </a>
         </li>
-        <li>
+        <li [ngClass]="{active:hasPath('categories')}">
           <a [routerLink]="['CategoryList']">
             <span>Categories</span>
           </a>
         </li>
-        <li>
+        <li [ngClass]="{active:hasPath('brands')}">
           <a [routerLink]="['BrandList']">
             <span>Brands</span>
           </a>
         </li>
-        <li>
+        <li [ngClass]="{active:hasPath('tags')}">
           <a [routerLink]="['TagList']">
             <span>Tags</span>
           </a>
