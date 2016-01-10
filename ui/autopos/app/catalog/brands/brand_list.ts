@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {BrandService} from "./brand-service";
+import {Component} from "angular2/core";
+import {BrandService} from "./brand_service";
 import {Brand} from "./brand";
 import {HTTP_PROVIDERS} from "angular2/http";
 import {Http, Response} from "angular2/http";
@@ -8,14 +8,13 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 
 
 @Component({
-  selector: 'brand-list',
-  templateUrl: './components/brand/brand-list.html',
-  //viewProviders: [HTTP_PROVIDERS],
+  selector: "brand-list",
+  templateUrl: "./app/catalog/brands/brand_list.html",
   providers: [BrandService],
   directives: <any>[ROUTER_DIRECTIVES, AddBrand]
 })
 
-export class BrandListCmp {
+export class BrandList {
 
   brands:Array<Brand>;
 

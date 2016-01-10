@@ -3,7 +3,7 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 
 @Component({
   selector: "add-brand",
-  templateUrl: "./components/brand/brand_form.html",
+  templateUrl: "./app/catalog/brands/brand_form.html",
   directives: <any>[ROUTER_DIRECTIVES]
 })
 
