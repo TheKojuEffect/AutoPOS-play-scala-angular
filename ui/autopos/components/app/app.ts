@@ -9,22 +9,22 @@ import {HomeCmp} from '../home/home-cmp';
 import {NavigationCmp} from '../navigation/navigation-cmp';
 import {ItemListCmp} from '../item/item-list-cmp';
 import {CategoryListCmp} from '../category/category-list-cmp';
-import {BrandListCmp} from '../brand/brand-list-cmp';
 import {TagListCmp} from '../tag/tag-list-cmp';
+import {BrandCmp} from "../brand/brand-cmp";
 
 
 @Component({
   selector: 'autopos',
   templateUrl: './components/app/app.html',
-  directives: [ItemListCmp, NavigationCmp, ROUTER_DIRECTIVES]
+  directives: <any>[ItemListCmp, NavigationCmp, BrandCmp, ROUTER_DIRECTIVES]
 })
 
 
-@RouteConfig([
+@RouteConfig(<any>[
   {path: '/', component: HomeCmp, as: 'Home'},
   {path: '/items', component: ItemListCmp, as: 'ItemList'},
   {path: '/categories', component: CategoryListCmp, as: 'CategoryList'},
-  {path: '/brands', component: BrandListCmp, as: 'BrandList'},
+  {path: '/brands/...', component: BrandCmp, as: 'BrandCmp'},
   {path: '/tags', component: TagListCmp, as: 'TagList'}
 ])
 

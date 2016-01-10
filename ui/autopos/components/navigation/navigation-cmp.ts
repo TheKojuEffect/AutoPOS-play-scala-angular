@@ -1,10 +1,11 @@
 import {Component} from 'angular2/core';
 import {Location, ROUTER_DIRECTIVES} from 'angular2/router';
+import {BrandCmp} from "../brand/brand-cmp";
 
 @Component({
   selector: 'navigation',
   templateUrl: './components/navigation/navigation.html',
-  directives: [ROUTER_DIRECTIVES]
+  directives: <any>[ROUTER_DIRECTIVES, BrandCmp]
 })
 
 export class NavigationCmp {
