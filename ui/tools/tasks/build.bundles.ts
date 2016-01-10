@@ -1,12 +1,12 @@
-import {parallel} from 'async';
-import {join} from 'path';
-import * as Builder from 'systemjs-builder';
-import {BUNDLES_DEST, SYSTEM_CONFIG_BUILDER} from '../config';
+import {parallel} from "async";
+import {join} from "path";
+import * as Builder from "systemjs-builder";
+import {BUNDLES_DEST, SYSTEM_CONFIG_BUILDER} from "../config";
 
 const BUNDLE_OPTS = {
   minify: true,
   sourceMaps: true,
-  format: 'cjs'
+  format: "cjs"
 };
 
 export = function bundles(gulp, plugins) {
@@ -19,8 +19,8 @@ export = function bundles(gulp, plugins) {
 
     function bundleApp(done) {
       builder.bundle(
-        'bootstrap - angular2/*',
-        join(BUNDLES_DEST, 'app.js'), BUNDLE_OPTS).then(done);
+        "bootstrap - angular2/*",
+        join(BUNDLES_DEST, "app.js"), BUNDLE_OPTS).then(done);
     }
   };
 };

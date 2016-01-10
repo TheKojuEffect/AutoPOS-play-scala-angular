@@ -1,4 +1,4 @@
-declare module 'tiny-lr' {
+declare module "tiny-lr" {
   function tinylr(): ITinylr;
   module tinylr {}
   export = tinylr;

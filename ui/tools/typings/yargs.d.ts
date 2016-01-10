@@ -1,4 +1,4 @@
-declare module 'yargs' {
+declare module "yargs" {
   var yargs: IYargs;
   export = yargs;
 

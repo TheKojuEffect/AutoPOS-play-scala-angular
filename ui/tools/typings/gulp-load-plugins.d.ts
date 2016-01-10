@@ -3,17 +3,17 @@
 // Definitions by: Joe Skeen <http://github.com/joeskeen>
 // Definitions: https://github.com/borisyankov/DefinitelyTyped
 
-// Does not support ES2015 import (import * as open from 'open').
+// Does not support ES2015 import (import * as open from "open").
 
 /** Loads in any gulp plugins and attaches them to an object, freeing you up from having to manually require each gulp plugin. */
-declare module 'gulp-load-plugins' {
+declare module "gulp-load-plugins" {
 
 	interface IOptions {
-		/** the glob(s) to search for, default ['gulp-*', 'gulp.*'] */
+		/** the glob(s) to search for, default ["gulp-*", "gulp.*"] */
 		pattern?: string[];
-		/** where to find the plugins, searched up from process.cwd(), default 'package.json' */
+		/** where to find the plugins, searched up from process.cwd(), default "package.json" */
 		config?: string;
-		/** which keys in the config to look within, default ['dependencies', 'devDependencies', 'peerDependencies'] */
+		/** which keys in the config to look within, default ["dependencies", "devDependencies", "peerDependencies"] */
 		scope?: string[];
 		/** what to remove from the name of the module when adding it to the context, default /^gulp(-|\.)/ */
 		replaceString?: RegExp;

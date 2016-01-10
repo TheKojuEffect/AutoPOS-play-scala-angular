@@ -1,10 +1,10 @@
-import * as connectLivereload from 'connect-livereload';
-import * as express from 'express';
-import * as tinylrFn from 'tiny-lr';
-import * as openResource from 'open';
-import * as serveStatic from 'serve-static';
-import {resolve} from 'path';
-import {APP_BASE, APP_DEST, DOCS_DEST, LIVE_RELOAD_PORT, DOCS_PORT, PORT} from '../config';
+import * as connectLivereload from "connect-livereload";
+import * as express from "express";
+import * as tinylrFn from "tiny-lr";
+import * as openResource from "open";
+import * as serveStatic from "serve-static";
+import {resolve} from "path";
+import {APP_BASE, APP_DEST, DOCS_DEST, LIVE_RELOAD_PORT, DOCS_PORT, PORT} from "../config";
 
 let tinylr = tinylrFn();
 
@@ -20,7 +20,7 @@ export function serveSPA() {
   );
 
   server.listen(PORT, () =>
-    openResource('http://localhost:' + PORT + APP_BASE + APP_DEST)
+    openResource("http://localhost:" + PORT + APP_BASE + APP_DEST)
   );
 }
 
@@ -40,6 +40,6 @@ export function serveDocs() {
   );
 
    server.listen(DOCS_PORT, () =>
-    openResource('http://localhost:' + DOCS_PORT + APP_BASE)
+    openResource("http://localhost:" + DOCS_PORT + APP_BASE)
   );
 }
