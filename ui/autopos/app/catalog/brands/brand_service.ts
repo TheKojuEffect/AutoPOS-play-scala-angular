@@ -1,6 +1,5 @@
-import {Http, Response} from "angular2/http";
+import {Http} from "angular2/http";
 import {Injectable} from "angular2/core";
-import {Brand} from "./brand";
 
 @Injectable()
 export class BrandService {

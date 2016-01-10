@@ -14,7 +14,7 @@ export class UiPane {
   }
 
   @Input() set active(active:boolean) {
-    if (active == this._active) return;
+    if (active === this._active) return;
     this._active = active;
     if (active) {
       this.viewContainer.createEmbeddedView(this.templateRef);
@@ -45,6 +45,6 @@ export class UiTabs {
   @ContentChildren(<Type>UiPane, false) panes:QueryList<UiPane>;
 
   select(pane:UiPane) {
-    this.panes.toArray().forEach((p:UiPane) => p.active = p == pane);
+    this.panes.toArray().forEach((p:UiPane) => p.active = p === pane);
   }
 }
