@@ -8,7 +8,6 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 @Component({
   selector: "brand-list",
   templateUrl: "./app/catalog/brands/brand_list.html",
-  providers: [BrandService],
   directives: <any>[ROUTER_DIRECTIVES, AddBrand]
 })
 

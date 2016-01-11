@@ -1,0 +1,24 @@
+<div *ngIf="brand">
+  <h2>Brand Detail</h2>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+      <tr>
+        <td>
+          <span>Name</span>
+        </td>
+        <td>
+          <input type="text" class="input-sm form-control" [value]="brand.name" readonly>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <a class="btn btn-info"
+     [routerLink]="['BrandList']">
+
+    <span class="glyphicon glyphicon-arrow-left"></span> &nbsp; <span> Back</span>
+  </a>
+</div>

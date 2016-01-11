@@ -1,4 +1,9 @@
 export class Brand {
-  id:number;
-  name:string;
+
+  constructor() {
+  }
+
+  constructor(public id:number,
+              public name:string) {
+  }
 }
