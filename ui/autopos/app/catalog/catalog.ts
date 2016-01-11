@@ -6,11 +6,12 @@ import {Tags} from "./tags/tags";
 import {Brands} from "./brands/brands";
 import {RouteConfig} from "angular2/router";
 import {Location} from "angular2/router";
+import {ROUTER_DIRECTIVES} from "angular2/router";
 
 @Component({
   selector: "catalog",
   templateUrl: "./app/catalog/catalog.html",
-  directives: <any>[UiTabs, UiPane, Items, Categories, Brands, Tags]
+  directives: <any>[ROUTER_DIRECTIVES , Items, Categories, Brands, Tags]
 })
 
 
