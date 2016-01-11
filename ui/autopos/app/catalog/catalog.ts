@@ -1,5 +1,4 @@
 import {Component} from "angular2/core";
-import {UiTabs, UiPane} from "../../components/ui_tabs/ui_tabs";
 import {Items} from "./items/items";
 import {Categories} from "./categories/categories";
 import {Tags} from "./tags/tags";
