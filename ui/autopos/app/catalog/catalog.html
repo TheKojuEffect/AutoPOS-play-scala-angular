@@ -1,18 +1,18 @@
 <ui-tabs>
 
-  <template ui-pane title='Items' active="true">
+  <template ui-pane title="Items" path="/catalog/items" [active]="hasPath('items')">
     <items></items>
   </template>
 
-  <template ui-pane title='Categories'>
+  <template ui-pane title="Categories" path="/catalog/categories" [active]="hasPath('categories')">
     <categories></categories>
   </template>
 
-  <template ui-pane title='Brands'>
+  <template ui-pane title="Brands" path="/catalog/brands" [active]="hasPath('brands')">
     <brands></brands>
   </template>
 
-  <template ui-pane title='Tags'>
+  <template ui-pane title="Tags" path="/catalog/tags" [active]="hasPath('tags')">
     <tags></tags>
   </template>
 

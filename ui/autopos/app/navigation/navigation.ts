@@ -9,11 +9,11 @@ import {Location, ROUTER_DIRECTIVES} from "angular2/router";
 
 export class Navigation {
 
-  constructor(private _location:Location) {
+  constructor(private location:Location) {
   }
 
   public getPath() {
-    return this._location.path();
+    return this.location.path();
   }
 
   public hasPath(route:string):boolean {
