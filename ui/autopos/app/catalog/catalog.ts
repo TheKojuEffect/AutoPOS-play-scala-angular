@@ -18,7 +18,7 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
   {path: "/items", component: Items, as: "Items", useAsDefault: true},
   {path: "/categories", component: Categories, as: "Categories"},
   {path: "/brands/...", component: Brands, as: "Brands"},
-  {path: "/tags", component: Tags, as: "Tags"}
+  {path: "/tags/...", component: Tags, as: "Tags"}
 ])
 
 
