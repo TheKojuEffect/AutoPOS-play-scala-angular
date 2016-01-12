@@ -1,7 +1,6 @@
 import {Http} from "angular2/http";
 import {Injectable} from "angular2/core";
 import {Brand} from "./brand";
-import {Headers} from "angular2/http";
 
 @Injectable()
 export class BrandService {
@@ -9,10 +8,6 @@ export class BrandService {
   private baseUrl = "http://localhost:9000/api/brands";
 
   constructor(private http:Http) {
-  }
-
-  private urlWithId(id:number) {
-    return this.baseUrl + "/" + id;
   }
 
   public getBrands() {
@@ -38,5 +33,8 @@ export class BrandService {
     return this.http.delete(url);
   }
 
+  private urlWithId(id:number) {
+    return this.baseUrl + "/" + id;
+  }
 }
 

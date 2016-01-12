@@ -8,7 +8,8 @@ import {Headers} from "angular2/http";
 
 
 class HttpOptions extends BaseRequestOptions {
-  constructor(){
+  constructor() {
+    super();
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
     this.headers = headers;

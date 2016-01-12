@@ -11,11 +11,6 @@ import {Injector} from "angular2/core";
 import {YesNoModalContent} from "angular2-modal/dist/angular2-modal";
 import {ICustomModal} from "angular2-modal/dist/angular2-modal";
 import {provide} from "angular2/core";
-import {IterableDiffers} from "angular2/core";
-import {KeyValueDiffers} from "angular2/core";
-import {Renderer} from "angular2/core"
-import {ModalDialogInstance} from "angular2-modal/dist/angular2-modal";
-import {ModalConfig} from "angular2-modal/dist/angular2-modal";
 
 @Component({
   selector: "brand-detail",
@@ -50,13 +45,13 @@ export class BrandDetail implements OnInit {
     this.modal.open(<any>YesNoModal, bindings)
       .then(r => r.result.then(re => {
         if (re) {
-          this.confirmDeleteBrand()
+          this.confirmDeleteBrand();
         }
       }));
   }
 
   private confirmDeleteBrand() {
     this.brandService.deleteBrand(this.brand.id)
-      .subscribe(() => this.router.navigate(['BrandList']));
+      .subscribe(() => this.router.navigate(["BrandList"]));
   }
 }

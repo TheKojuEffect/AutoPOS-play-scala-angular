@@ -36,7 +36,7 @@ export class EditBrand implements OnInit {
   onSubmit() {
     this.brandService.updateBrand(this.brand)
       .subscribe(()  => {
-          this.router.navigate(['BrandDetail', {id: this.brand.id}]);
+          this.router.navigate(["BrandDetail", {id: this.brand.id}]);
         }
       );
   }
