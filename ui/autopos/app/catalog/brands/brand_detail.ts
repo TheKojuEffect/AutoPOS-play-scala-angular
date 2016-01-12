@@ -24,7 +24,7 @@ import {ModalConfig} from "angular2-modal/dist/angular2-modal";
   providers: [Modal]
 })
 
-export class BrandDetail {
+export class BrandDetail implements OnInit {
 
   brand:Brand;
 
