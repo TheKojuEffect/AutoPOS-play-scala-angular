@@ -10,13 +10,13 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 @Component({
   selector: "catalog",
   templateUrl: "./app/catalog/catalog.html",
-  directives: <any>[ROUTER_DIRECTIVES , Items, Categories, Brands, Tags]
+  directives: <any>[ROUTER_DIRECTIVES, Items, Categories, Brands, Tags]
 })
 
 
 @RouteConfig(<any>[
   {path: "/items", component: Items, as: "Items", useAsDefault: true},
-  {path: "/categories", component: Categories, as: "Categories"},
+  {path: "/categories/...", component: Categories, as: "Categories"},
   {path: "/brands/...", component: Brands, as: "Brands"},
   {path: "/tags/...", component: Tags, as: "Tags"}
 ])

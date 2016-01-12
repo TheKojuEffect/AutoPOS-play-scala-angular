@@ -1,0 +1,49 @@
+<div *ngIf="category">
+  <h3>Category Detail</h3>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <tbody>
+      <tr>
+        <td>
+          <span>Short Name</span>
+        </td>
+        <td>
+          <input type="text" class="input-sm form-control" [value]="category.shortName" readonly>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span>Name</span>
+        </td>
+        <td>
+          <input type="text" class="input-sm form-control" [value]="category.name" readonly>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-8 col-xs-8">
+      <button class="btn btn-primary btn-sm"
+              [routerLink]="['EditCategory', {id: category.id}]">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+      </button>
+
+      <button class="btn btn-danger btn-sm"
+              (click)="deleteCategory()">
+        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+      </button>
+    </div>
+
+    <div class="col-md-4 col-xs-4">
+      <a class="btn btn-info btn-sm pull-right"
+         [routerLink]="['CategoryList']">
+
+        <span class="glyphicon glyphicon-arrow-left"></span> &nbsp; <span> Back</span>
+      </a>
+    </div>
+  </div>
+</div>

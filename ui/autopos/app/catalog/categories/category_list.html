@@ -1,0 +1,33 @@
+<div>
+  <h3>Categories</h3>
+  <a class="btn btn-primary" [routerLink]="['AddCategory']">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add Category
+  </a>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Short Name</th>
+      <th>Name</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="#category of categories">
+      <td>
+        {{category.shortName}}
+      </td>
+      <td>
+        {{category.name}}
+      </td>
+      <td>
+        <a class="btn btn-info btn-sm"
+           [routerLink]="['CategoryDetail', {id: category.id}]">
+
+          <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span> View</span>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
