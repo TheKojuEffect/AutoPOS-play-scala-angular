@@ -11,16 +11,31 @@ export class BrandService {
   constructor(private http:Http) {
   }
 
+  private urlWithId(id:number) {
+    return this.baseUrl + "/" + id;
+  }
+
   public getBrands() {
     return this.http.get(this.baseUrl);
+  }
+
+  public getBrand(id:number) {
+    let url = this.urlWithId(id);
+    return this.http.get(url);
   }
 
   public addBrand(brand:Brand) {
     return this.http.post(this.baseUrl, JSON.stringify(brand));
   }
 
-  public getBrand(id:number) {
-    return this.http.get(this.baseUrl + "/" + id)
+  public updateBrand(brand:Brand) {
+    let url = this.urlWithId(brand.id);
+    return this.http.put(url, JSON.stringify(brand));
+  }
+
+  public deleteBrand(id:number) {
+    let url = this.urlWithId(id);
+    return this.http.delete(url);
   }
 
 }

@@ -1,5 +1,5 @@
 <div *ngIf="brand">
-  <h2>Brand Detail</h2>
+  <h3>Brand Detail</h3>
 
   <div class="table-responsive">
     <table class="table table-striped">
@@ -16,9 +16,26 @@
     </table>
   </div>
 
-  <a class="btn btn-info"
-     [routerLink]="['BrandList']">
+  <div class="row">
 
-    <span class="glyphicon glyphicon-arrow-left"></span> &nbsp; <span> Back</span>
-  </a>
+    <div class="col-md-8 col-xs-8">
+      <button class="btn btn-primary btn-sm"
+              [routerLink]="['EditBrand', {id: brand.id}]">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+      </button>
+
+      <button class="btn btn-danger btn-sm"
+              (click)="deleteBrand()">
+        <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span> Delete</span>
+      </button>
+    </div>
+
+    <div class="col-md-4 col-xs-4">
+      <a class="btn btn-info btn-sm pull-right"
+         [routerLink]="['BrandList']">
+
+        <span class="glyphicon glyphicon-arrow-left"></span> &nbsp; <span> Back</span>
+      </a>
+    </div>
+  </div>
 </div>

@@ -5,6 +5,7 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 import {BrandList} from "./brand_list";
 import {BrandDetail} from "./brand_detail";
 import {BrandService} from "./brand_service";
+import {EditBrand} from "./edit_brand";
 
 @Component({
   selector: "brands",
@@ -16,7 +17,8 @@ import {BrandService} from "./brand_service";
 @RouteConfig(<any>[
   {path: "/", component: BrandList, as: "BrandList", useAsDefault: true},
   {path: "/add", component: AddBrand, as: "AddBrand"},
-  {path: "/:id", component: BrandDetail, as: "BrandDetail"}
+  {path: "/:id", component: BrandDetail, as: "BrandDetail"},
+  {path: "/:id/edit", component: EditBrand, as: "EditBrand"}
 ])
 
 
