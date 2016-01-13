@@ -19,7 +19,8 @@ libraryDependencies ++= Seq(
   "com.github.tminglei" %% "slick-pg_date2" % "0.10.2",
 
   "com.typesafe.play" %% "play-slick" % "1.1.1",
-  "com.typesafe.play" %% "play-slick-evolutions" % "1.1.1",
+
+  "org.flywaydb" %% "flyway-play" % "2.2.1",
 
   "org.webjars" % "requirejs" % "2.1.20",
   "org.webjars" % "angularjs" % "1.4.7" exclude("org.webjars", "jquery"),
