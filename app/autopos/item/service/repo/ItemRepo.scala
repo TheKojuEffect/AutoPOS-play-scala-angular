@@ -6,6 +6,7 @@ import autopos.common.service.repo.BaseRepo
 import autopos.item.model.Item
 import autopos.item.model.Item.{ItemTable, ItemTagTable}
 import autopos.item.model.Tag.TagTable
+import autopos.item.service.ItemCode
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -17,7 +18,7 @@ trait ItemRepo extends BaseRepo {
 
   def update(item: Item): Future[Int]
 
-  def findById(id: Long): Future[Option[Item]]
+  def findById(id: Int): Future[Option[Item]]
 
   def list(): Future[Seq[Item]]
 
@@ -42,7 +43,7 @@ class ItemRepoImpl
     } yield i1).result
   }
 
-  override def findById(id: Long) = db.run {
+  override def findById(id: Int) = db.run {
     (for {
       (i1, it1) <- items filter (_.id === id) joinLeft itemTags on (_.id === _.itemId)
     } yield i1).result.headOption
@@ -50,12 +51,14 @@ class ItemRepoImpl
 
   override def update(item: Item) = db.run {
     items.filter(_.id === item.id)
-      .update(item)
+      .update(item.copy(code = ItemCode(item.id)))
+    // Workaround to prevent item.code update
+    // https://github.com/slick/slick/issues/601
   }
 
   override def create(item: Item) = db.run {
     (items returning items.map(_.id)
-      into ((item, id) => item.copy(id = id))
+      into ((item, id) => item.copy(id = id, code = ItemCode(id)))
       ) += item
   }
 }

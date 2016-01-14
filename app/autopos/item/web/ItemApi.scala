@@ -22,7 +22,7 @@ class ItemApi @Inject()(itemService: ItemService)
       }
   }
 
-  def getItem(id: Long) = Action.async {
+  def getItem(id: Int) = Action.async {
     itemService.getItem(id)
       .map {
         _.map { item =>
@@ -31,7 +31,7 @@ class ItemApi @Inject()(itemService: ItemService)
       }
   }
 
-  def updateItem(id: Long) = Action.async(parse.json) { request =>
+  def updateItem(id: Int) = Action.async(parse.json) { request =>
     request.body.validate[Item]
       .fold(
         errors => {

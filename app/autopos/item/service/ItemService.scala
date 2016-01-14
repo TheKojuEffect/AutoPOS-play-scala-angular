@@ -17,7 +17,7 @@ trait ItemService {
 
   def getItems(): Future[Seq[Item]]
 
-  def getItem(id: Long): Future[Option[Item]]
+  def getItem(id: Int): Future[Option[Item]]
 
 }
 
@@ -28,7 +28,7 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def getItems() =
     itemRepo.list()
 
-  override def getItem(id: Long) =
+  override def getItem(id: Int) =
     itemRepo.findById(id)
 
   override def updateItem(item: Item) =

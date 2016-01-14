@@ -5,7 +5,8 @@ import autopos.item.model.Brand.BrandTable
 import autopos.item.model.Category.CategoryTable
 import autopos.item.model.Tag.TagTable
 
-case class Item(id: Long,
+case class Item(id: Int = 0,
+                code: String = "",
                 name: String,
                 description: Option[String],
                 remarks: Option[String],
@@ -27,7 +28,7 @@ object Item extends HasDbConfig {
       (__ \ "markedPrice").read[BigDecimal] ~
       (__ \ "categoryId").readNullable[Int] ~
       (__ \ "brandId").readNullable[Int]
-    ) (Item(0L, _, _, _, _, _, _))
+    ) (Item(0, "", _, _, _, _, _, _))
 
   implicit val itemWrites = Json.writes[Item]
 
@@ -38,7 +39,9 @@ object Item extends HasDbConfig {
 
   class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
 
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def code = column[String]("code", O.Length(7), O.AutoInc)
 
     def name = column[String]("name", O.Length(50))
 
@@ -58,6 +61,7 @@ object Item extends HasDbConfig {
 
     def * = (
       id,
+      code,
       name,
       description,
       remarks,
@@ -69,9 +73,9 @@ object Item extends HasDbConfig {
 
   /* ******************************** */
 
-  class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Int)](slickTag, "item_tag") {
+  class ItemTagTable(slickTag: SlickTag) extends Table[(Int, Int)](slickTag, "item_tag") {
 
-    def itemId = column[Long]("item_id")
+    def itemId = column[Int]("item_id")
 
     def item = foreignKey("item_tag_item_id_fkey", itemId, TableQuery[ItemTable])(_.id)
 
@@ -82,6 +86,5 @@ object Item extends HasDbConfig {
     def * = (itemId, tagId)
 
   }
-
 
 }
