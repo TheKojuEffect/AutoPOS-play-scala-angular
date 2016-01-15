@@ -48,6 +48,7 @@ GET           /api/items                 autopos.item.web.ItemApi.getItems
 POST          /api/items                 autopos.item.web.ItemApi.addItem
 GET           /api/items/:id             autopos.item.web.ItemApi.getItem(id: Int)
 PUT           /api/items/:id             autopos.item.web.ItemApi.updateItem(id: Int)
+DELETE        /api/items/:id             autopos.item.web.ItemApi.deleteItem(id: Int)
 
 # Static
 # ~~~~

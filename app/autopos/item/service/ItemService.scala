@@ -19,6 +19,8 @@ trait ItemService {
 
   def getItem(id: Int): Future[Option[Item]]
 
+  def deleteItem(id: Int): Future[Int]
+
 }
 
 @Singleton
@@ -36,5 +38,8 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
 
   override def addItem(item: Item) =
     itemRepo.create(item)
+
+  override def deleteItem(id: Int) =
+    itemRepo.delete(id)
 
 }
