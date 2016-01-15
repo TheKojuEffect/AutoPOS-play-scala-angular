@@ -61,4 +61,11 @@ class ItemApi @Inject()(itemService: ItemService)
         }
       )
   }
+
+  def deleteItem(id: Int) = Action.async {
+    itemService.deleteItem(id)
+      .map {
+        _ => NoContent
+      }
+  }
 }

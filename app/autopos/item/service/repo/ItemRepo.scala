@@ -22,6 +22,8 @@ trait ItemRepo extends BaseRepo {
 
   def list(): Future[Seq[Item]]
 
+  def delete(id: Int): Future[Int]
+
 }
 
 
@@ -60,5 +62,10 @@ class ItemRepoImpl
     (items returning items.map(_.id)
       into ((item, id) => item.copy(id = id, code = ItemCode(id)))
       ) += item
+  }
+
+  override def delete(id: Int) = db.run {
+    items.filter(_.id === id)
+      .delete
   }
 }

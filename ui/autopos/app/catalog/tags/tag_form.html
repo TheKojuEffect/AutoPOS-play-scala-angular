@@ -8,7 +8,7 @@
              [(ngModel)]="tag.name"
              ngControl="name" #name="ngForm">
     </div>
-    <div [hidden]="name.valid" class="alert alert-danger">
+    <div [hidden]="name.valid || name.untouched" class="alert alert-danger">
       Name is required
     </div>
 
