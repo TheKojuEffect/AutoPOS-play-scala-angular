@@ -9,7 +9,8 @@
         </encoder>
     </appender>
 
-    <!--<logger name="play" level="INFO" />-->
+    <logger name="play" level="INFO" />
+    <logger name="application" level="DEBUG" />
     <!--<logger name="scala.slick" level="INFO" />-->
 
     <root level="INFO">
