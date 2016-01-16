@@ -14,7 +14,7 @@ export class AddItem {
 
   title = "Add Item";
 
-  item = new Item(null, null);
+  item = new Item(null, null, null, null);
 
   constructor(private itemService:ItemService,
               private router:Router) {
