@@ -25,9 +25,8 @@ class ItemApi @Inject()(itemService: ItemService)
   def getItem(id: Int) = Action.async {
     itemService.getItem(id)
       .map {
-        _.map { item =>
-          Ok(toJson(item))
-        } getOrElse BadRequest
+        case Some(item) => Ok(toJson(item))
+        case None => NotFound
       }
   }
 
