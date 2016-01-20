@@ -4,8 +4,8 @@ import play.api.Play
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfig}
 import slick.driver.JdbcProfile
 
-trait HasDbConfig extends HasDatabaseConfig[JdbcProfile] {
+trait DbConfig extends HasDatabaseConfig[JdbcProfile] {
 
-  protected val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
+  protected final val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
 }

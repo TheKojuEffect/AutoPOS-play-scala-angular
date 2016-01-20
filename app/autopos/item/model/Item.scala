@@ -1,9 +1,6 @@
 package autopos.item.model
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Brand.BrandTable
-import autopos.item.model.Category.CategoryTable
-import autopos.item.model.Tag.TagTable
+import autopos.common.service.repo.DbConfig
 
 case class Item(id: Int = 0,
                 code: String = "",
@@ -15,7 +12,7 @@ case class Item(id: Int = 0,
                 brandId: Option[Int])
 
 
-object Item extends HasDbConfig {
+object Item {
 
   import play.api.libs.json._
   import Reads.{maxLength, minLength}
@@ -32,12 +29,18 @@ object Item extends HasDbConfig {
 
   implicit val itemWrites = Json.writes[Item]
 
+}
 
-  /* ******************************** */
+
+trait ItemDbModule {
+  self: DbConfig with BrandDbModule with CategoryDbModule with TagDbModule =>
 
   import driver.api.{Tag => SlickTag, _}
 
-  class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
+  protected final lazy val items = TableQuery[ItemTable]
+  protected final lazy val itemTags = TableQuery[ItemTagTable]
+
+  private[ItemDbModule] class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
@@ -53,11 +56,11 @@ object Item extends HasDbConfig {
 
     def categoryId = column[Option[Int]]("category_id")
 
-    def category = foreignKey("item_category_id_fkey", categoryId, TableQuery[CategoryTable])(_.id)
+    def category = foreignKey("item_category_id_fkey", categoryId, categories)(_.id)
 
     def brandId = column[Option[Int]]("brand_id")
 
-    def brand = foreignKey("item_brand_id_fkey", brandId, TableQuery[BrandTable])(_.id)
+    def brand = foreignKey("item_brand_id_fkey", brandId, brands)(_.id)
 
     def * = (
       id,
@@ -73,15 +76,15 @@ object Item extends HasDbConfig {
 
   /* ******************************** */
 
-  class ItemTagTable(slickTag: SlickTag) extends Table[(Int, Int)](slickTag, "item_tag") {
+  private[ItemDbModule] class ItemTagTable(slickTag: SlickTag) extends Table[(Int, Int)](slickTag, "item_tag") {
 
     def itemId = column[Int]("item_id")
 
-    def item = foreignKey("item_tag_item_id_fkey", itemId, TableQuery[ItemTable])(_.id)
+    def item = foreignKey("item_tag_item_id_fkey", itemId, items)(_.id)
 
     def tagId = column[Int]("tag_id")
 
-    def tag = foreignKey("item_tag_tag_id_fkey", tagId, TableQuery[TagTable])(_.id)
+    def tag = foreignKey("item_tag_tag_id_fkey", tagId, tags)(_.id)
 
     def * = (itemId, tagId)
 

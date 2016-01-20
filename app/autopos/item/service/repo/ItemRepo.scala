@@ -3,9 +3,7 @@ package autopos.item.service.repo
 import javax.inject.Singleton
 
 import autopos.common.service.repo.BaseRepo
-import autopos.item.model.Item
-import autopos.item.model.Item.{ItemTable, ItemTagTable}
-import autopos.item.model.Tag.TagTable
+import autopos.item.model._
 import autopos.item.service.ItemCode
 import com.google.inject.ImplementedBy
 
@@ -29,15 +27,9 @@ trait ItemRepo extends BaseRepo {
 
 @Singleton
 class ItemRepoImpl
-  extends ItemRepo {
+  extends ItemRepo with BrandDbModule with CategoryDbModule with TagDbModule with ItemDbModule {
 
   import driver.api._
-
-  private val items = TableQuery[ItemTable]
-
-  private val itemTags = TableQuery[ItemTagTable]
-
-  private val tags = TableQuery[TagTable]
 
   override def list(): Future[Seq[Item]] = db.run {
     (for {

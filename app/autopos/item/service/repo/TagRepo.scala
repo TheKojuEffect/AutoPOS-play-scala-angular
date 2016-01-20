@@ -2,16 +2,15 @@ package autopos.item.service.repo
 
 import javax.inject.Singleton
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Tag.TagTable
-import autopos.item.model.{Tag => ItemTag}
+import autopos.common.service.repo.DbConfig
+import autopos.item.model.{Tag => ItemTag, TagDbModule}
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[TagRepoImpl])
-trait TagRepo extends HasDbConfig {
+trait TagRepo extends DbConfig {
 
   def list(): Future[Seq[ItemTag]]
 
@@ -27,13 +26,9 @@ trait TagRepo extends HasDbConfig {
 
 @Singleton
 class TagRepoImpl
-  extends TagRepo {
+  extends TagRepo with TagDbModule {
 
   import driver.api._
-
-  private val tags = TableQuery[TagTable]
-
-  /* ***************************** */
 
   override def create(tag: ItemTag) = db.run {
     (tags returning tags.map(_.id)

@@ -1,14 +1,13 @@
 package autopos.item.model
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Tag._
+import autopos.common.service.repo.DbConfig
 
 
 case class Brand(id: Int,
                  name: String)
 
 
-object Brand extends HasDbConfig {
+object Brand {
 
   import play.api.libs.functional.syntax._
   import play.api.libs.json.Reads.{maxLength, minLength}
@@ -25,12 +24,17 @@ object Brand extends HasDbConfig {
 
   implicit val brandWrites = Json.writes[Brand]
 
-  /* ************************************ */
+}
 
+
+trait BrandDbModule {
+  self: DbConfig =>
 
   import driver.api.{Tag => SlickTag, _}
 
-  class BrandTable(tag: SlickTag) extends Table[Brand](tag, "brand") {
+  protected final lazy val brands = TableQuery[BrandTable]
+
+  private[BrandDbModule] class BrandTable(tag: SlickTag) extends Table[Brand](tag, "brand") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
@@ -41,4 +45,3 @@ object Brand extends HasDbConfig {
   }
 
 }
-

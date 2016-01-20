@@ -1,6 +1,6 @@
 package autopos.item.model
 
-import autopos.common.service.repo.HasDbConfig
+import autopos.common.service.repo.DbConfig
 import autopos.item.model.Tag._
 
 case class Category(id: Int,
@@ -8,7 +8,7 @@ case class Category(id: Int,
                     name: String)
 
 
-object Category extends HasDbConfig {
+object Category {
 
   def readDto(idOpt: Option[Int], shortName: String, name: String) =
     Category(idOpt getOrElse 0, shortName, name)
@@ -25,12 +25,16 @@ object Category extends HasDbConfig {
 
   implicit val categoryWrites = Json.writes[Category]
 
+}
 
-  /* ****************************** */
+trait CategoryDbModule {
+  self: DbConfig =>
 
   import driver.api.{Tag => SlickTag, _}
 
-  class CategoryTable(tag: SlickTag) extends Table[Category](tag, "category") {
+  protected final lazy val categories = TableQuery[CategoryTable]
+
+  private[CategoryDbModule] class CategoryTable(tag: SlickTag) extends Table[Category](tag, "category") {
 
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
