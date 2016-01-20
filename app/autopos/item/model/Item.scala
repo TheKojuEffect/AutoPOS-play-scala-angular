@@ -2,14 +2,14 @@ package autopos.item.model
 
 import autopos.common.service.repo.DbConfig
 
-case class Item(id: Int = 0,
-                code: String = "",
-                name: String,
+case class Item(name: String,
                 description: Option[String],
                 remarks: Option[String],
                 markedPrice: BigDecimal,
                 categoryId: Option[Int],
-                brandId: Option[Int])
+                brandId: Option[Int],
+                code: String = "",
+                id: Int = 0)
 
 
 object Item {
@@ -25,7 +25,7 @@ object Item {
       (__ \ "markedPrice").read[BigDecimal] ~
       (__ \ "categoryId").readNullable[Int] ~
       (__ \ "brandId").readNullable[Int]
-    ) (Item(0, "", _, _, _, _, _, _))
+    ) (Item(_, _, _, _, _, _))
 
   implicit val itemWrites = Json.writes[Item]
 
@@ -42,9 +42,6 @@ trait ItemDbModule {
 
   private[ItemDbModule] class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
-
-    def code = column[String]("code", O.Length(7), O.AutoInc)
 
     def name = column[String]("name", O.Length(50))
 
@@ -62,15 +59,12 @@ trait ItemDbModule {
 
     def brand = foreignKey("item_brand_id_fkey", brandId, brands)(_.id)
 
-    def * = (
-      id,
-      code,
-      name,
-      description,
-      remarks,
-      markedPrice,
-      categoryId,
-      brandId) <>((Item.apply _).tupled, Item.unapply)
+    def code = column[String]("code", O.Length(7), O.AutoInc) // AutoInc fields are not inserted
+
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def * = (name, description, remarks, markedPrice, categoryId, brandId, code, id) <>
+      ((Item.apply _).tupled, Item.unapply)
   }
 
 
