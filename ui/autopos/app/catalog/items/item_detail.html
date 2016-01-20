@@ -37,7 +37,7 @@
           <span>Description</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.description" readonly>
+          <input type="text" class="input-sm form-control" [value]="item.description || ''" readonly>
         </td>
       </tr>
 
@@ -64,7 +64,7 @@
           <span>Remarks</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.remarks" readonly>
+          <input type="text" class="input-sm form-control" [value]="item.remarks || ''" readonly>
         </td>
       </tr>
 
