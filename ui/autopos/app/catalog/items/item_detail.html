@@ -46,7 +46,7 @@
           <span>Category</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.categoryId || ''" readonly>
+          <input type="text" class="input-sm form-control" [value]="item.category?.shortName || ''" readonly>
         </td>
       </tr>
 
@@ -55,7 +55,7 @@
           <span>Brand</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.brandId || ''" readonly>
+          <input type="text" class="input-sm form-control" [value]="item.brand?.name || ''" readonly>
         </td>
       </tr>
 

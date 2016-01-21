@@ -1,22 +1,57 @@
 package autopos.item.model
 
 import autopos.common.service.repo.DbConfig
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads.{maxLength, minLength}
+import play.api.libs.json._
+
 
 case class Item(name: String,
                 description: Option[String],
                 remarks: Option[String],
                 markedPrice: BigDecimal,
-                categoryId: Option[Int],
-                brandId: Option[Int],
+                category: Option[Category],
+                brand: Option[Brand],
                 code: String = "",
                 id: Int = 0)
 
-
 object Item {
 
-  import play.api.libs.json._
-  import Reads.{maxLength, minLength}
-  import play.api.libs.functional.syntax._
+  def create(i: ItemSchema, brand: Option[Brand], category: Option[Category]) =
+    Item(i.name,
+      i.description,
+      i.remarks,
+      i.markedPrice,
+      category,
+      brand,
+      i.code,
+      i.id)
+
+  def fromSchemaTuple = (Item.create _).tupled
+
+  implicit val itemReads = (
+    (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
+      (__ \ "description").readNullable(maxLength[String](250)) ~
+      (__ \ "remarks").readNullable(maxLength[String](250)) ~
+      (__ \ "markedPrice").read[BigDecimal] ~
+      (__ \ "category").readNullable[Category] ~
+      (__ \ "brand").readNullable[Brand]
+    ) (Item(_, _, _, _, _, _))
+
+  implicit val itemWrites = Json.writes[Item]
+
+}
+
+case class ItemSchema(name: String,
+                      description: Option[String],
+                      remarks: Option[String],
+                      markedPrice: BigDecimal,
+                      categoryId: Option[Int],
+                      brandId: Option[Int],
+                      code: String = "",
+                      id: Int = 0)
+
+object ItemSchema {
 
   implicit val itemReads = (
     (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
@@ -25,9 +60,9 @@ object Item {
       (__ \ "markedPrice").read[BigDecimal] ~
       (__ \ "categoryId").readNullable[Int] ~
       (__ \ "brandId").readNullable[Int]
-    ) (Item(_, _, _, _, _, _))
+    ) (ItemSchema(_, _, _, _, _, _))
 
-  implicit val itemWrites = Json.writes[Item]
+  implicit val itemWrites = Json.writes[ItemSchema]
 
 }
 
@@ -40,7 +75,7 @@ trait ItemDbModule {
   protected final lazy val items = TableQuery[ItemTable]
   protected final lazy val itemTags = TableQuery[ItemTagTable]
 
-  private[ItemDbModule] class ItemTable(tag: SlickTag) extends Table[Item](tag, "item") {
+  private[ItemDbModule] class ItemTable(tag: SlickTag) extends Table[ItemSchema](tag, "item") {
 
 
     def name = column[String]("name", O.Length(50))
@@ -64,7 +99,7 @@ trait ItemDbModule {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
 
     def * = (name, description, remarks, markedPrice, categoryId, brandId, code, id) <>
-      ((Item.apply _).tupled, Item.unapply)
+      ((ItemSchema.apply _).tupled, ItemSchema.unapply)
   }
 
 

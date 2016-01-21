@@ -2,7 +2,7 @@ package autopos.item.service
 
 import javax.inject.{Inject, Singleton}
 
-import autopos.item.model.Item
+import autopos.item.model.{Item, ItemSchema}
 import autopos.item.service.repo.ItemRepo
 import com.google.inject.ImplementedBy
 
@@ -11,11 +11,11 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemServiceImpl])
 trait ItemService {
 
-  def addItem(item: Item): Future[Item]
+  def addItem(item: ItemSchema): Future[ItemSchema]
 
-  def updateItem(item: Item): Future[Int]
+  def updateItem(item: ItemSchema): Future[Int]
 
-  def getItems(): Future[Seq[Item]]
+  def getItems(): Future[Seq[ItemSchema]]
 
   def getItem(id: Int): Future[Option[Item]]
 
@@ -33,10 +33,10 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def getItem(id: Int) =
     itemRepo.findById(id)
 
-  override def updateItem(item: Item) =
+  override def updateItem(item: ItemSchema) =
     itemRepo.update(item)
 
-  override def addItem(item: Item) =
+  override def addItem(item: ItemSchema) =
     itemRepo.create(item)
 
   override def deleteItem(id: Int) =

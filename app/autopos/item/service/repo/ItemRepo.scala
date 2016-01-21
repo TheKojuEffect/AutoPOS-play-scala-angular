@@ -7,18 +7,19 @@ import autopos.item.model._
 import autopos.item.service.ItemCode
 import com.google.inject.ImplementedBy
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def create(item: Item): Future[Item]
+  def create(item: ItemSchema): Future[ItemSchema]
 
-  def update(item: Item): Future[Int]
+  def update(item: ItemSchema): Future[Int]
 
   def findById(id: Int): Future[Option[Item]]
 
-  def list(): Future[Seq[Item]]
+  def list(): Future[Seq[ItemSchema]]
 
   def delete(id: Int): Future[Int]
 
@@ -31,26 +32,29 @@ class ItemRepoImpl
 
   import driver.api._
 
-  override def list(): Future[Seq[Item]] = db.run {
+  override def list(): Future[Seq[ItemSchema]] = db.run {
     (for {
       (i1, it1) <- items joinLeft itemTags on (_.id === _.itemId)
     } yield i1).result
   }
 
   override def findById(id: Int) = db.run {
-    (for {
-      (i1, it1) <- items filter (_.id === id) joinLeft itemTags on (_.id === _.itemId)
-    } yield i1).result.headOption
+    items.filter(_.id === id)
+      .joinLeft(brands).on((item, brand) => item.brandId === brand.id)
+      .joinLeft(categories).on((itemBrand, category) => itemBrand._1.categoryId === category.id)
+      .map(r => (r._1._1, r._1._2, r._2))
+      .result.headOption
+      .map(_.map(Item.fromSchemaTuple(_)))
   }
 
-  override def update(item: Item) = db.run {
+  override def update(item: ItemSchema) = db.run {
     items.filter(_.id === item.id)
       .update(item.copy(code = ItemCode(item.id)))
     // Workaround to prevent item.code update
     // https://github.com/slick/slick/issues/601
   }
 
-  override def create(item: Item) = db.run {
+  override def create(item: ItemSchema) = db.run {
     (items returning items.map(_.id)
       into ((item, id) => item.copy(id = id, code = ItemCode(id)))
       ) += item
