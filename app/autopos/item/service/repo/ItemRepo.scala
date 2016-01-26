@@ -39,10 +39,11 @@ class ItemRepoImpl
   }
 
   override def findById(id: Int) = db.run {
-    items.filter(_.id === id)
-      .joinLeft(brands).on((item, brand) => item.brandId === brand.id)
-      .joinLeft(categories).on((itemBrand, category) => itemBrand._1.categoryId === category.id)
-      .map(r => (r._1._1, r._1._2, r._2))
+    (for {
+      ((item, brand), category) <- items.filter(_.id === id)
+        .joinLeft(brands).on(_.brandId === _.id)
+        .joinLeft(categories).on(_._1.categoryId === _.id)
+    } yield (item, brand, category))
       .result.headOption
       .map(_.map(Item.fromSchemaTuple(_)))
   }
