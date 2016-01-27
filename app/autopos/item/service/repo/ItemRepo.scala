@@ -19,7 +19,7 @@ trait ItemRepo extends BaseRepo {
 
   def findById(id: Int): Future[Option[Item]]
 
-  def list(): Future[Seq[ItemSchema]]
+  def list(): Future[Seq[Item]]
 
   def delete(id: Int): Future[Int]
 
@@ -32,10 +32,14 @@ class ItemRepoImpl
 
   import driver.api._
 
-  override def list(): Future[Seq[ItemSchema]] = db.run {
+  override def list(): Future[Seq[Item]] = db.run {
     (for {
-      (i1, it1) <- items joinLeft itemTags on (_.id === _.itemId)
-    } yield i1).result
+      ((item, brand), category) <- items
+        .joinLeft(brands).on(_.brandId === _.id)
+        .joinLeft(categories).on(_._1.categoryId === _.id)
+    } yield (item, brand, category))
+      .result
+      .map(_.map(Item.fromSchemaTuple(_)))
   }
 
   override def findById(id: Int) = db.run {

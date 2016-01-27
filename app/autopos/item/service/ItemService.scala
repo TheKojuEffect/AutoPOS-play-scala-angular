@@ -15,7 +15,7 @@ trait ItemService {
 
   def updateItem(item: ItemSchema): Future[Int]
 
-  def getItems(): Future[Seq[ItemSchema]]
+  def getItems(): Future[Seq[Item]]
 
   def getItem(id: Int): Future[Option[Item]]
 
