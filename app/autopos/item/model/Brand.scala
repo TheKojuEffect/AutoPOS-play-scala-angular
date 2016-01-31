@@ -16,6 +16,8 @@ object Brand {
     (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
       .map(Brand(_))
 
+  val brandIdReads = (__ \ "id").read[Int]
+    .map(Brand("", _))
 
   implicit val brandWrites = Json.writes[Brand]
 

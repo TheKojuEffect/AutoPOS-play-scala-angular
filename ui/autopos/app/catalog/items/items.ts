@@ -6,12 +6,14 @@ import {ItemList} from "./item_list";
 import {ItemDetail} from "./item_detail";
 import {ItemService} from "./item_service";
 import {EditItem} from "./edit_item";
+import {BrandService} from "../brands/brand_service";
+import {CategoryService} from "../categories/category_service";
 
 @Component({
   selector: "items",
   templateUrl: "./app/catalog/items/items.html",
   directives: <any>[ROUTER_DIRECTIVES],
-  providers: [ItemService]
+  providers: [ItemService, BrandService, CategoryService]
 })
 
 @RouteConfig(<any>[

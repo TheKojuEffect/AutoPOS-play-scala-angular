@@ -17,6 +17,9 @@ object Category {
       (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
     ) (Category.apply(_, _))
 
+  val categoryIdReads = (__ \ "id").read[Int]
+    .map(Category("", "", _))
+
   implicit val categoryWrites = Json.writes[Category]
 
 }

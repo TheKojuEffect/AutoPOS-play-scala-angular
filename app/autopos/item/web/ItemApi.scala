@@ -2,7 +2,7 @@ package autopos.item.web
 
 import javax.inject.Inject
 
-import autopos.item.model.ItemSchema
+import autopos.item.model.Item
 import autopos.item.service.ItemService
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
@@ -31,13 +31,13 @@ class ItemApi @Inject()(itemService: ItemService)
   }
 
   def updateItem(id: Int) = Action.async(parse.json) { request =>
-    request.body.validate[ItemSchema]
+    request.body.validate[Item]
       .fold(
         errors => {
-          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+          Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
         },
-        itemDto => {
-          itemService.updateItem(itemDto.copy(id = id))
+        item => {
+          itemService.updateItem(item.copy(id = id))
             .map { _ =>
               Accepted
             }
@@ -45,17 +45,17 @@ class ItemApi @Inject()(itemService: ItemService)
       )
   }
 
-
   def addItem = Action.async(parse.json) { request =>
-    request.body.validate[ItemSchema]
+    request.body.validate[Item]
       .fold(
         errors => {
-          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+          Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
         },
-        itemDto => {
-          itemService.addItem(itemDto)
-            .map { item =>
-              Ok(toJson(item))
+        item => {
+          itemService.addItem(item)
+            .map { itemId =>
+              Created(Json.obj("id" -> itemId))
+                .withHeaders(LOCATION -> s"/api/items/$itemId")
             }
         }
       )

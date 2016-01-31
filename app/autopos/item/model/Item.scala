@@ -1,6 +1,8 @@
 package autopos.item.model
 
 import autopos.common.service.repo.DbConfig
+import autopos.item.model.Brand.brandIdReads
+import autopos.item.model.Category.categoryIdReads
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
 import play.api.libs.json._
@@ -29,13 +31,14 @@ object Item {
 
   def fromSchemaTuple = (Item.create _).tupled
 
+
   implicit val itemReads = (
     (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
       (__ \ "description").readNullable(maxLength[String](250)) ~
       (__ \ "remarks").readNullable(maxLength[String](250)) ~
       (__ \ "markedPrice").read[BigDecimal] ~
-      (__ \ "category").readNullable[Category] ~
-      (__ \ "brand").readNullable[Brand]
+      (__ \ "category").readNullable[Category](categoryIdReads) ~
+      (__ \ "brand").readNullable[Brand](brandIdReads)
     ) (Item(_, _, _, _, _, _))
 
   implicit val itemWrites = Json.writes[Item]
@@ -53,19 +56,9 @@ case class ItemSchema(name: String,
 
 object ItemSchema {
 
-  implicit val itemReads = (
-    (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
-      (__ \ "description").readNullable(maxLength[String](250)) ~
-      (__ \ "remarks").readNullable(maxLength[String](250)) ~
-      (__ \ "markedPrice").read[BigDecimal] ~
-      (__ \ "categoryId").readNullable[Int] ~
-      (__ \ "brandId").readNullable[Int]
-    ) (ItemSchema(_, _, _, _, _, _))
-
-  implicit val itemWrites = Json.writes[ItemSchema]
-
+  def fromItem(i: Item) =
+    ItemSchema(i.name, i.description, i.remarks, i.markedPrice, i.category.map(_.id), i.brand.map(_.id), i.code, i.id)
 }
-
 
 trait ItemDbModule {
   self: DbConfig with BrandDbModule with CategoryDbModule with TagDbModule =>
