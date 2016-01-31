@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
 
 routesGenerator := InjectedRoutesGenerator
 
-fork in run := true
+fork in run := false
 
 // All work and no play...
 emojiLogs
