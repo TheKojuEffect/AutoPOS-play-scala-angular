@@ -1,44 +1,44 @@
 package autopos.item.model
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Tag._
+import autopos.common.service.repo.DbConfig
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads.{maxLength, minLength}
+import play.api.libs.json._
 
 
-case class Brand(id: Int,
-                 name: String)
+case class Brand(name: String,
+                 id: Int = 0)
 
 
-object Brand extends HasDbConfig {
+object Brand {
 
-  import play.api.libs.functional.syntax._
-  import play.api.libs.json.Reads.{maxLength, minLength}
-  import play.api.libs.json._
+  implicit val brandReads =
+    (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
+      .map(Brand(_))
 
-  def readDto(id: Option[Int], name: String) =
-    Brand(id getOrElse 0, name)
-
-  implicit val brandReads = (
-    (__ \ "id").readNullable[Int] ~
-      (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
-    ) (readDto _)
-
+  val brandIdReads = (__ \ "id").read[Int]
+    .map(Brand("", _))
 
   implicit val brandWrites = Json.writes[Brand]
 
-  /* ************************************ */
+}
 
+
+trait BrandDbModule {
+  self: DbConfig =>
 
   import driver.api.{Tag => SlickTag, _}
 
-  class BrandTable(tag: SlickTag) extends Table[Brand](tag, "brand") {
+  protected final lazy val brands = TableQuery[BrandTable]
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  private[BrandDbModule] class BrandTable(tag: SlickTag) extends Table[Brand](tag, "brand") {
 
     def name = column[String]("name", O.Length(50))
 
-    def * = (id, name) <>((Brand.apply _).tupled, Brand.unapply)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def * = (name, id) <>((Brand.apply _).tupled, Brand.unapply)
 
   }
 
 }
-

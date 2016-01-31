@@ -25,9 +25,8 @@ class ItemApi @Inject()(itemService: ItemService)
   def getItem(id: Int) = Action.async {
     itemService.getItem(id)
       .map {
-        _.map { item =>
-          Ok(toJson(item))
-        } getOrElse BadRequest
+        case Some(item) => Ok(toJson(item))
+        case None => NotFound
       }
   }
 
@@ -35,10 +34,10 @@ class ItemApi @Inject()(itemService: ItemService)
     request.body.validate[Item]
       .fold(
         errors => {
-          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+          Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
         },
-        itemDto => {
-          itemService.updateItem(itemDto.copy(id = id))
+        item => {
+          itemService.updateItem(item.copy(id = id))
             .map { _ =>
               Accepted
             }
@@ -46,17 +45,17 @@ class ItemApi @Inject()(itemService: ItemService)
       )
   }
 
-
   def addItem = Action.async(parse.json) { request =>
     request.body.validate[Item]
       .fold(
         errors => {
-          Future.successful(BadRequest(Json.obj("status" -> "KO", "message" -> JsError.toJson(errors))))
+          Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
         },
-        itemDto => {
-          itemService.addItem(itemDto)
-            .map { item =>
-              Ok(toJson(item))
+        item => {
+          itemService.addItem(item)
+            .map { itemId =>
+              Created(Json.obj("id" -> itemId))
+                .withHeaders(LOCATION -> s"/api/items/$itemId")
             }
         }
       )

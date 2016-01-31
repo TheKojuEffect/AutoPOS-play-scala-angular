@@ -3,8 +3,7 @@ package autopos.item.service.repo
 import javax.inject.Singleton
 
 import autopos.common.service.repo.BaseRepo
-import autopos.item.model.Category
-import autopos.item.model.Category.CategoryTable
+import autopos.item.model.{Category, CategoryDbModule}
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -28,11 +27,9 @@ trait CategoryRepo extends BaseRepo {
 
 @Singleton
 class CategoryRepoImpl
-  extends CategoryRepo {
+  extends CategoryRepo with CategoryDbModule {
 
   import driver.api._
-
-  private val categories = TableQuery[CategoryTable]
 
   override def list(): Future[Seq[Category]] = db.run {
     categories.result

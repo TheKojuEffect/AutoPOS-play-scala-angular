@@ -2,16 +2,15 @@ package autopos.item.service.repo
 
 import javax.inject.Singleton
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Brand
-import autopos.item.model.Brand.BrandTable
+import autopos.common.service.repo.DbConfig
+import autopos.item.model.{Brand, BrandDbModule}
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[BrandRepoImpl])
-trait BrandRepo extends HasDbConfig {
+trait BrandRepo extends DbConfig {
 
   def findById(id: Int): Future[Option[Brand]]
 
@@ -27,12 +26,9 @@ trait BrandRepo extends HasDbConfig {
 
 @Singleton
 class BrandRepoImpl
-  extends BrandRepo {
+  extends BrandRepo with BrandDbModule {
 
   import driver.api._
-
-  private val brands = TableQuery[BrandTable]
-
 
   override def findById(id: Int) = db.run {
     brands.filter(_.id === id).result.headOption

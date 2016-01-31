@@ -1,44 +1,45 @@
 package autopos.item.model
 
-import autopos.common.service.repo.HasDbConfig
-import autopos.item.model.Tag._
+import autopos.common.service.repo.DbConfig
+import play.api.libs.functional.syntax._
+import play.api.libs.json.Reads.{maxLength, minLength}
+import play.api.libs.json._
 
-case class Category(id: Int,
-                    shortName: String,
-                    name: String)
+case class Category(shortName: String,
+                    name: String,
+                    id: Int = 0)
 
 
-object Category extends HasDbConfig {
-
-  def readDto(idOpt: Option[Int], shortName: String, name: String) =
-    Category(idOpt getOrElse 0, shortName, name)
-
-  import play.api.libs.functional.syntax._
-  import play.api.libs.json.Reads.{maxLength, minLength}
-  import play.api.libs.json._
+object Category {
 
   implicit val categoryReads = (
-    (__ \ "id").readNullable[Int] ~
-      (__ \ "shortName").read(minLength[String](1) andKeep maxLength[String](3)) ~
+    (__ \ "shortName").read(minLength[String](1) andKeep maxLength[String](3)) ~
       (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
-    ) (readDto _)
+    ) (Category.apply(_, _))
+
+  val categoryIdReads = (__ \ "id").read[Int]
+    .map(Category("", "", _))
 
   implicit val categoryWrites = Json.writes[Category]
 
+}
 
-  /* ****************************** */
+trait CategoryDbModule {
+  self: DbConfig =>
 
   import driver.api.{Tag => SlickTag, _}
 
-  class CategoryTable(tag: SlickTag) extends Table[Category](tag, "category") {
+  protected final lazy val categories = TableQuery[CategoryTable]
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+  private[CategoryDbModule] class CategoryTable(tag: SlickTag) extends Table[Category](tag, "category") {
 
     def shortName = column[String]("short_name", O.Length(3))
 
     def name = column[String]("name", O.Length(50))
 
-    def * = (id, shortName, name) <>((Category.apply _).tupled, Category.unapply)
+    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+    def * = ( shortName, name, id) <>((Category.apply _).tupled, Category.unapply)
 
   }
 
