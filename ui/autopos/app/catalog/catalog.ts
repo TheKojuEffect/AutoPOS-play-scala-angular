@@ -17,8 +17,8 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 @RouteConfig(<any>[
   {path: "/items/...", component: Items, as: "Items", useAsDefault: true},
   {path: "/categories/...", component: Categories, as: "Categories"},
-  {path: "/brands/...", component: Brands, as: "Brands"},
-  {path: "/tags/...", component: Tags, as: "Tags"}
+  {path: "/brands/...", component: Brands, as: "Brands"}
+  //{path: "/tags/...", component: Tags, as: "Tags"}
 ])
 
 
