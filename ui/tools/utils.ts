@@ -1,11 +1,11 @@
-export * from "./utils/template-injectables";
-export * from "./utils/template-locals";
-export * from "./utils/server";
-export * from "./utils/tasks_tools";
+export * from './utils/template_injectables';
+export * from './utils/template_locals';
+export * from './utils/server';
+export * from './utils/tasks_tools';
 
 
 export function tsProjectFn(plugins) {
-  return plugins.typescript.createProject("tsconfig.json", {
-    typescript: require("typescript")
+  return plugins.typescript.createProject('tsconfig.json', {
+    typescript: require('typescript')
   });
 }

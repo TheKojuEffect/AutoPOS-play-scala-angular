@@ -6,7 +6,6 @@ import {Autopos} from "./app/autopos";
 import {RequestOptions, BaseRequestOptions} from "angular2/http";
 import {Headers} from "angular2/http";
 
-
 class HttpOptions extends BaseRequestOptions {
   constructor() {
     super();
@@ -24,3 +23,14 @@ bootstrap(Autopos, [
   provide(LocationStrategy, {useClass: HashLocationStrategy}),
   provide(RequestOptions, {useClass: HttpOptions})
 ]);
+
+// In order to start the Service Worker located at "./sw.js"
+// uncomment this line. More about Service Workers here
+// https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
+// if ('serviceWorker' in navigator) {
+//   (<any>navigator).serviceWorker.register('./sw.js').then(function(registration) {
+//     console.log('ServiceWorker registration successful with scope: ',    registration.scope);
+//   }).catch(function(err) {
+//     console.log('ServiceWorker registration failed: ', err);
+//   });
+// }

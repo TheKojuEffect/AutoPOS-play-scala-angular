@@ -1,13 +1,13 @@
-import * as gulp from "gulp";
-import * as util from "gulp-util";
-import * as chalk from "chalk";
-import * as gulpLoadPlugins from "gulp-load-plugins";
-import * as _runSequence from "run-sequence";
-import {readdirSync, existsSync, lstatSync} from "fs";
-import {join} from "path";
-import {TOOLS_DIR} from "../config";
+import * as gulp from 'gulp';
+import * as util from 'gulp-util';
+import * as chalk from 'chalk';
+import * as gulpLoadPlugins from 'gulp-load-plugins';
+import * as _runSequence from 'run-sequence';
+import {readdirSync, existsSync, lstatSync} from 'fs';
+import {join} from 'path';
+import {TOOLS_DIR} from '../config';
 
-const TASKS_PATH = join(TOOLS_DIR, "tasks");
+const TASKS_PATH = join(TOOLS_DIR, 'tasks');
 
 // NOTE: Remove if no issues with runSequence function below.
 // export function loadTasks(): void {
@@ -15,8 +15,8 @@ const TASKS_PATH = join(TOOLS_DIR, "tasks");
 // }
 
 export function task(taskname: string, option?: string) {
-  util.log("Loading task", chalk.yellow(taskname, option || ""));
-  return require(join("..", "tasks", taskname))(gulp, gulpLoadPlugins(), option);
+  util.log('Loading task', chalk.yellow(taskname, option || ''));
+  return require(join('..', 'tasks', taskname))(gulp, gulpLoadPlugins(), option);
 }
 
 export function runSequence(...sequence: any[]) {
@@ -36,15 +36,13 @@ export function runSequence(...sequence: any[]) {
 // ----------
 // Private.
 
-function registerTask(taskname: string, filename?: string, option: string = ""): void {
+function registerTask(taskname: string, filename?: string, option: string = ''): void {
   gulp.task(taskname, task(filename || taskname, option));
 }
 
 // TODO: add recursive lookup ? or enforce pattern file + folder (ie ./tools/utils & ./tools/utils.ts )
 function scanDir(root: string, cb: (taskname: string) => void) {
-  if (!existsSync(root)) {
-    return;
-  }
+  if (!existsSync(root)) return;
 
   walk(root);
 
@@ -58,7 +56,7 @@ function scanDir(root: string, cb: (taskname: string) => void) {
       //   walk(curPath);
       // }
       if (lstatSync(curPath).isFile() && /\.ts$/.test(file)) {
-        let taskname = file.replace(/(\.ts)/, "");
+        let taskname = file.replace(/(\.ts)/, '');
         cb(taskname);
       }
     }

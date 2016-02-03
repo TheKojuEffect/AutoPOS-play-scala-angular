@@ -1,11 +1,13 @@
-import {server as karma} from "karma";
-import {join} from "path";
+/// <reference path="../manual_typings/karma.d.ts" />
+
+import * as karma from 'karma';
+import {join} from 'path';
 
 export = function karmaStart() {
   return function (done) {
-    karma.start({
-      configFile: join(process.cwd(), "karma.conf.js"),
+    new (<any>karma).Server({
+      configFile: join(process.cwd(), 'karma.conf.js'),
       singleRun: true
-    }, done);
+    }).start(done);
   };
 };

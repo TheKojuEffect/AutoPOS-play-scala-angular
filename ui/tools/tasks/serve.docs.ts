@@ -1,4 +1,4 @@
-import {serveDocs} from "../utils";
+import {serveDocs} from '../utils';
 
 export = function serverStart(gulp, plugins) {
   return function () {
