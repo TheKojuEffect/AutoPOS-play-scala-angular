@@ -2,7 +2,6 @@ import {Component} from "angular2/core";
 import {ItemService} from "./item_service";
 import {Router} from "angular2/router";
 import {RouteParams} from "angular2/router";
-import {OnInit} from "angular2/core";
 import {Item} from "./item";
 import {RouterLink} from "angular2/router";
 import {Modal} from "angular2-modal/dist/angular2-modal";
@@ -11,6 +10,9 @@ import {Injector} from "angular2/core";
 import {YesNoModalContent} from "angular2-modal/dist/angular2-modal";
 import {ICustomModal} from "angular2-modal/dist/angular2-modal";
 import {provide} from "angular2/core";
+import {OnActivate} from "angular2/router";
+import {ComponentInstruction} from "angular2/router";
+import "rxjs/Rx";
 
 @Component({
   selector: "item-detail",
@@ -19,7 +21,8 @@ import {provide} from "angular2/core";
   providers: [Modal]
 })
 
-export class ItemDetail implements OnInit {
+export class ItemDetail implements OnActivate {
+
 
   item:Item;
 
@@ -29,11 +32,11 @@ export class ItemDetail implements OnInit {
               private modal:Modal) {
   }
 
-
-  ngOnInit() {
+  routerOnActivate(nextInstruction:ComponentInstruction, prevInstruction:ComponentInstruction):any {
     let id = this.routeParams.get("id");
-    this.itemService.getItem(parseInt(id))
-      .subscribe(item => this.item = item.json());
+    return this.itemService.getItem(parseInt(id))
+      .toPromise()
+      .then(item => this.item = item.json());
   }
 
   deleteItem() {

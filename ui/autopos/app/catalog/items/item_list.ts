@@ -3,6 +3,9 @@ import {ItemService} from "./item_service";
 import {Item} from "./item";
 import {AddItem} from "./add_item";
 import {ROUTER_DIRECTIVES} from "angular2/router";
+import {OnActivate} from "angular2/router";
+import {ComponentInstruction} from "angular2/router";
+import "rxjs/Rx";
 
 
 @Component({
@@ -11,13 +14,18 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
   directives: <any>[ROUTER_DIRECTIVES, AddItem]
 })
 
-export class ItemList {
+export class ItemList implements OnActivate {
+
 
   items:Array<Item>;
 
   constructor(private itemService:ItemService) {
-    itemService.getItems()
-      .subscribe(res => this.items = res.json());
+  }
+
+  routerOnActivate(nextInstruction:ComponentInstruction, prevInstruction:ComponentInstruction):any {
+    return this.itemService.getItems()
+      .toPromise()
+      .then(res => this.items = res.json());
   }
 
 }
