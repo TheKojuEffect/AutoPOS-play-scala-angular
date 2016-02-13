@@ -25,8 +25,8 @@ export const BOOTSTRAP_MODULE     = ENABLE_HOT_LOADING ? 'hot_loader_main' : 'ma
 
 export const APP_TITLE            = 'AutoPOS';
 
-export const APP_SRC              = 'autopos';
-export const TEST_SRC             = 'autopos';
+export const APP_SRC              = 'src';
+export const TEST_SRC             = 'src';
 export const ASSETS_SRC           = `${APP_SRC}/assets`;
 
 export const TOOLS_DIR            = 'tools';
