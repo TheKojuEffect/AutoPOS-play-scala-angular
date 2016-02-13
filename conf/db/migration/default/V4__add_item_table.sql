@@ -1,7 +1,7 @@
 CREATE TABLE item
 (
-  id           SERIAL PRIMARY KEY     NOT NULL,
-  code         VARCHAR(7) UNIQUE      NOT NULL,
+  id           SERIAL PRIMARY KEY,
+  code         VARCHAR(7) UNIQUE      NOT NULL CHECK (length(code) >= 3),
   name         VARCHAR(50)            NOT NULL,
   description  VARCHAR(250),
   remarks      VARCHAR(250),
@@ -9,6 +9,8 @@ CREATE TABLE item
   category_id  INTEGER REFERENCES category (id),
   brand_id     INTEGER REFERENCES brand (id)
 );
+
+ALTER SEQUENCE item_id_seq RESTART WITH 1001;
 
 CREATE TABLE item_tag
 (
