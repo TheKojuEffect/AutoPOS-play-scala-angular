@@ -1,6 +1,7 @@
 import {readFileSync} from 'fs';
 import {argv} from 'yargs';
 import {normalize, join} from 'path';
+import * as chalk from 'chalk';
 
 // --------------
 // Configuration.
@@ -10,11 +11,10 @@ const ENVIRONMENTS = {
   PRODUCTION: 'prod'
 };
 
+export const PORT                 = argv['port']        || 5555;
 export const PROJECT_ROOT         = normalize(join(__dirname, '..'));
 export const ENV                  = getEnvironment();
 export const DEBUG                = argv['debug']       || false;
-export const PORT                 = argv['port']        || 5555;
-export const LIVE_RELOAD_PORT     = argv['reload-port'] || 4002;
 export const DOCS_PORT            = argv['docs-port']   || 4003;
 export const APP_BASE             = argv['base']        || '/';
 
@@ -26,14 +26,15 @@ export const BOOTSTRAP_MODULE     = ENABLE_HOT_LOADING ? 'hot_loader_main' : 'ma
 export const APP_TITLE            = 'AutoPOS';
 
 export const APP_SRC              = 'autopos';
+export const TEST_SRC             = 'autopos';
 export const ASSETS_SRC           = `${APP_SRC}/assets`;
 
 export const TOOLS_DIR            = 'tools';
 export const TMP_DIR              = 'tmp';
-export const TEST_DEST            = 'test';
+export const TEST_SPEC_DEST       = 'dist/test/spec';
+export const TEST_E2E_DEST        = 'dist/test/e2e';
 export const DOCS_DEST            = 'docs';
 export const APP_DEST             = `dist/${ENV}`;
-export const ASSETS_DEST          = `${APP_DEST}/assets`;
 export const CSS_DEST             = `${APP_DEST}/css`;
 export const JS_DEST              = `${APP_DEST}/js`;
 export const APP_ROOT             = ENV === 'dev' ? `${APP_BASE}${APP_DEST}/` : `${APP_BASE}`;
@@ -45,6 +46,11 @@ export const JS_PROD_APP_BUNDLE   = 'app.js';
 
 export const VERSION_NPM          = '2.14.2';
 export const VERSION_NODE         = '4.0.0';
+
+if (ENABLE_HOT_LOADING) {
+  console.log(chalk.bgRed.white.bold('The hot loader is temporary disabled.'));
+  process.exit(0);
+}
 
 interface InjectableDependency {
   src: string;
@@ -88,10 +94,9 @@ export const PROD_DEPENDENCIES = PROD_NPM_DEPENDENCIES.concat(APP_ASSETS);
 const SYSTEM_CONFIG_DEV = {
   defaultJSExtensions: true,
   paths: {
-    [BOOTSTRAP_MODULE]: `${APP_ROOT}${BOOTSTRAP_MODULE}`,
-    'hot_loader_main': `${APP_ROOT}hot_loader_main`,
-    'angular2/*': `${APP_ROOT}angular2/*`,
-    'rxjs/*': `${APP_ROOT}rxjs/*`,
+    [BOOTSTRAP_MODULE]: `${APP_BASE}${BOOTSTRAP_MODULE}`,
+    'angular2/*': `${APP_BASE}angular2/*`,
+    'rxjs/*': `${APP_BASE}rxjs/*`,
     '*': `${APP_BASE}node_modules/*`
   },
   packages: {
@@ -107,8 +112,8 @@ export const SYSTEM_CONFIG = SYSTEM_CONFIG_DEV;
 
 function normalizeDependencies(deps: InjectableDependency[]) {
   deps
-    .filter(d => !/\*/.test(d.src)) // Skip globs
-    .forEach(d => d.src = require.resolve(d.src));
+    .filter((d:InjectableDependency) => !/\*/.test(d.src)) // Skip globs
+    .forEach((d:InjectableDependency) => d.src = require.resolve(d.src));
   return deps;
 }
 
@@ -118,7 +123,7 @@ function appVersion(): number|string {
 }
 
 function getEnvironment() {
-  let base = argv['_'];
+  let base:string[] = argv['_'];
   let prodKeyword = !!base.filter(o => o.indexOf(ENVIRONMENTS.PRODUCTION) >= 0).pop();
   if (base && prodKeyword || argv['env'] === ENVIRONMENTS.PRODUCTION) {
     return ENVIRONMENTS.PRODUCTION;
