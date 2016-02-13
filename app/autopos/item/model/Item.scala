@@ -81,11 +81,11 @@ trait ItemDbModule {
 
     def categoryId = column[Option[Int]]("category_id")
 
-    def category = foreignKey("item_category_id_fkey", categoryId, categories)(_.id)
+    def category = foreignKey("item_category_id_fkey", categoryId, categories)(_.id.?)
 
     def brandId = column[Option[Int]]("brand_id")
 
-    def brand = foreignKey("item_brand_id_fkey", brandId, brands)(_.id)
+    def brand = foreignKey("item_brand_id_fkey", brandId, brands)(_.id.?)
 
     def code = column[String]("code", O.Length(7), O.AutoInc) // AutoInc fields are not inserted
 
