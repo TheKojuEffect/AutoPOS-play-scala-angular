@@ -17,7 +17,7 @@ class HttpOptions extends BaseRequestOptions {
 
 //noinspection TypeScriptValidateTypes
 bootstrap(Autopos, [
-  provide(APP_BASE_HREF, {useValue: "<%= APP_ROOT %>"}),
+  provide(APP_BASE_HREF, {useValue: '/'}),
   ROUTER_PROVIDERS,
   HTTP_PROVIDERS,
   provide(LocationStrategy, {useClass: HashLocationStrategy}),
