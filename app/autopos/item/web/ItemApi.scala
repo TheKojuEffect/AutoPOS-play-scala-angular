@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import autopos.item.model.Item
 import autopos.item.service.ItemService
+import autopos.shared.pagination.PageRequest
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
@@ -14,9 +15,9 @@ import scala.concurrent.Future
 class ItemApi @Inject()(itemService: ItemService)
   extends Controller {
 
-
-  def getItems() = Action.async {
-    itemService.getItems()
+  def getItems(page: Int, size: Int) = Action.async {
+    val pageable = new PageRequest(page, size)
+    itemService.getItems(pageable)
       .map { items =>
         Ok(toJson(items))
       }

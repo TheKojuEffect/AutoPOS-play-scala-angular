@@ -4,6 +4,7 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model.{Item, ItemSchema}
 import autopos.item.service.repo.ItemRepo
+import autopos.shared.pagination.Pageable
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
@@ -15,7 +16,7 @@ trait ItemService {
 
   def updateItem(item: Item): Future[Int]
 
-  def getItems(): Future[Seq[Item]]
+  def getItems(pageable: Pageable): Future[Seq[Item]]
 
   def getItem(id: Int): Future[Option[Item]]
 
@@ -27,8 +28,8 @@ trait ItemService {
 class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   extends ItemService {
 
-  override def getItems() =
-    itemRepo.list()
+  override def getItems(pageable: Pageable) =
+    itemRepo.list(pageable)
 
   override def getItem(id: Int) =
     itemRepo.findById(id)
