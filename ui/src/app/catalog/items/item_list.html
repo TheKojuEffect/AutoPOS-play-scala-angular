@@ -42,4 +42,9 @@
     </tr>
     </tbody>
   </table>
+
+  <pagination [totalItems]="bigTotalItems" [(ngModel)]="bigCurrentPage" [maxSize]="maxSize" class="pagination-sm"
+              [boundaryLinks]="true" [rotate]="false" (numPages)="numPages = $event">
+
+  </pagination>
 </div>

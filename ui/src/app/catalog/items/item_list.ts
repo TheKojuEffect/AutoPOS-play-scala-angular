@@ -5,19 +5,28 @@ import {AddItem} from "./add_item";
 import {ROUTER_DIRECTIVES} from "angular2/router";
 import {OnActivate} from "angular2/router";
 import {ComponentInstruction} from "angular2/router";
+import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
+
 import "rxjs/Rx";
 
 
 @Component({
   selector: "item-list",
   templateUrl: "./app/catalog/items/item_list.html",
-  directives: <any>[ROUTER_DIRECTIVES, AddItem]
+  directives: <any>[ROUTER_DIRECTIVES, PAGINATION_DIRECTIVES, AddItem]
 })
 
 export class ItemList implements OnActivate {
 
-
   items:Array<Item>;
+
+  private totalItems:number = 64;
+  private currentPage:number = 4;
+
+  private maxSize:number = 5;
+  private bigTotalItems:number = 175;
+  private bigCurrentPage:number = 1;
+
 
   constructor(private itemService:ItemService) {
   }
@@ -27,5 +36,15 @@ export class ItemList implements OnActivate {
       .toPromise()
       .then(res => this.items = res.json());
   }
+
+  private setPage(pageNo:number):void {
+    this.currentPage = pageNo;
+  };
+
+  private pageChanged(event:any):void {
+    console.log('Page changed to: ' + event.page);
+    console.log('Number items per page: ' + event.itemsPerPage);
+  };
+
 
 }

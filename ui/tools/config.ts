@@ -103,6 +103,9 @@ const SYSTEM_CONFIG_DEV = {
   packages: {
     angular2: { defaultExtension: false },
     rxjs: { defaultExtension: false }
+  },
+  map: {
+    moment: 'moment/moment.js'
   }
 };
 
