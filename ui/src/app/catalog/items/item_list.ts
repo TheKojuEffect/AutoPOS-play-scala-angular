@@ -20,13 +20,9 @@ export class ItemList implements OnActivate {
 
   items:Array<Item>;
 
-  private totalItems:number = 64;
-  private currentPage:number = 4;
-
-  private maxSize:number = 5;
-  private bigTotalItems:number = 175;
-  private bigCurrentPage:number = 1;
-
+  private totalItems:number = 175;
+  private currentPage:number = 1;
+  private itemsPerPage:number = 20;
 
   constructor(private itemService:ItemService) {
   }
@@ -45,6 +41,10 @@ export class ItemList implements OnActivate {
     console.log('Page changed to: ' + event.page);
     console.log('Number items per page: ' + event.itemsPerPage);
   };
+
+  private numOfPages(num:any):void {
+    console.log("Number of pages: " + num);
+  }
 
 
 }
