@@ -3,7 +3,7 @@ import {bootstrap} from "angular2/platform/browser";
 import {ROUTER_PROVIDERS, APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from "angular2/router";
 import {HTTP_PROVIDERS} from "angular2/http";
 import {Autopos} from "./app/autopos";
-import {RequestOptions, BaseRequestOptions, RequestOptionsArgs} from "angular2/http";
+import {RequestOptions, BaseRequestOptions} from "angular2/http";
 import {Headers} from "angular2/http";
 
 class HttpOptions extends BaseRequestOptions {
@@ -12,11 +12,6 @@ class HttpOptions extends BaseRequestOptions {
     var headers = new Headers();
     headers.append("Content-Type", "application/json");
     this.headers = headers;
-  }
-
-  merge(options?:RequestOptionsArgs):RequestOptions {
-    options.url = 'http://localhost:9000/api' + options.url;
-    return super.merge(options);
   }
 }
 

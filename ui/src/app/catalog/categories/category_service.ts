@@ -5,7 +5,7 @@ import {Category} from "./category";
 @Injectable()
 export class CategoryService {
 
-  private baseUrl = "/categories";
+  private baseUrl = "http://localhost:9000/api/categories";
 
   constructor(private http:Http) {
   }
