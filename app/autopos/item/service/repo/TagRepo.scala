@@ -1,9 +1,8 @@
 package autopos.item.service.repo
 
 import javax.inject.Singleton
-
-import autopos.common.service.repo.DbConfig
 import autopos.item.model.{Tag => ItemTag, TagDbModule}
+import autopos.shared.service.repo.DbConfig
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future

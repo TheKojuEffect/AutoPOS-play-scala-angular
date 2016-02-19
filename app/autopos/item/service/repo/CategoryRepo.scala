@@ -1,9 +1,8 @@
 package autopos.item.service.repo
 
 import javax.inject.Singleton
-
-import autopos.common.service.repo.BaseRepo
 import autopos.item.model.{Category, CategoryDbModule}
+import autopos.shared.service.repo.BaseRepo
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future

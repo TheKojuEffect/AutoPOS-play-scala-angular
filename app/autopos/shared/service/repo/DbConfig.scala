@@ -1,4 +1,4 @@
-package autopos.common.service.repo
+package autopos.shared.service.repo
 
 import play.api.Play
 import play.api.db.slick.{DatabaseConfigProvider, HasDatabaseConfig}

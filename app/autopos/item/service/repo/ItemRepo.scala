@@ -1,11 +1,10 @@
 package autopos.item.service.repo
 
 import javax.inject.Singleton
-
-import autopos.common.service.repo.BaseRepo
 import autopos.item.model._
 import autopos.item.service.ItemCode
 import autopos.shared.pagination.Pageable
+import autopos.shared.service.repo.BaseRepo
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.ExecutionContext.Implicits.global

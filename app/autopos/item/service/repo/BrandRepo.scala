@@ -2,7 +2,7 @@ package autopos.item.service.repo
 
 import javax.inject.Singleton
 
-import autopos.common.service.repo.DbConfig
+import autopos.shared.service.repo.DbConfig
 import autopos.item.model.{Brand, BrandDbModule}
 import com.google.inject.ImplementedBy
 

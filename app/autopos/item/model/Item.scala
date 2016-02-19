@@ -1,8 +1,8 @@
 package autopos.item.model
 
-import autopos.common.service.repo.DbConfig
 import autopos.item.model.Brand.brandIdReads
 import autopos.item.model.Category.categoryIdReads
+import autopos.shared.service.repo.DbConfig
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
 import play.api.libs.json._
