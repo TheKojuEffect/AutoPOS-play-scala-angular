@@ -5,7 +5,7 @@ import {Item} from "./item";
 @Injectable()
 export class ItemService {
 
-  private baseUrl = "http://localhost:9000/api/items";
+  private baseUrl = "/items";
 
   constructor(private http:Http) {
   }

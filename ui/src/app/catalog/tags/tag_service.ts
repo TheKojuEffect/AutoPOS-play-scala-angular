@@ -5,7 +5,7 @@ import {Tag} from "./tag";
 @Injectable()
 export class TagService {
 
-  private baseUrl = "http://localhost:9000/api/tags";
+  private baseUrl = "/tags";
 
   constructor(private http:Http) {
   }

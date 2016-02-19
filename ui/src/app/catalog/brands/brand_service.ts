@@ -5,7 +5,7 @@ import {Brand} from "./brand";
 @Injectable()
 export class BrandService {
 
-  private baseUrl = "http://localhost:9000/api/brands";
+  private baseUrl = "/brands";
 
   constructor(private http:Http) {
   }
