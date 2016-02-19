@@ -1,10 +1,14 @@
-package autopos.shared.pagination
+package autopos.shared.sort
 
-import autopos.shared.pagination.Sort.Order
+import autopos.shared.sort.Sortable.Order
 
-case class Sort(orders: Seq[Order])
+trait Sortable {
 
-object Sort {
+  def orders: Seq[Order]
+
+}
+
+object Sortable {
 
   case class Order(property: String,
                    direction: Direction = Direction.ASC,

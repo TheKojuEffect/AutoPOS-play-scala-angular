@@ -30,7 +30,7 @@ PUT           /api/tags/:id              autopos.item.web.TagApi.updateTag(id: I
 DELETE        /api/tags/:id              autopos.item.web.TagApi.deleteTag(id: Int)
 
 # Items
-GET           /api/items                 autopos.item.web.ItemApi.getItems(page:Int ?= 1, size:Int ?= 20)
+GET           /api/items                 autopos.item.web.ItemApi.getItems(pageable: autopos.shared.pagination.Pager)
 POST          /api/items                 autopos.item.web.ItemApi.addItem
 GET           /api/items/:id             autopos.item.web.ItemApi.getItem(id: Int)
 PUT           /api/items/:id             autopos.item.web.ItemApi.updateItem(id: Int)
