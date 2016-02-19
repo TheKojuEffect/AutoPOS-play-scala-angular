@@ -15,10 +15,10 @@ import {EditBrand} from "./edit_brand";
 })
 
 @RouteConfig(<any>[
-  {path: "/", component: BrandList, as: "BrandList", useAsDefault: true},
-  {path: "/add", component: AddBrand, as: "AddBrand"},
-  {path: "/:id", component: BrandDetail, as: "BrandDetail"},
-  {path: "/:id/edit", component: EditBrand, as: "EditBrand"}
+  {path: "/", component: BrandList, name: "BrandList", useAsDefault: true},
+  {path: "/add", component: AddBrand, name: "AddBrand"},
+  {path: "/:id", component: BrandDetail, name: "BrandDetail"},
+  {path: "/:id/edit", component: EditBrand, name: "EditBrand"}
 ])
 
 

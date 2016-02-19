@@ -17,8 +17,8 @@ import {Home} from "./home/home";
 
 
 @RouteConfig(<any>[
-  {path: "/", component: Home, as: "Home", useAsDefault: true},
-  {path: "/catalog/...", component: Catalog, as: "Catalog"}
+  {path: "/", component: Home, name: "Home", useAsDefault: true},
+  {path: "/catalog/...", component: Catalog, name: "Catalog"}
 ])
 
 
