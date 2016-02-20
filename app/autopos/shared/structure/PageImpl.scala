@@ -1,6 +1,6 @@
 package autopos.shared.structure
 
 case class PageImpl[T](content: Seq[T],
-                       pageable: Pageable,
-                       totalElements: Int)
+                       totalElements: Int,
+                       pageable: Pageable)
   extends Page[T]

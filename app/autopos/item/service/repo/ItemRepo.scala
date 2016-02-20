@@ -1,10 +1,11 @@
 package autopos.item.service.repo
 
 import javax.inject.Singleton
+
 import autopos.item.model._
 import autopos.item.service.ItemCode
 import autopos.shared.service.repo.BaseRepo
-import autopos.shared.structure.Pageable
+import autopos.shared.structure.{Page, PageImpl, Pageable}
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -19,7 +20,7 @@ trait ItemRepo extends BaseRepo {
 
   def findById(id: Int): Future[Option[Item]]
 
-  def list(pageable: Pageable): Future[Seq[Item]]
+  def list(pageable: Pageable): Future[Page[Item]]
 
   def delete(id: Int): Future[Int]
 
@@ -32,16 +33,28 @@ class ItemRepoImpl
 
   import driver.api._
 
-  override def list(pageable: Pageable): Future[Seq[Item]] = db.run {
-    (for {
-      ((item, brand), category) <- items
-        .joinLeft(brands).on(_.brandId === _.id)
-        .joinLeft(categories).on(_._1.categoryId === _.id)
-    } yield (item, brand, category))
-      .drop(pageable.offset)
-      .take(pageable.pageSize)
-      .result
-      .map(_.map(Item.fromSchemaTuple(_)))
+  override def list(pageable: Pageable): Future[Page[Item]] = {
+
+    val itemsQuery = items
+      .joinLeft(brands).on(_.brandId === _.id)
+      .joinLeft(categories).on(_._1.categoryId === _.id)
+
+    val listQuery = for {
+      ((item, brand), category) <- itemsQuery
+        .drop(pageable.offset)
+        .take(pageable.pageSize)
+
+    } yield (item, brand, category)
+
+    db.run {
+      for {
+        content <- listQuery.result
+          .map(_.map(Item.fromSchemaTuple))
+
+        totalElements <- itemsQuery.length.result
+
+      } yield PageImpl(content, totalElements, pageable)
+    }
   }
 
   override def findById(id: Int) = db.run {
