@@ -1,4 +1,4 @@
-package autopos.shared.pagination
+package autopos.shared.structure
 
 trait Pageable {
 

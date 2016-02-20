@@ -4,7 +4,7 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model.{Item, ItemSchema}
 import autopos.item.service.repo.ItemRepo
-import autopos.shared.pagination.Pageable
+import autopos.shared.structure.Pageable
 import com.google.inject.ImplementedBy
 
 import scala.concurrent.Future
