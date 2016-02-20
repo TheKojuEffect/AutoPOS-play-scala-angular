@@ -1,10 +1,17 @@
 package autopos.shared.web
 
-case class PagedResoures[T](content: Iterable[T], pageMetaData: PageMetaData, links: Seq[Link])
 
-case class PageMetaData(number: Int, size: Int, totalElements: Int, totalPages: Int)
+case class PagedResources[T](content: Iterable[T],
+                             pageMeta: PageMeta,
+                             links: Seq[Link])
 
-case class Link(rel: String, href: String)
+case class PageMeta(number: Int,
+                    size: Int,
+                    totalElements: Int,
+                    totalPages: Int)
+
+case class Link(rel: String,
+                href: String)
 
 object Link {
   val SELF = "self"

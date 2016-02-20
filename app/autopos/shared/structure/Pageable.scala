@@ -12,4 +12,8 @@ trait Pageable {
   final def offset: Int =
     (pageNumber - 1) * pageSize
 
+  def sortable: Option[Sortable]
+
+  def searchable: Option[Searchable]
+
 }
