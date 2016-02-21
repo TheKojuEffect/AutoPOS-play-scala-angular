@@ -17,8 +17,8 @@ class ItemApi @Inject()(itemService: ItemService)
 
   def getItems(pageable: Pageable) = Action.async {
     itemService.getItems(pageable)
-      .map { items =>
-        Ok(toJson(items.content))
+      .map { itemsPage =>
+        Ok(toJson(itemsPage))
       }
   }
 

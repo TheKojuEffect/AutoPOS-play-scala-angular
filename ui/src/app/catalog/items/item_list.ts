@@ -30,7 +30,7 @@ export class ItemList implements OnActivate {
   routerOnActivate(nextInstruction:ComponentInstruction, prevInstruction:ComponentInstruction):any {
     return this.itemService.getItems()
       .toPromise()
-      .then(res => this.items = res.json());
+      .then(res => this.items = res.json().elements);
   }
 
   private setPage(pageNo:number):void {

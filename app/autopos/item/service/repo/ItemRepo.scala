@@ -48,12 +48,12 @@ class ItemRepoImpl
 
     db.run {
       for {
-        content <- listQuery.result
+        elements <- listQuery.result
           .map(_.map(Item.fromSchemaTuple))
 
         totalElements <- itemsQuery.length.result
 
-      } yield PageImpl(content, totalElements, pageable)
+      } yield PageImpl(elements, totalElements, pageable)
     }
   }
 
