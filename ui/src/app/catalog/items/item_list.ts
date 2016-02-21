@@ -10,6 +10,8 @@ import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 import "rxjs/Rx";
 import {PageMetadata} from "../../shared/PageMetadata";
 import {Page} from "../../shared/Page";
+import {Pager} from "../../shared/Pager";
+import {Pageable} from "../../shared/Pageable";
 
 
 @Component({
@@ -31,7 +33,18 @@ export class ItemList implements OnActivate {
   }
 
   routerOnActivate(nextInstruction:ComponentInstruction, prevInstruction:ComponentInstruction):any {
-    return this.itemService.getItems()
+    let pageable = new Pager(this.pageMetadata.page, this.pageMetadata.size);
+    return this.loadItems(pageable);
+  }
+
+  //noinspection JSUnusedGlobalSymbols
+  changePage(page: number, size: number) {
+    let pageable = new Pager(page, size);
+    return this.loadItems(pageable);
+  }
+
+  private loadItems(pageable:Pageable) {
+    return this.itemService.getItems(pageable)
       .toPromise()
       .then(res => {
           let page:Page<Item> = res.json();

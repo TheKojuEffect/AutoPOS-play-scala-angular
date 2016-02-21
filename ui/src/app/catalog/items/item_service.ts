@@ -1,6 +1,7 @@
 import {Http} from "angular2/http";
 import {Injectable} from "angular2/core";
 import {Item} from "./item";
+import {Pageable} from "../../shared/Pageable";
 
 @Injectable()
 export class ItemService {
@@ -10,8 +11,9 @@ export class ItemService {
   constructor(private http:Http) {
   }
 
-  public getItems() {
-    return this.http.get(this.baseUrl);
+  public getItems(pageable:Pageable) {
+    let url = this.baseUrl + "?" + pageable.queryString();
+    return this.http.get(url);
   }
 
   public getItem(id:number) {
