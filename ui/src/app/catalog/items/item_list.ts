@@ -8,6 +8,8 @@ import {ComponentInstruction} from "angular2/router";
 import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
 
 import "rxjs/Rx";
+import {PageMetadata} from "../../shared/PageMetadata";
+import {Page} from "../../shared/Page";
 
 
 @Component({
@@ -20,31 +22,23 @@ export class ItemList implements OnActivate {
 
   items:Array<Item>;
 
-  private totalItems:number = 175;
-  private currentPage:number = 1;
-  private itemsPerPage:number = 20;
+  pageMetadata:PageMetadata;
 
   constructor(private itemService:ItemService) {
+    this.pageMetadata = new PageMetadata();
+    this.pageMetadata.page = 1;
+    this.pageMetadata.size = 20;
   }
 
   routerOnActivate(nextInstruction:ComponentInstruction, prevInstruction:ComponentInstruction):any {
     return this.itemService.getItems()
       .toPromise()
-      .then(res => this.items = res.json().elements);
+      .then(res => {
+          let page:Page<Item> = res.json();
+          this.items = page.elements;
+          this.pageMetadata = page.metadata;
+        }
+      );
   }
-
-  private setPage(pageNo:number):void {
-    this.currentPage = pageNo;
-  };
-
-  private pageChanged(event:any):void {
-    console.log('Page changed to: ' + event.page);
-    console.log('Number items per page: ' + event.itemsPerPage);
-  };
-
-  private numOfPages(num:any):void {
-    console.log("Number of pages: " + num);
-  }
-
 
 }

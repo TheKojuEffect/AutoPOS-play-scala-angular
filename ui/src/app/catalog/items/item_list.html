@@ -44,10 +44,9 @@
   </table>
 
   <pagination class="pagination-sm"
-              [totalItems]="totalItems" [itemsPerPage]="20" [maxSize]="5"
+              [totalItems]="pageMetadata.totalElements" [itemsPerPage]="pageMetadata.size" [maxSize]="5"
               [boundaryLinks]="true" [rotate]="false"
-              [(ngModel)]="currentPage"
-              (numPages)="numOfPages($event)" (pageChanged)="pageChanged($event)">
+              [(ngModel)]="pageMetadata.page">
 
   </pagination>
 
