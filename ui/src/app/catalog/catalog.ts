@@ -15,10 +15,10 @@ import {ROUTER_DIRECTIVES} from "angular2/router";
 
 
 @RouteConfig(<any>[
-  {path: "/items/...", component: Items, as: "Items", useAsDefault: true},
-  {path: "/categories/...", component: Categories, as: "Categories"},
-  {path: "/brands/...", component: Brands, as: "Brands"}
-  //{path: "/tags/...", component: Tags, as: "Tags"}
+  {path: "/items/...", component: Items, name: "Items", useAsDefault: true},
+  {path: "/categories/...", component: Categories, name: "Categories"},
+  {path: "/brands/...", component: Brands, name: "Brands"}
+  //{path: "/tags/...", component: Tags, name: "Tags"}
 ])
 
 

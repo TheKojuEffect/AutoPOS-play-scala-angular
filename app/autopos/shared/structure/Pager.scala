@@ -1,8 +1,12 @@
-package autopos.shared.pagination
+package autopos.shared.structure
 
 import play.api.mvc.QueryStringBindable
 
-case class Pager(pageNumber: Int, pageSize: Int) extends Pageable
+case class Pager(pageNumber: Int, pageSize: Int,
+                 sortable: Option[Sortable] = None,
+                 searchable: Option[Searchable] = None)
+  extends Pageable
+
 
 object Pager {
 

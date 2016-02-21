@@ -17,10 +17,10 @@ import {CategoryService} from "../categories/category_service";
 })
 
 @RouteConfig(<any>[
-  {path: "/", component: ItemList, as: "ItemList", useAsDefault: true},
-  {path: "/add", component: AddItem, as: "AddItem"},
-  {path: "/:id", component: ItemDetail, as: "ItemDetail"},
-  {path: "/:id/edit", component: EditItem, as: "EditItem"}
+  {path: "/", component: ItemList, name: "ItemList", useAsDefault: true},
+  {path: "/add", component: AddItem, name: "AddItem"},
+  {path: "/:id", component: ItemDetail, name: "ItemDetail"},
+  {path: "/:id/edit", component: EditItem, name: "EditItem"}
 ])
 
 

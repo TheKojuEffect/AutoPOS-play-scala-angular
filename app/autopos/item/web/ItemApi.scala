@@ -4,7 +4,7 @@ import javax.inject.Inject
 
 import autopos.item.model.Item
 import autopos.item.service.ItemService
-import autopos.shared.pagination.Pageable
+import autopos.shared.structure.Pageable
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
 import play.api.mvc.{Action, Controller}
@@ -17,8 +17,8 @@ class ItemApi @Inject()(itemService: ItemService)
 
   def getItems(pageable: Pageable) = Action.async {
     itemService.getItems(pageable)
-      .map { items =>
-        Ok(toJson(items))
+      .map { itemsPage =>
+        Ok(toJson(itemsPage))
       }
   }
 

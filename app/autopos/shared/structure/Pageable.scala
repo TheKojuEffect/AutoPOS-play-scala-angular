@@ -1,4 +1,4 @@
-package autopos.shared.pagination
+package autopos.shared.structure
 
 trait Pageable {
 
@@ -11,5 +11,9 @@ trait Pageable {
 
   final def offset: Int =
     (pageNumber - 1) * pageSize
+
+  def sortable: Option[Sortable]
+
+  def searchable: Option[Searchable]
 
 }

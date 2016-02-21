@@ -15,10 +15,10 @@ import {EditTag} from "./edit_tag";
 })
 
 @RouteConfig(<any>[
-  {path: "/", component: TagList, as: "TagList", useAsDefault: true},
-  {path: "/add", component: AddTag, as: "AddTag"},
-  {path: "/:id", component: TagDetail, as: "TagDetail"},
-  {path: "/:id/edit", component: EditTag, as: "EditTag"}
+  {path: "/", component: TagList, name: "TagList", useAsDefault: true},
+  {path: "/add", component: AddTag, name: "AddTag"},
+  {path: "/:id", component: TagDetail, name: "TagDetail"},
+  {path: "/:id/edit", component: EditTag, name: "EditTag"}
 ])
 
 

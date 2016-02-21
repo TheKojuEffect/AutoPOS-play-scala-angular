@@ -15,10 +15,10 @@ import {EditCategory} from "./edit_category";
 })
 
 @RouteConfig(<any>[
-  {path: "/", component: CategoryList, as: "CategoryList", useAsDefault: true},
-  {path: "/add", component: AddCategory, as: "AddCategory"},
-  {path: "/:id", component: CategoryDetail, as: "CategoryDetail"},
-  {path: "/:id/edit", component: EditCategory, as: "EditCategory"}
+  {path: "/", component: CategoryList, name: "CategoryList", useAsDefault: true},
+  {path: "/add", component: AddCategory, name: "AddCategory"},
+  {path: "/:id", component: CategoryDetail, name: "CategoryDetail"},
+  {path: "/:id/edit", component: EditCategory, name: "EditCategory"}
 ])
 
 

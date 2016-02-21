@@ -1,6 +1,6 @@
-package autopos.shared.sort
+package autopos.shared.structure
 
-import autopos.shared.sort.Sortable.Order
+import autopos.shared.structure.Sortable.Order
 
 trait Sortable {
 
