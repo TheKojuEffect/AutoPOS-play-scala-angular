@@ -13,7 +13,7 @@
 
 <autopos>Loading...</autopos>
 
-<script>
+  <script>
   // function.name (all IE)
   // Remove once https://github.com/angular/angular/issues/6501 is fixed.
   /*! @source http://stackoverflow.com/questions/6903762/function-name-not-supported-in-ie*/
@@ -29,30 +29,35 @@
       }
     });
   }
-</script>
+  </script>
 
-<!-- shims:js -->
-<!-- endinject -->
+  <script>
+  // Fixes undefined module function in SystemJS bundle
+  function module() {}
+  </script>
 
-<% if (ENV === 'dev') { %>
-<script>System.config(<%= JSON.stringify(SYSTEM_CONFIG) %>)</script>
-<% } %>
+  <!-- shims:js -->
+  <!-- endinject -->
 
-<!-- libs:js -->
-<!-- endinject -->
+  <% if (ENV === 'dev') { %>
+  <script>System.config(<%= JSON.stringify(SYSTEM_CONFIG) %>)</script>
+  <% } %>
 
-<!-- inject:js -->
-<!-- endinject -->
+  <!-- libs:js -->
+  <!-- endinject -->
 
-<% if (ENV === 'dev') { %>
-<script>
+  <!-- inject:js -->
+  <!-- endinject -->
+
+  <% if (ENV === 'dev') { %>
+  <script>
   System.import('<%= BOOTSTRAP_MODULE %>')
     .catch(function (e) {
       console.error(e,
-        'Report this error');
+        'Report this error at https://github.com/mgechev/angular2-seed/issues');
     });
-</script>
-<% } %>
+  </script>
+  <% } %>
 
 </body>
 </html>
