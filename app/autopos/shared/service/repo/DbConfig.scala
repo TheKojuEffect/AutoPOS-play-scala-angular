@@ -6,6 +6,6 @@ import slick.driver.JdbcProfile
 
 trait DbConfig extends HasDatabaseConfig[JdbcProfile] {
 
-  protected final val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
+  protected final lazy val dbConfig = DatabaseConfigProvider.get[JdbcProfile](Play.current)
 
 }
