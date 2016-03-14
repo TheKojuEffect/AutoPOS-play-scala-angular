@@ -8,7 +8,7 @@ import play.api.mvc.{Action, Controller}
 
 class UserApi @Inject()(userService: UserService) extends Controller {
 
-  def getUser(id: Int) = Action {
+  def getUser(id: Long) = Action {
     userService.getUser(id)
       .map(user => Ok(Json.toJson(user)))
       .getOrElse(NotFound)

@@ -39,7 +39,7 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
       )
   }
 
-  def getBrand(id: Int) = Action.async {
+  def getBrand(id: Long) = Action.async {
     brandRepo.findById(id)
       .map {
         brandOption => brandOption.map {
@@ -50,7 +50,7 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
   }
 
 
-  def updateBrand(id: Int) = Action.async(parse.json) { request =>
+  def updateBrand(id: Long) = Action.async(parse.json) { request =>
     request.body.validate[Brand]
       .fold(
         errors => {
@@ -67,7 +67,7 @@ class BrandApi @Inject()(brandRepo: BrandRepo)
       )
   }
 
-  def deleteBrand(id: Int) = Action.async {
+  def deleteBrand(id: Long) = Action.async {
     brandRepo.delete(id)
       .map {
         _ => NoContent

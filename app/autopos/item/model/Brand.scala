@@ -7,7 +7,7 @@ import play.api.libs.json._
 
 
 case class Brand(name: String,
-                 id: Int = 0)
+                 id: Long = 0)
 
 
 object Brand {
@@ -16,7 +16,7 @@ object Brand {
     (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
       .map(Brand(_))
 
-  val brandIdReads = (__ \ "id").read[Int]
+  val brandIdReads = (__ \ "id").read[Long]
     .map(Brand("", _))
 
   implicit val brandWrites = Json.writes[Brand]
@@ -35,7 +35,7 @@ trait BrandDbModule {
 
     def name = column[String]("name", O.Length(50))
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def * = (name, id) <>((Brand.apply _).tupled, Brand.unapply)
 

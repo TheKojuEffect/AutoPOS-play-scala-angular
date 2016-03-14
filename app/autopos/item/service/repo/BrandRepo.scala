@@ -13,7 +13,7 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[BrandRepoImpl])
 trait BrandRepo extends HasDbConfig {
 
-  def findById(id: Int): Future[Option[Brand]]
+  def findById(id: Long): Future[Option[Brand]]
 
   def list(): Future[Seq[Brand]]
 
@@ -21,7 +21,7 @@ trait BrandRepo extends HasDbConfig {
 
   def update(brand: Brand): Future[Int]
 
-  def delete(id: Int): Future[Int]
+  def delete(id: Long): Future[Int]
 }
 
 
@@ -32,7 +32,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
 
   import driver.api._
 
-  override def findById(id: Int) = db.run {
+  override def findById(id: Long) = db.run {
     brands.filter(_.id === id).result.headOption
   }
 
@@ -52,7 +52,7 @@ class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
       .update(brand)
   }
 
-  override def delete(id: Int) = db.run {
+  override def delete(id: Long) = db.run {
     brands.filter(_.id === id)
       .delete
   }

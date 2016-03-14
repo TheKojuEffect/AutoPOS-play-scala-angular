@@ -15,7 +15,7 @@ case class Item(name: String,
                 category: Option[Category],
                 brand: Option[Brand],
                 code: String = "",
-                id: Int = 0)
+                id: Long = 0)
 
 object Item {
 
@@ -49,10 +49,10 @@ case class ItemSchema(name: String,
                       description: Option[String],
                       remarks: Option[String],
                       markedPrice: BigDecimal,
-                      categoryId: Option[Int],
-                      brandId: Option[Int],
+                      categoryId: Option[Long],
+                      brandId: Option[Long],
                       code: String = "",
-                      id: Int = 0)
+                      id: Long = 0)
 
 object ItemSchema {
 
@@ -79,17 +79,17 @@ trait ItemDbModule {
 
     def markedPrice = column[BigDecimal]("marked_price")
 
-    def categoryId = column[Option[Int]]("category_id")
+    def categoryId = column[Option[Long]]("category_id")
 
     def category = foreignKey("item_category_id_fkey", categoryId, categories)(_.id.?)
 
-    def brandId = column[Option[Int]]("brand_id")
+    def brandId = column[Option[Long]]("brand_id")
 
     def brand = foreignKey("item_brand_id_fkey", brandId, brands)(_.id.?)
 
-    def code = column[String]("code", O.Length(7), O.AutoInc) // AutoInc fields are not inserted
+    def code = column[String]("code", O.Length(14), O.AutoInc) // AutoInc fields are not inserted
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def * = (name, description, remarks, markedPrice, categoryId, brandId, code, id) <>
       ((ItemSchema.apply _).tupled, ItemSchema.unapply)
@@ -98,13 +98,13 @@ trait ItemDbModule {
 
   /* ******************************** */
 
-  private[ItemDbModule] class ItemTagTable(slickTag: SlickTag) extends Table[(Int, Int)](slickTag, "item_tag") {
+  private[ItemDbModule] class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Long)](slickTag, "item_tag") {
 
-    def itemId = column[Int]("item_id")
+    def itemId = column[Long]("item_id")
 
     def item = foreignKey("item_tag_item_id_fkey", itemId, items)(_.id)
 
-    def tagId = column[Int]("tag_id")
+    def tagId = column[Long]("tag_id")
 
     def tag = foreignKey("item_tag_tag_id_fkey", tagId, tags)(_.id)
 

@@ -2,7 +2,7 @@ package autopos.user.model
 
 import play.api.libs.json.Json
 
-case class User(id: Int,
+case class User(id: Long,
                 username: String,
                 password: String,
                 authorities: Set[Authority],

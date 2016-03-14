@@ -7,7 +7,7 @@ import play.api.libs.json._
 
 case class Category(shortName: String,
                     name: String,
-                    id: Int = 0)
+                    id: Long = 0)
 
 
 object Category {
@@ -17,7 +17,7 @@ object Category {
       (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50))
     ) (Category.apply(_, _))
 
-  val categoryIdReads = (__ \ "id").read[Int]
+  val categoryIdReads = (__ \ "id").read[Long]
     .map(Category("", "", _))
 
   implicit val categoryWrites = Json.writes[Category]
@@ -37,7 +37,7 @@ trait CategoryDbModule {
 
     def name = column[String]("name", O.Length(50))
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def * = ( shortName, name, id) <>((Category.apply _).tupled, Category.unapply)
 

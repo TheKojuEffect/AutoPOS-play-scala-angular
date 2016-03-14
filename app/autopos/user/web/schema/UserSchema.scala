@@ -3,7 +3,7 @@ package autopos.user.web.schema
 import autopos.user.model.Role.Role
 import play.api.libs.json.Json
 
-case class UserResource(id: Int,
+case class UserResource(id: Long,
                         username: String,
                         firstName: String,
                         lastName: String,

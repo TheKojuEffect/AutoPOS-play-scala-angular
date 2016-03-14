@@ -17,15 +17,15 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def create(item: ItemSchema): Future[Int]
+  def create(item: ItemSchema): Future[Long]
 
   def update(item: ItemSchema): Future[Int]
 
-  def findById(id: Int): Future[Option[Item]]
+  def findById(id: Long): Future[Option[Item]]
 
   def list(pageable: Pageable): Future[Page[Item]]
 
-  def delete(id: Int): Future[Int]
+  def delete(id: Long): Future[Int]
 
 }
 
@@ -61,7 +61,7 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
     }
   }
 
-  override def findById(id: Int) = db.run {
+  override def findById(id: Long) = db.run {
     (for {
       ((item, brand), category) <- items.filter(_.id === id)
         .joinLeft(brands).on(_.brandId === _.id)
@@ -82,7 +82,7 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
     (items returning items.map(_.id)) += item
   }
 
-  override def delete(id: Int) = db.run {
+  override def delete(id: Long) = db.run {
     items.filter(_.id === id)
       .delete
   }

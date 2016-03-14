@@ -22,7 +22,7 @@ class ItemApi @Inject()(itemService: ItemService)
       }
   }
 
-  def getItem(id: Int) = Action.async {
+  def getItem(id: Long) = Action.async {
     itemService.getItem(id)
       .map {
         case Some(item) => Ok(toJson(item))
@@ -30,7 +30,7 @@ class ItemApi @Inject()(itemService: ItemService)
       }
   }
 
-  def updateItem(id: Int) = Action.async(parse.json) { request =>
+  def updateItem(id: Long) = Action.async(parse.json) { request =>
     request.body.validate[Item]
       .fold(
         errors => {
@@ -61,7 +61,7 @@ class ItemApi @Inject()(itemService: ItemService)
       )
   }
 
-  def deleteItem(id: Int) = Action.async {
+  def deleteItem(id: Long) = Action.async {
     itemService.deleteItem(id)
       .map {
         _ => NoContent

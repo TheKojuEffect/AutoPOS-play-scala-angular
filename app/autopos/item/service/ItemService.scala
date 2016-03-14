@@ -12,15 +12,15 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemServiceImpl])
 trait ItemService {
 
-  def addItem(item: Item): Future[Int]
+  def addItem(item: Item): Future[Long]
 
   def updateItem(item: Item): Future[Int]
 
   def getItems(pageable: Pageable): Future[Page[Item]]
 
-  def getItem(id: Int): Future[Option[Item]]
+  def getItem(id: Long): Future[Option[Item]]
 
-  def deleteItem(id: Int): Future[Int]
+  def deleteItem(id: Long): Future[Int]
 
 }
 
@@ -31,7 +31,7 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def getItems(pageable: Pageable) =
     itemRepo.list(pageable)
 
-  override def getItem(id: Int) =
+  override def getItem(id: Long) =
     itemRepo.findById(id)
 
   override def updateItem(item: Item) =
@@ -40,7 +40,7 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def addItem(item: Item) =
     itemRepo.create(ItemSchema.fromItem(item))
 
-  override def deleteItem(id: Int) =
+  override def deleteItem(id: Long) =
     itemRepo.delete(id)
 
 }

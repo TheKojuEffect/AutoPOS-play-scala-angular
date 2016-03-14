@@ -19,9 +19,9 @@ trait CategoryRepo extends BaseRepo {
 
   def update(category: Category): Future[Int]
 
-  def findById(id: Int): Future[Option[Category]]
+  def findById(id: Long): Future[Option[Category]]
 
-  def delete(id: Int): Future[Int]
+  def delete(id: Long): Future[Int]
 
 }
 
@@ -48,12 +48,12 @@ class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
       .update(category)
   }
 
-  override def findById(id: Int) = db.run {
+  override def findById(id: Long) = db.run {
     categories.filter(_.id === id)
       .result.headOption
   }
 
-  override def delete(id: Int) = db.run {
+  override def delete(id: Long) = db.run {
     categories.filter(_.id === id)
       .delete
   }

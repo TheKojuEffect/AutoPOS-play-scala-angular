@@ -21,7 +21,7 @@ class TagApi @Inject()(tagRepo: TagRepo)
       }
   }
 
-  def getTag(id: Int) = Action.async {
+  def getTag(id: Long) = Action.async {
     tagRepo.findById(id)
       .map {
         tagOption => tagOption map {
@@ -47,7 +47,7 @@ class TagApi @Inject()(tagRepo: TagRepo)
       )
   }
 
-  def updateTag(id: Int) = Action.async(parse.json) { request =>
+  def updateTag(id: Long) = Action.async(parse.json) { request =>
     request.body.validate[Tag]
       .fold(
         errors => {
@@ -62,7 +62,7 @@ class TagApi @Inject()(tagRepo: TagRepo)
         })
   }
 
-  def deleteTag(id: Int) = Action.async {
+  def deleteTag(id: Long) = Action.async {
     tagRepo.delete(id)
       .map {
         _ => NoContent

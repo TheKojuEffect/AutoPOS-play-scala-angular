@@ -11,28 +11,28 @@ GET           /api/account               autopos.auth.web.AccountApi.getAccount(
 # Brands
 GET           /api/brands                autopos.item.web.BrandApi.getBrands
 POST          /api/brands                autopos.item.web.BrandApi.addBrand
-GET           /api/brands/:id            autopos.item.web.BrandApi.getBrand(id: Int)
-PUT           /api/brands/:id            autopos.item.web.BrandApi.updateBrand(id: Int)
-DELETE        /api/brands/:id            autopos.item.web.BrandApi.deleteBrand(id: Int)
+GET           /api/brands/:id            autopos.item.web.BrandApi.getBrand(id: Long)
+PUT           /api/brands/:id            autopos.item.web.BrandApi.updateBrand(id: Long)
+DELETE        /api/brands/:id            autopos.item.web.BrandApi.deleteBrand(id: Long)
 
 # Categories
 GET           /api/categories            autopos.item.web.CategoryApi.getCategories
 POST          /api/categories            autopos.item.web.CategoryApi.addCategory
-GET           /api/categories/:id        autopos.item.web.CategoryApi.getCategory(id:Int)
-PUT           /api/categories/:id        autopos.item.web.CategoryApi.updateCategory(id: Int)
-DELETE        /api/categories/:id        autopos.item.web.CategoryApi.deleteCategory(id: Int)
+GET           /api/categories/:id        autopos.item.web.CategoryApi.getCategory(id:Long)
+PUT           /api/categories/:id        autopos.item.web.CategoryApi.updateCategory(id: Long)
+DELETE        /api/categories/:id        autopos.item.web.CategoryApi.deleteCategory(id: Long)
 
 # Tags
 GET           /api/tags                  autopos.item.web.TagApi.getTags
 POST          /api/tags                  autopos.item.web.TagApi.addTag
-GET           /api/tags/:id              autopos.item.web.TagApi.getTag(id: Int)
-PUT           /api/tags/:id              autopos.item.web.TagApi.updateTag(id: Int)
-DELETE        /api/tags/:id              autopos.item.web.TagApi.deleteTag(id: Int)
+GET           /api/tags/:id              autopos.item.web.TagApi.getTag(id: Long)
+PUT           /api/tags/:id              autopos.item.web.TagApi.updateTag(id: Long)
+DELETE        /api/tags/:id              autopos.item.web.TagApi.deleteTag(id: Long)
 
 # Items
 GET           /api/items                 autopos.item.web.ItemApi.getItems(pageable: autopos.shared.structure.Pager)
 POST          /api/items                 autopos.item.web.ItemApi.addItem
-GET           /api/items/:id             autopos.item.web.ItemApi.getItem(id: Int)
-PUT           /api/items/:id             autopos.item.web.ItemApi.updateItem(id: Int)
-DELETE        /api/items/:id             autopos.item.web.ItemApi.deleteItem(id: Int)
+GET           /api/items/:id             autopos.item.web.ItemApi.getItem(id: Long)
+PUT           /api/items/:id             autopos.item.web.ItemApi.updateItem(id: Long)
+DELETE        /api/items/:id             autopos.item.web.ItemApi.deleteItem(id: Long)
 

@@ -7,7 +7,7 @@ import play.api.libs.json._
 
 
 case class Tag(name: String,
-               id: Int = 0)
+               id: Long = 0)
 
 
 object Tag {
@@ -32,7 +32,7 @@ trait TagDbModule {
 
     def name = column[String]("name", O.Length(50))
 
-    def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
     def * = (name, id) <>((Tag.apply _).tupled, Tag.unapply)
 

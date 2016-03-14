@@ -21,7 +21,7 @@ class CategoryApi @Inject()(categoryRepo: CategoryRepo)
       }
   }
 
-  def getCategory(id: Int) = Action.async {
+  def getCategory(id: Long) = Action.async {
     categoryRepo.findById(id)
       .map { categoryOption =>
         categoryOption map { category =>
@@ -30,7 +30,7 @@ class CategoryApi @Inject()(categoryRepo: CategoryRepo)
       }
   }
 
-  def updateCategory(id: Int) = Action.async(parse.json) { request =>
+  def updateCategory(id: Long) = Action.async(parse.json) { request =>
     request.body.validate[Category]
       .fold(
         errors => {
@@ -65,7 +65,7 @@ class CategoryApi @Inject()(categoryRepo: CategoryRepo)
       )
   }
 
-  def deleteCategory(id: Int) = Action.async {
+  def deleteCategory(id: Long) = Action.async {
     categoryRepo.delete(id)
       .map { _ =>
         NoContent

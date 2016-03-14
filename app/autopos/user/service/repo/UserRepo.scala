@@ -7,7 +7,7 @@ import com.google.inject.ImplementedBy
 @ImplementedBy(classOf[UserRepoImpl])
 private[service] trait UserRepo {
 
-  def get(id: Int): Option[User]
+  def get(id: Long): Option[User]
 
   def findByUsername(username: String): Option[User]
 
@@ -20,7 +20,7 @@ private[repo] class UserRepoImpl extends UserRepo {
     User(2, "john", "doe", Set(Authority(ROLE_USER)), "John", "Doe", true, "john_doe")
   )
 
-  override def get(id: Int): Option[User] =
+  override def get(id: Long): Option[User] =
     users.filter(_.id == id).headOption
 
   override def findByUsername(username: String): Option[User] =

@@ -9,7 +9,7 @@ import com.google.inject.ImplementedBy
 @ImplementedBy(classOf[UserServiceImpl])
 trait UserService {
 
-  def getUser(id: Int): Option[User]
+  def getUser(id: Long): Option[User]
 
   def getUser(username: String): Option[User]
 
@@ -18,7 +18,7 @@ trait UserService {
 
 class UserServiceImpl @Inject()(userRepo: UserRepo) extends UserService {
 
-  override def getUser(id: Int): Option[User] = userRepo.get(id)
+  override def getUser(id: Long): Option[User] = userRepo.get(id)
 
   override def getUser(username: String): Option[User] = userRepo.findByUsername(username)
 }

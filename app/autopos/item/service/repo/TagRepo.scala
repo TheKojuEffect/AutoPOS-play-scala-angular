@@ -19,9 +19,9 @@ trait TagRepo extends HasDbConfig {
 
   def update(tag: ItemTag): Future[Int]
 
-  def findById(id: Int): Future[Option[ItemTag]]
+  def findById(id: Long): Future[Option[ItemTag]]
 
-  def delete(id: Int): Future[Int]
+  def delete(id: Long): Future[Int]
 }
 
 
@@ -47,11 +47,11 @@ class TagRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
       .update(tag)
   }
 
-  override def findById(id: Int) = db.run {
+  override def findById(id: Long) = db.run {
     tags.filter(_.id === id).result.headOption
   }
 
-  override def delete(id: Int) = db.run {
+  override def delete(id: Long) = db.run {
     tags.filter(_.id === id).delete
   }
 
