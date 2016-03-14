@@ -53,6 +53,13 @@
       </select>
     </div>
 
+    <div class="form-group">
+      <label for="location">Location</label>
+      <textarea class="form-control" id="location" placeholder="Location" maxlength="250"
+                [(ngModel)]="item.location"
+                ngControl="remarks" #location="ngForm">
+        </textarea>
+    </div>
 
     <div class="form-group">
       <label for="remarks">Remarks</label>
@@ -72,6 +79,7 @@
         Cancel
       </button>
     </div>
+
   </form>
 </div>
 

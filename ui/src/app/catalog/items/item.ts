@@ -7,6 +7,7 @@ export class Item {
   public name:string;
   public markedPrice:number;
   public description:string;
+  public location:string;
   public remarks:string;
   public category:Category;
   public brand:Brand;
