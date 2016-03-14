@@ -2,7 +2,7 @@ package autopos.item.service
 
 private[service] object ItemCode {
 
-  private val alpha = "3KMEQPINHABTOGCWUVRYZFSXJDL"
+  private val alpha = "3KMEQPNHABTGCWUVRYZFSXJD"
 
   private val base = alpha.length
 
@@ -10,23 +10,23 @@ private[service] object ItemCode {
 
   def apply(code: String) = decode(code)
 
-  def apply(id: Int) = encode(id)
+  def apply(id: Long) = encode(id)
 
-  def encode(id: Int) = {
-    def enc(in: Int, acc: String): String =
+  def encode(id: Long) = {
+    def enc(in: Long, acc: String): String =
       if (in < 1) acc
-      else enc(in / base, alpha(in % base) + acc)
+      else enc(in / base, alpha((in % base).toInt) + acc)
 
     enc(id, "")
   }
 
-  def decode: PartialFunction[String, Int] = {
+  def decode: PartialFunction[String, Long] = {
     case code: String if code.length == 0 => 0
     case code: String if code.head != firstChar => {
       val in = code.reverse
 
-      def dec(idx: Int, acc: BigInt): Int =
-        if (idx == in.length) acc.toInt
+      def dec(idx: Int, acc: BigInt): Long =
+        if (idx == in.length) acc.toLong
         else dec(idx + 1, acc + alpha.indexOf(in(idx)) * BigInt(base).pow(idx))
 
       dec(0, 0)

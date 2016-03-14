@@ -1,26 +1,29 @@
-CREATE FUNCTION item_code(id INTEGER)
-  RETURNS VARCHAR(7) AS $code$
+CREATE FUNCTION item_code(id BIGINT)
+  RETURNS VARCHAR(14) AS $code$
 
 DECLARE
-  alphabet   VARCHAR(27);
-  base_count INTEGER DEFAULT 0;
-  code       VARCHAR(7);
-  divisor    DECIMAL(12, 4);
-  mod        INTEGER DEFAULT 0;
+  alphabet VARCHAR(24);
+  base     INTEGER DEFAULT 0;
+  code     VARCHAR(14);
+  divisor  BIGINT;
+  mod      INTEGER DEFAULT 0;
 
 BEGIN
-  alphabet := '3KMEQPINHABTOGCWUVRYZFSXJDL';
-  base_count := char_length(alphabet);
+  alphabet := '3KMEQPNHABTGCWUVRYZFSXJD';
+  base := char_length(alphabet);
   code := '';
 
-  WHILE id >= base_count LOOP
-    divisor := id / base_count;
-    mod := (id - (base_count * trunc(divisor, 0)));
+  WHILE id >= base LOOP
+    divisor := (id / base) :: BIGINT;
+    mod := (id - (base * divisor)) :: INTEGER;
     code := concat(substring(alphabet FROM mod + 1 FOR 1), code);
-    id := trunc(divisor, 0);
+    id := divisor;
   END LOOP;
 
-  code = concat(substring(alphabet FROM id + 1 FOR 1), code);
+  IF id > 0
+  THEN
+    code = concat(substring(alphabet FROM (id :: INTEGER) + 1 FOR 1), code);
+  END IF;
 
   RETURN (code);
 
