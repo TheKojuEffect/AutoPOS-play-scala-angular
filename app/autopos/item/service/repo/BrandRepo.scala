@@ -1,16 +1,17 @@
 package autopos.item.service.repo
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
-import autopos.shared.service.repo.DbConfig
 import autopos.item.model.{Brand, BrandDbModule}
+import autopos.shared.service.repo.{BaseRepoImpl, HasDbConfig}
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[BrandRepoImpl])
-trait BrandRepo extends DbConfig {
+trait BrandRepo extends HasDbConfig {
 
   def findById(id: Int): Future[Option[Brand]]
 
@@ -25,8 +26,9 @@ trait BrandRepo extends DbConfig {
 
 
 @Singleton
-class BrandRepoImpl
-  extends BrandRepo with BrandDbModule {
+class BrandRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+  extends BaseRepoImpl(dbConfigProvider)
+    with BrandRepo with BrandDbModule {
 
   import driver.api._
 

@@ -1,15 +1,17 @@
 package autopos.item.service.repo
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
+
 import autopos.item.model.{Tag => ItemTag, TagDbModule}
-import autopos.shared.service.repo.DbConfig
+import autopos.shared.service.repo.{BaseRepoImpl, HasDbConfig}
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
 
 
 @ImplementedBy(classOf[TagRepoImpl])
-trait TagRepo extends DbConfig {
+trait TagRepo extends HasDbConfig {
 
   def list(): Future[Seq[ItemTag]]
 
@@ -24,8 +26,9 @@ trait TagRepo extends DbConfig {
 
 
 @Singleton
-class TagRepoImpl
-  extends TagRepo with TagDbModule {
+class TagRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+  extends BaseRepoImpl(dbConfigProvider)
+    with TagRepo with TagDbModule {
 
   import driver.api._
 
@@ -51,4 +54,5 @@ class TagRepoImpl
   override def delete(id: Int) = db.run {
     tags.filter(_.id === id).delete
   }
+
 }

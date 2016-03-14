@@ -2,7 +2,7 @@ package autopos.item.model
 
 import autopos.item.model.Brand.brandIdReads
 import autopos.item.model.Category.categoryIdReads
-import autopos.shared.service.repo.DbConfig
+import autopos.shared.service.repo.HasDbConfig
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
 import play.api.libs.json._
@@ -61,7 +61,7 @@ object ItemSchema {
 }
 
 trait ItemDbModule {
-  self: DbConfig with BrandDbModule with CategoryDbModule with TagDbModule =>
+  self: HasDbConfig with BrandDbModule with CategoryDbModule with TagDbModule =>
 
   import driver.api.{Tag => SlickTag, _}
 

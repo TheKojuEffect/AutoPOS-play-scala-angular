@@ -1,12 +1,15 @@
 package autopos.item.service.repo
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
 
 import autopos.item.model._
 import autopos.item.service.ItemCode
-import autopos.shared.service.repo.BaseRepo
+import autopos.shared.service.repo.{BaseRepo, BaseRepoImpl}
 import autopos.shared.structure.{Page, PageImpl, Pageable}
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
+import slick.backend.DatabaseConfig
+import slick.driver.JdbcProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -28,8 +31,9 @@ trait ItemRepo extends BaseRepo {
 
 
 @Singleton
-class ItemRepoImpl
-  extends ItemRepo with BrandDbModule with CategoryDbModule with TagDbModule with ItemDbModule {
+class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+  extends BaseRepoImpl(dbConfigProvider)
+    with ItemRepo with BrandDbModule with CategoryDbModule with TagDbModule with ItemDbModule {
 
   import driver.api._
 

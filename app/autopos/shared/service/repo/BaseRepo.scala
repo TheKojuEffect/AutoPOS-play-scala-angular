@@ -1,3 +1,13 @@
 package autopos.shared.service.repo
 
-trait BaseRepo extends DbConfig
+import play.api.db.slick.DatabaseConfigProvider
+import slick.backend.DatabaseConfig
+import slick.driver.JdbcProfile
+
+trait BaseRepo extends HasDbConfig
+
+abstract class BaseRepoImpl(dbConfigProvider: DatabaseConfigProvider)
+  extends BaseRepo {
+
+  override protected final lazy val dbConfig: DatabaseConfig[JdbcProfile] = dbConfigProvider.get[JdbcProfile]
+}

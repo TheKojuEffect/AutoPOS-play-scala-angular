@@ -1,9 +1,11 @@
 package autopos.item.service.repo
 
-import javax.inject.Singleton
+import javax.inject.{Inject, Singleton}
+
 import autopos.item.model.{Category, CategoryDbModule}
-import autopos.shared.service.repo.BaseRepo
+import autopos.shared.service.repo.{BaseRepoImpl, BaseRepo}
 import com.google.inject.ImplementedBy
+import play.api.db.slick.DatabaseConfigProvider
 
 import scala.concurrent.Future
 
@@ -25,8 +27,9 @@ trait CategoryRepo extends BaseRepo {
 
 
 @Singleton
-class CategoryRepoImpl
-  extends CategoryRepo with CategoryDbModule {
+class CategoryRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
+  extends BaseRepoImpl(dbConfigProvider)
+    with CategoryRepo with CategoryDbModule {
 
   import driver.api._
 
@@ -54,7 +57,6 @@ class CategoryRepoImpl
     categories.filter(_.id === id)
       .delete
   }
-
 }
 
 

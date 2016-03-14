@@ -1,6 +1,6 @@
 package autopos.item.model
 
-import autopos.shared.service.repo.DbConfig
+import autopos.shared.service.repo.HasDbConfig
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
 import play.api.libs.json._
@@ -22,7 +22,7 @@ object Tag {
 }
 
 trait TagDbModule {
-  self: DbConfig =>
+  self: HasDbConfig =>
 
   import driver.api.{Tag => SlickTag, _}
 
