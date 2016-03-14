@@ -18,7 +18,9 @@
     <tbody>
     <tr *ngFor="#item of items">
       <td>
-        {{item.code}}
+        <a [routerLink]="['ItemDetail', {id: item.id}]">
+          {{item.code}}
+        </a>
       </td>
       <td>
         {{item.name}}

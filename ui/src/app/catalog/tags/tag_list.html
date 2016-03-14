@@ -14,7 +14,9 @@
     <tbody>
     <tr *ngFor="#tag of tags">
       <td>
-        {{tag.name}}
+        <a [routerLink]="['TagDetail', {id: tag.id}]">
+          {{tag.name}}
+        </a>
       </td>
       <td>
         <a class="btn btn-info btn-sm"

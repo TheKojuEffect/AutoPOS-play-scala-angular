@@ -14,7 +14,9 @@
     <tbody>
     <tr *ngFor="#brand of brands">
       <td>
-        {{brand.name}}
+        <a [routerLink]="['BrandDetail', {id: brand.id}]">
+          {{brand.name}}
+        </a>
       </td>
       <td>
         <a class="btn btn-info btn-sm"
