@@ -12,16 +12,6 @@
       Name is required
     </div>
 
-
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea class="form-control" id="description" placeholder="Description" maxlength="250"
-                [(ngModel)]="item.description"
-                ngControl="description" #description="ngForm">
-        </textarea>
-    </div>
-
-
     <div class="form-group">
       <label for="markedPrice">Marked Price</label>
       <input class="form-control" id="markedPrice" placeholder="Marked Price" required min="0.1"
@@ -42,7 +32,6 @@
       </select>
     </div>
 
-
     <div class="form-group">
       <label>Brand</label>
       <select ngControl="brand" [ngModel]="item.brand?.id" (ngModelChange)="changeBrand($event)">
@@ -54,10 +43,18 @@
     </div>
 
     <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" placeholder="Description" maxlength="250"
+                [(ngModel)]="item.description"
+                ngControl="description" #description="ngForm">
+        </textarea>
+    </div>
+
+    <div class="form-group">
       <label for="location">Location</label>
       <textarea class="form-control" id="location" placeholder="Location" maxlength="250"
                 [(ngModel)]="item.location"
-                ngControl="remarks" #location="ngForm">
+                ngControl="location" #location="ngForm">
         </textarea>
     </div>
 

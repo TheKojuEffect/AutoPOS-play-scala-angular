@@ -34,28 +34,11 @@
 
       <tr>
         <td>
-          <span>Description</span>
-        </td>
-        <td>
-          <input type="text" class="input-sm form-control" [value]="item.description || ''" readonly>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <span>Location</span>
-        </td>
-        <td>
-          <input type="text" class="input-sm form-control" [value]="item.location || ''" readonly>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
           <span>Category</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.category?.shortName || ''" readonly>
+          <input type="text" class="input-sm form-control"
+                 [value]="item.category ? item.category.shortName + ' -- ' + item.category.name : ''" readonly>
         </td>
       </tr>
 
@@ -70,10 +53,28 @@
 
       <tr>
         <td>
+          <span>Description</span>
+        </td>
+        <td>
+          <textarea type="text" class="input-sm form-control" [value]="item.description || ''" readonly></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <span>Location</span>
+        </td>
+        <td>
+          <textarea type="text" class="input-sm form-control" [value]="item.location || ''" readonly></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
           <span>Remarks</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.remarks || ''" readonly>
+          <textarea type="text" class="input-sm form-control" [value]="item.remarks || ''" readonly></textarea>
         </td>
       </tr>
 

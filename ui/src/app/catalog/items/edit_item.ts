@@ -38,7 +38,7 @@ export class EditItem implements OnInit {
     this.itemService.getItem(parseInt(id))
       .subscribe(item => {
         this.item = item.json();
-        this.title += " [" + this.item.name + "]";
+        this.title += " [" + this.item.code + "]";
       });
 
     this.brandService.getBrands()
