@@ -1,5 +1,9 @@
 package autopos.item.model
 
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
+
+import autopos.shared.model.Audited
 import autopos.shared.service.repo.HasDbConfig
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
@@ -7,7 +11,10 @@ import play.api.libs.json._
 
 case class Category(shortName: String,
                     name: String,
-                    id: Long = 0)
+                    id: Long = 0,
+                    createdOn: LocalDateTime = now(),
+                    lastUpdatedOn: LocalDateTime = now())
+  extends Audited
 
 
 object Category {
@@ -39,7 +46,11 @@ trait CategoryDbModule {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def * = ( shortName, name, id) <>((Category.apply _).tupled, Category.unapply)
+    def createdOn = column[LocalDateTime]("created_on")
+
+    def lastUpdatedOn = column[LocalDateTime]("last_updated_on")
+
+    def * = (shortName, name, id, createdOn, lastUpdatedOn) <>((Category.apply _).tupled, Category.unapply)
 
   }
 

@@ -1,13 +1,16 @@
 CREATE TABLE item (
-  id           BIGSERIAL PRIMARY KEY,
-  code         VARCHAR(14) UNIQUE      NOT NULL CHECK (length(code) >= 3),
-  name         VARCHAR(50)             NOT NULL,
-  marked_price DECIMAL(10, 2)          NOT NULL CHECK (marked_price > 0),
-  category_id  BIGINT REFERENCES category (id),
-  brand_id     BIGINT REFERENCES brand (id),
-  description  VARCHAR(250),
-  location     VARCHAR(250),
-  remarks      VARCHAR(250)
+  id              BIGSERIAL PRIMARY KEY,
+  code            VARCHAR(14) UNIQUE       NOT NULL CHECK (length(code) >= 3),
+  name            VARCHAR(50)              NOT NULL,
+  marked_price    DECIMAL(10, 2)           NOT NULL CHECK (marked_price > 0),
+  category_id     BIGINT REFERENCES category (id),
+  brand_id        BIGINT REFERENCES brand (id),
+  description     VARCHAR(250),
+  location        VARCHAR(250),
+  remarks         VARCHAR(250),
+
+  created_on      TIMESTAMP DEFAULT now()  NOT NULL,
+  last_updated_on TIMESTAMP DEFAULT now()  NOT NULL
 );
 
 -- Start the id from 789 so that item code is at least 3 characters length
@@ -69,3 +72,18 @@ BEFORE INSERT
 ON item
 FOR EACH ROW
 EXECUTE PROCEDURE set_item_code();
+
+-- Trigger to set audit dates before insert
+CREATE TRIGGER set_audit_dates_on_item
+BEFORE INSERT
+ON item
+FOR EACH ROW
+EXECUTE PROCEDURE set_audit_dates();
+
+-- Trigger to update audit dates before update
+CREATE TRIGGER update_audit_dates_on_item
+BEFORE UPDATE
+ON item
+FOR EACH ROW
+EXECUTE PROCEDURE update_audit_dates();
+

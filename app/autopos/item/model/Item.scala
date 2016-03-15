@@ -1,7 +1,11 @@
 package autopos.item.model
 
+import java.time.LocalDateTime
+import java.time.LocalDateTime.now
+
 import autopos.item.model.Brand.brandIdReads
 import autopos.item.model.Category.categoryIdReads
+import autopos.shared.model.Audited
 import autopos.shared.service.repo.HasDbConfig
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength}
@@ -16,7 +20,10 @@ case class Item(name: String,
                 category: Option[Category],
                 brand: Option[Brand],
                 code: String = "",
-                id: Long = 0)
+                id: Long = 0,
+                createdOn: LocalDateTime = now(),
+                lastUpdatedOn: LocalDateTime = now())
+  extends Audited
 
 object Item {
 
@@ -56,7 +63,10 @@ case class ItemSchema(name: String,
                       categoryId: Option[Long],
                       brandId: Option[Long],
                       code: String = "",
-                      id: Long = 0)
+                      id: Long = 0,
+                      createdOn: LocalDateTime = now(),
+                      lastUpdatedOn: LocalDateTime = now())
+  extends Audited
 
 object ItemSchema {
 
@@ -97,8 +107,13 @@ trait ItemDbModule {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
 
-    def * = (name, description, location, remarks, markedPrice, categoryId, brandId, code, id) <>
+    def createdOn = column[LocalDateTime]("created_on")
+
+    def lastUpdatedOn = column[LocalDateTime]("last_updated_on")
+
+    def * = (name, description, location, remarks, markedPrice, categoryId, brandId, code, id, createdOn, lastUpdatedOn) <>
       ((ItemSchema.apply _).tupled, ItemSchema.unapply)
+
   }
 
 
