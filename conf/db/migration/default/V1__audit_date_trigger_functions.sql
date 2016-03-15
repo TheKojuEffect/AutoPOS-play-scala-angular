@@ -15,9 +15,9 @@ CREATE FUNCTION update_audit_dates()
   RETURNS TRIGGER AS
 $BODY$
 BEGIN
+  NEW.created_on := OLD.created_on;
   IF ROW (NEW.*) IS DISTINCT FROM ROW (OLD.*)
   THEN
-    NEW.created_on := OLD.created_on;
     NEW.last_updated_on := now();
     RETURN NEW;
   ELSE
