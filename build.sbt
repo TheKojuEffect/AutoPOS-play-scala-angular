@@ -12,6 +12,9 @@ libraryDependencies ++= Seq(
 
   "org.postgresql" % "postgresql" % "9.4-1206-jdbc42",
 
+  "com.github.tminglei" %% "slick-pg" % "0.12.0",
+  "com.github.tminglei" %% "slick-pg_date2" % "0.12.0",
+
   "com.typesafe.play" %% "play-slick" % "2.0.0",
 
   "org.flywaydb" %% "flyway-play" % "3.0.0",
