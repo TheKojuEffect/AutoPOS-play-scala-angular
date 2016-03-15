@@ -25,10 +25,10 @@ CREATE FUNCTION item_code(id BIGINT)
 
 DECLARE
   alphabet VARCHAR(24);
-  base     INTEGER DEFAULT 0;
+  base     INT DEFAULT 0;
   code     VARCHAR(14);
   divisor  BIGINT;
-  mod      INTEGER DEFAULT 0;
+  mod      INT DEFAULT 0;
 
 BEGIN
   alphabet := '3KMEQPNHABTGCWUVRYZFSXJD';
@@ -37,14 +37,14 @@ BEGIN
 
   WHILE id >= base LOOP
     divisor := (id / base) :: BIGINT;
-    mod := (id - (base * divisor)) :: INTEGER;
+    mod := (id - (base * divisor)) :: INT;
     code := concat(substring(alphabet FROM mod + 1 FOR 1), code);
     id := divisor;
   END LOOP;
 
   IF id > 0
   THEN
-    code = concat(substring(alphabet FROM (id :: INTEGER) + 1 FOR 1), code);
+    code = concat(substring(alphabet FROM (id :: INT) + 1 FOR 1), code);
   END IF;
 
   RETURN (code);
