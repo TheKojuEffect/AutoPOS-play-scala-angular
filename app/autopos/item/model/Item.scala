@@ -21,8 +21,8 @@ case class Item(name: String,
                 brand: Option[Brand],
                 code: String = "",
                 id: Long = 0,
-                createdOn: LocalDateTime = now(),
-                lastUpdatedOn: LocalDateTime = now())
+                createdOn: LocalDateTime = now,
+                lastUpdatedOn: LocalDateTime = now)
   extends Audited
 
 object Item {
@@ -64,8 +64,8 @@ case class ItemSchema(name: String,
                       brandId: Option[Long],
                       code: String = "",
                       id: Long = 0,
-                      createdOn: LocalDateTime = now(),
-                      lastUpdatedOn: LocalDateTime = now())
+                      createdOn: LocalDateTime = now,
+                      lastUpdatedOn: LocalDateTime = now)
   extends Audited
 
 object ItemSchema {
@@ -82,7 +82,8 @@ trait ItemDbModule {
   protected final lazy val items = TableQuery[ItemTable]
   protected final lazy val itemTags = TableQuery[ItemTagTable]
 
-  private[ItemDbModule] class ItemTable(tag: SlickTag) extends Table[ItemSchema](tag, "item") {
+  private[ItemDbModule] class ItemTable(tag: SlickTag)
+    extends Table[ItemSchema](tag, "item") {
 
 
     def name = column[String]("name", O.Length(50))
@@ -119,7 +120,8 @@ trait ItemDbModule {
 
   /* ******************************** */
 
-  private[ItemDbModule] class ItemTagTable(slickTag: SlickTag) extends Table[(Long, Long)](slickTag, "item_tag") {
+  private[ItemDbModule] class ItemTagTable(slickTag: SlickTag)
+    extends Table[(Long, Long)](slickTag, "item_tag") {
 
     def itemId = column[Long]("item_id")
 

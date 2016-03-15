@@ -12,8 +12,8 @@ import play.api.libs.json._
 
 case class Tag(name: String,
                id: Long = 0,
-               createdOn: LocalDateTime = now(),
-               lastUpdatedOn: LocalDateTime = now())
+               createdOn: LocalDateTime = now,
+               lastUpdatedOn: LocalDateTime = now)
   extends Audited
 
 
