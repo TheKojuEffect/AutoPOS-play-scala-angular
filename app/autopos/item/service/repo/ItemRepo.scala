@@ -4,12 +4,11 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model._
 import autopos.item.service.ItemCode
+import autopos.item.structure.command.ItemCreateCommand
 import autopos.shared.service.repo.{BaseRepo, BaseRepoImpl}
 import autopos.shared.structure.{Page, PageImpl, Pageable}
 import com.google.inject.ImplementedBy
 import play.api.db.slick.DatabaseConfigProvider
-import slick.backend.DatabaseConfig
-import slick.driver.JdbcProfile
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -17,7 +16,7 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def create(item: Item): Future[Long]
+  def create(itemCreateCommand: ItemCreateCommand): Future[Long]
 
   def update(item: Item): Future[Int]
 
@@ -33,7 +32,12 @@ trait ItemRepo extends BaseRepo {
 @Singleton
 class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
   extends BaseRepoImpl(dbConfigProvider)
-    with ItemRepo with BrandDbModule with CategoryDbModule with TagDbModule with ItemDbModule {
+    with ItemRepo
+    with BrandDbModule
+    with CategoryDbModule
+    with TagDbModule
+    with ItemQuantityDbModule
+    with ItemDbModule {
 
   import driver.api._
 
@@ -78,8 +82,19 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
     // https://github.com/slick/slick/issues/601
   }
 
-  override def create(item: Item) = db.run {
-    (items returning items.map(_.id)) += item
+  override def create(itemCreateCommand: ItemCreateCommand) = {
+
+    val item = itemCreateCommand.toItem
+    val quantity = itemCreateCommand.quantity
+
+    val createItem = (for {
+
+      itemId <- ((items returning items.map(_.id)) += item)
+      _ <- itemQuantities += ItemQuantity(itemId, quantity)
+
+    } yield itemId).transactionally
+
+    db run createItem
   }
 
   override def delete(id: Long) = db.run {

@@ -18,6 +18,8 @@ trait ItemQuantityDbModule {
 
   import driver.api.{Tag => SlickTag, _}
 
+  protected final lazy val itemQuantities = TableQuery[ItemQuantityTable]
+
   private[ItemQuantityDbModule] class ItemQuantityTable(tag: SlickTag)
     extends Table[ItemQuantity](tag, "item_quantity") {
 

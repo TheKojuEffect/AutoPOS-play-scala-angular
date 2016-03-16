@@ -2,8 +2,9 @@ package autopos.item.service
 
 import javax.inject.{Inject, Singleton}
 
-import autopos.item.model.{ItemDto, Item}
+import autopos.item.model.{Item, ItemDto}
 import autopos.item.service.repo.ItemRepo
+import autopos.item.structure.command.ItemCreateCommand
 import autopos.shared.structure.{Page, Pageable}
 import com.google.inject.ImplementedBy
 
@@ -12,7 +13,7 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemServiceImpl])
 trait ItemService {
 
-  def addItem(item: ItemDto): Future[Long]
+  def addItem(itemCreateCommand: ItemCreateCommand): Future[Long]
 
   def updateItem(item: ItemDto): Future[Int]
 
@@ -37,8 +38,8 @@ class ItemServiceImpl @Inject()(itemRepo: ItemRepo)
   override def updateItem(item: ItemDto) =
     itemRepo.update(Item.fromItem(item))
 
-  override def addItem(item: ItemDto) =
-    itemRepo.create(Item.fromItem(item))
+  override def addItem(itemCreateCommand: ItemCreateCommand) =
+    itemRepo.create(itemCreateCommand)
 
   override def deleteItem(id: Long) =
     itemRepo.delete(id)

@@ -15,6 +15,8 @@ object CommonReads {
 
   def requiredInt(field: String) = (__ \ field).read[Int]
 
+  def optionalId(field: String) = (__ \ field).readNullable[Long]
+
 }
 
 

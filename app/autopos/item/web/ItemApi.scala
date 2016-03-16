@@ -4,6 +4,7 @@ import javax.inject.Inject
 
 import autopos.item.model.ItemDto
 import autopos.item.service.ItemService
+import autopos.item.structure.command.ItemCreateCommand
 import autopos.shared.structure.Pageable
 import play.api.libs.json.Json.toJson
 import play.api.libs.json.{JsError, Json}
@@ -46,7 +47,7 @@ class ItemApi @Inject()(itemService: ItemService)
   }
 
   def addItem = Action.async(parse.json) { request =>
-    request.body.validate[ItemDto]
+    request.body.validate[ItemCreateCommand]
       .fold(
         errors => {
           Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
