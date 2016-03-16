@@ -17,13 +17,13 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def create(item: ItemSchema): Future[Long]
+  def create(item: Item): Future[Long]
 
-  def update(item: ItemSchema): Future[Int]
+  def update(item: Item): Future[Int]
 
-  def findById(id: Long): Future[Option[Item]]
+  def findById(id: Long): Future[Option[ItemDto]]
 
-  def list(pageable: Pageable): Future[Page[Item]]
+  def list(pageable: Pageable): Future[Page[ItemDto]]
 
   def delete(id: Long): Future[Int]
 
@@ -37,7 +37,7 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
 
   import driver.api._
 
-  override def list(pageable: Pageable): Future[Page[Item]] = {
+  override def list(pageable: Pageable): Future[Page[ItemDto]] = {
 
     val itemsQuery = items
       .joinLeft(brands).on(_.brandId === _.id)
@@ -53,7 +53,7 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
     db.run {
       for {
         elements <- listQuery.result
-          .map(_.map(Item.fromSchemaTuple))
+          .map(_.map(ItemDto.fromSchemaTuple))
 
         totalElements <- itemsQuery.length.result
 
@@ -68,17 +68,17 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
         .joinLeft(categories).on(_._1.categoryId === _.id)
     } yield (item, brand, category))
       .result.headOption
-      .map(_.map(Item.fromSchemaTuple(_)))
+      .map(_.map(ItemDto.fromSchemaTuple(_)))
   }
 
-  override def update(item: ItemSchema) = db.run {
+  override def update(item: Item) = db.run {
     items.filter(_.id === item.id)
       .update(item.copy(code = ItemCode(item.id)))
     // Workaround to prevent item.code update
     // https://github.com/slick/slick/issues/601
   }
 
-  override def create(item: ItemSchema) = db.run {
+  override def create(item: Item) = db.run {
     (items returning items.map(_.id)) += item
   }
 

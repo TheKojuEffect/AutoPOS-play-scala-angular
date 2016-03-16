@@ -2,7 +2,7 @@ package autopos.item.web
 
 import javax.inject.Inject
 
-import autopos.item.model.Item
+import autopos.item.model.ItemDto
 import autopos.item.service.ItemService
 import autopos.shared.structure.Pageable
 import play.api.libs.json.Json.toJson
@@ -31,7 +31,7 @@ class ItemApi @Inject()(itemService: ItemService)
   }
 
   def updateItem(id: Long) = Action.async(parse.json) { request =>
-    request.body.validate[Item]
+    request.body.validate[ItemDto]
       .fold(
         errors => {
           Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))
@@ -46,7 +46,7 @@ class ItemApi @Inject()(itemService: ItemService)
   }
 
   def addItem = Action.async(parse.json) { request =>
-    request.body.validate[Item]
+    request.body.validate[ItemDto]
       .fold(
         errors => {
           Future.successful(BadRequest(Json.obj("message" -> JsError.toJson(errors))))

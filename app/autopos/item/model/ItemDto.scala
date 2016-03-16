@@ -7,28 +7,29 @@ import autopos.item.model.Brand.brandIdReads
 import autopos.item.model.Category.categoryIdReads
 import autopos.shared.model.Audited
 import autopos.shared.service.repo.HasDbConfig
+import autopos.shared.web.format.CommonReads.{requiredAndGreaterThanZero, max250String, min1AndMax50String}
 import play.api.libs.functional.syntax._
-import play.api.libs.json.Reads.{maxLength, minLength}
 import play.api.libs.json._
 
 
-case class Item(name: String,
-                description: Option[String],
-                location: Option[String],
-                remarks: Option[String],
-                markedPrice: BigDecimal,
-                category: Option[Category],
-                brand: Option[Brand],
-                code: String = "",
-                id: Long = 0,
-                createdOn: LocalDateTime = now,
-                lastUpdatedOn: LocalDateTime = now)
+case class ItemDto(name: String,
+                   description: Option[String],
+                   location: Option[String],
+                   remarks: Option[String],
+                   markedPrice: BigDecimal,
+                   category: Option[Category],
+                   brand: Option[Brand],
+                   code: String = "",
+                   id: Long = 0,
+                   createdOn: LocalDateTime = now,
+                   lastUpdatedOn: LocalDateTime = now)
   extends Audited
 
-object Item {
+object ItemDto {
 
-  def create(i: ItemSchema, brand: Option[Brand], category: Option[Category]) =
-    Item(i.name,
+
+  def create(i: Item, brand: Option[Brand], category: Option[Category]) =
+    ItemDto(i.name,
       i.description,
       i.location,
       i.remarks,
@@ -38,40 +39,45 @@ object Item {
       i.code,
       i.id)
 
-  def fromSchemaTuple = (Item.create _).tupled
+  def fromSchemaTuple = (ItemDto.create _).tupled
 
+  val nameReads = min1AndMax50String("name")
+  val descriptionReads = max250String("description")
+  val locationReads = max250String("location")
+  val remarksReads = max250String("remarks")
+  val markedPriceReads = requiredAndGreaterThanZero("markedPrice")
 
   implicit val itemReads = (
-    (__ \ "name").read(minLength[String](1) andKeep maxLength[String](50)) ~
-      (__ \ "description").readNullable(maxLength[String](250)) ~
-      (__ \ "location").readNullable(maxLength[String](250)) ~
-      (__ \ "remarks").readNullable(maxLength[String](250)) ~
-      (__ \ "markedPrice").read[BigDecimal] ~
+    nameReads ~
+      descriptionReads ~
+      locationReads ~
+      remarksReads ~
+      markedPriceReads ~
       (__ \ "category").readNullable[Category](categoryIdReads) ~
       (__ \ "brand").readNullable[Brand](brandIdReads)
-    ) (Item(_, _, _, _, _, _, _))
+    ) (ItemDto(_, _, _, _, _, _, _))
 
-  implicit val itemWrites = Json.writes[Item]
+  implicit val itemWrites = Json.writes[ItemDto]
 
 }
 
-case class ItemSchema(name: String,
-                      description: Option[String],
-                      location: Option[String],
-                      remarks: Option[String],
-                      markedPrice: BigDecimal,
-                      categoryId: Option[Long],
-                      brandId: Option[Long],
-                      code: String = "",
-                      id: Long = 0,
-                      createdOn: LocalDateTime = now,
-                      lastUpdatedOn: LocalDateTime = now)
+case class Item(name: String,
+                description: Option[String],
+                location: Option[String],
+                remarks: Option[String],
+                markedPrice: BigDecimal,
+                categoryId: Option[Long],
+                brandId: Option[Long],
+                code: String = "",
+                id: Long = 0,
+                createdOn: LocalDateTime = now,
+                lastUpdatedOn: LocalDateTime = now)
   extends Audited
 
-object ItemSchema {
+object Item {
 
-  def fromItem(i: Item) =
-    ItemSchema(i.name, i.description, i.location, i.remarks, i.markedPrice, i.category.map(_.id), i.brand.map(_.id), i.code, i.id)
+  def fromItem(i: ItemDto) =
+    Item(i.name, i.description, i.location, i.remarks, i.markedPrice, i.category.map(_.id), i.brand.map(_.id), i.code, i.id)
 }
 
 trait ItemDbModule {
@@ -83,7 +89,7 @@ trait ItemDbModule {
   protected final lazy val itemTags = TableQuery[ItemTagTable]
 
   private[ItemDbModule] class ItemTable(tag: SlickTag)
-    extends Table[ItemSchema](tag, "item") {
+    extends Table[Item](tag, "item") {
 
 
     def name = column[String]("name", O.Length(50))
@@ -113,7 +119,7 @@ trait ItemDbModule {
     def lastUpdatedOn = column[LocalDateTime]("last_updated_on")
 
     def * = (name, description, location, remarks, markedPrice, categoryId, brandId, code, id, createdOn, lastUpdatedOn) <>
-      ((ItemSchema.apply _).tupled, ItemSchema.unapply)
+      ((Item.apply _).tupled, Item.unapply)
 
   }
 
