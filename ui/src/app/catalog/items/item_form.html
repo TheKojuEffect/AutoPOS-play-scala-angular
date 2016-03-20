@@ -1,4 +1,4 @@
-<div *ngIf="item && categories && brands">
+<div *ngIf="item && categories">
   <form (ngSubmit)="onSubmit()" #itemForm="ngForm">
     <h3>{{title}}</h3>
 
@@ -34,13 +34,13 @@
 
     <div class="form-group">
       <label>Brand</label>
-      <select ngControl="brand" [ngModel]="item.brand?.id" (ngModelChange)="changeBrand($event)">
-        <option></option>
-        <option *ngFor="#b of brands" [value]="b.id">
-          {{b.name}}
-        </option>
-      </select>
+      <brand-select
+        [brandId]="item.brand?.id"
+        (select)="changeBrand($event)">
+      </brand-select>
+
     </div>
+
 
     <div class="form-group">
       <label for="description">Description</label>

@@ -1,18 +1,16 @@
-import {Component} from "angular2/core";
-import {ROUTER_DIRECTIVES} from "angular2/router";
-import {ItemService} from "./item_service";
-import {Item} from "./item";
-import {Router} from "angular2/router";
-import {BrandService} from "../brands/brand_service";
-import {CategoryService} from "../categories/category_service";
-import {OnInit} from "angular2/core";
-import {Brand} from "../brands/brand";
-import {Category} from "../categories/category";
+import {Component, OnInit} from 'angular2/core';
+import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
+import {ItemService} from './item_service';
+import {Item} from './item';
+import {CategoryService} from '../categories/category_service';
+import {Brand} from '../brands/brand';
+import {Category} from '../categories/category';
+import {BrandSelect} from '../brands/brand_select';
 
 @Component({
   selector: "add-item",
   templateUrl: "./app/catalog/items/item_form.html",
-  directives: <any>[ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES, BrandSelect]
 })
 
 export class AddItem implements OnInit {
@@ -21,19 +19,14 @@ export class AddItem implements OnInit {
 
   item = new Item();
 
-  brands:Brand[];
   categories:Category[];
 
   constructor(private itemService:ItemService,
-              private brandService:BrandService,
               private categoryService:CategoryService,
               private router:Router) {
   }
 
   ngOnInit() {
-    this.brandService.getBrands()
-      .subscribe(brands => this.brands = brands.json());
-
     this.categoryService.getCategories()
       .subscribe(categories => this.categories = categories.json());
 
@@ -44,7 +37,7 @@ export class AddItem implements OnInit {
   }
 
   changeBrand(brandId) {
-    this.item.brand = brandId ? new Brand(parseInt(brandId), "") : null;
+    this.item.brand = brandId ? new Brand(brandId, "") : null;
   }
 
   onSubmit() {
