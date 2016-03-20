@@ -7,7 +7,7 @@ import autopos.item.model.Brand.brandIdReads
 import autopos.item.model.Category.categoryIdReads
 import autopos.shared.model.Audited
 import autopos.shared.service.repo.HasDbConfig
-import autopos.shared.web.format.CommonReads.{requiredAndGreaterThanZero, max250String, min1AndMax50String}
+import autopos.shared.web.format.CommonReads.{max250String, min1AndMax50String, requiredAndGreaterThanZero}
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -28,7 +28,7 @@ case class ItemDto(name: String,
 object ItemDto {
 
 
-  def create(i: Item, brand: Option[Brand], category: Option[Category]) =
+  def create(i: Item, iq: ItemQuantity, brand: Option[Brand], category: Option[Category]) =
     ItemDto(i.name,
       i.description,
       i.location,
