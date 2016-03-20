@@ -30,7 +30,6 @@ object Brand {
 
 }
 
-
 trait BrandDbModule {
   self: HasDbConfig =>
 

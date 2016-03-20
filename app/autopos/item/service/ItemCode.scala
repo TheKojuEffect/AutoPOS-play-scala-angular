@@ -1,6 +1,6 @@
 package autopos.item.service
 
-private[service] object ItemCode {
+private[item] object ItemCode {
 
   private val alpha = "3KMEQPNHABTGCWUVRYZFSXJD"
 

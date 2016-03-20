@@ -1,11 +1,10 @@
-package autopos.shared.web.format
+package autopos.shared.format
 
 import play.api.libs.functional.syntax._
 import play.api.libs.json.Reads.{maxLength, minLength, verifying}
 import play.api.libs.json._
 
-
-object CommonReads {
+object ReadsExtensions {
 
   def min1AndMax50String(field: String) = (__ \ field).read(minLength[String](1) ~> maxLength[String](50))
 

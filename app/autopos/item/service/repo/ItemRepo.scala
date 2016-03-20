@@ -4,7 +4,6 @@ import javax.inject.{Inject, Singleton}
 
 import autopos.item.model._
 import autopos.item.service.ItemCode
-import autopos.item.structure.command.ItemCreateCommand
 import autopos.shared.service.repo.{BaseRepo, BaseRepoImpl}
 import autopos.shared.structure.{Page, PageImpl, Pageable}
 import com.google.inject.ImplementedBy
@@ -16,9 +15,9 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[ItemRepoImpl])
 trait ItemRepo extends BaseRepo {
 
-  def create(itemCreateCommand: ItemCreateCommand): Future[Long]
+  def create(itemCommand: ItemCommand): Future[Long]
 
-  def update(item: Item): Future[Int]
+  def update(id: Long, itemCommand: ItemCommand): Future[Int]
 
   def findById(id: Long): Future[Option[ItemDto]]
 
@@ -36,56 +35,52 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
     with BrandDbModule
     with CategoryDbModule
     with TagDbModule
-    with ItemQuantityDbModule
     with ItemDbModule {
 
   import driver.api._
 
-  override def list(pageable: Pageable): Future[Page[ItemDto]] = {
+  def itemsQuery = items
+    .join(itemQuantities).on(_.id === _.itemId)
+    .joinLeft(brands).on(_._1.brandId === _.id)
+    .joinLeft(categories).on(_._1._1.categoryId === _.id)
 
-    val itemsQuery = items
-      .joinLeft(brands).on(_.brandId === _.id)
-      .joinLeft(categories).on(_._1.categoryId === _.id)
+  def itemListQuery = for {
+    (((item, itemQuantity), brand), category) <- itemsQuery
+  } yield (item, itemQuantity, brand, category)
 
-    val listQuery = for {
-      ((item, brand), category) <- itemsQuery
+  override def list(pageable: Pageable): Future[Page[ItemDto]] = db.run {
+    for {
+      elements <- itemListQuery
         .drop(pageable.offset)
         .take(pageable.pageSize)
+        .result
+        .map(_.map(i => {
+          ItemDto.fromTuple(i)
+        }))
 
-    } yield (item, brand, category)
+      totalElements <- itemsQuery.length.result
 
-    db.run {
-      for {
-        elements <- listQuery.result
-          .map(_.map(ItemDto.fromSchemaTuple))
-
-        totalElements <- itemsQuery.length.result
-
-      } yield PageImpl(elements, totalElements, pageable)
-    }
+    } yield PageImpl(elements, totalElements, pageable)
   }
 
   override def findById(id: Long) = db.run {
-    (for {
-      ((item, brand), category) <- items.filter(_.id === id)
-        .joinLeft(brands).on(_.brandId === _.id)
-        .joinLeft(categories).on(_._1.categoryId === _.id)
-    } yield (item, brand, category))
+    itemListQuery.filter(_._1.id === id)
       .result.headOption
-      .map(_.map(ItemDto.fromSchemaTuple(_)))
+      .map(_.map(ItemDto.fromTuple(_)))
   }
 
-  override def update(item: Item) = db.run {
-    items.filter(_.id === item.id)
-      .update(item.copy(code = ItemCode(item.id)))
+  override def update(id: Long, itemCommand: ItemCommand) = db.run {
+    val item = itemCommand.toItem(id)
+    items.filter(_.id === id)
+      .update(item)
     // Workaround to prevent item.code update
     // https://github.com/slick/slick/issues/601
   }
 
-  override def create(itemCreateCommand: ItemCreateCommand) = {
+  override def create(itemCommand: ItemCommand) = {
 
-    val item = itemCreateCommand.toItem
-    val quantity = itemCreateCommand.quantity
+    val item = itemCommand.toItem()
+    val quantity = itemCommand.quantity
 
     val createItem = (for {
 
@@ -98,7 +93,10 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
   }
 
   override def delete(id: Long) = db.run {
-    items.filter(_.id === id)
-      .delete
+    (for {
+      _ <- itemQuantities.filter(_.itemId === id).delete
+      rowsAffected <- items.filter(_.id === id).delete
+    } yield rowsAffected)
+      .transactionally
   }
 }
