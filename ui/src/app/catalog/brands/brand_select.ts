@@ -27,7 +27,6 @@ export class BrandSelect implements OnInit {
   }
 
   changeBrand(brandId) {
-    console.log(brandId);
     this.select.emit(+brandId);
   }
 
