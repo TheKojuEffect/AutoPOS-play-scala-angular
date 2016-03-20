@@ -1,0 +1,9 @@
+<select (change)="changeCategory($event.target.value)">
+  <option value="">-- Select --</option>
+  <option
+    *ngFor="#c of categories | async"
+    [value]="c.id"
+    [selected]="c.id == categoryId">
+    {{c.shortName}} -- {{c.name}}
+  </option>
+</select>

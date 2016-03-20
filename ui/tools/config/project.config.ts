@@ -10,7 +10,7 @@ export class ProjectConfig extends SeedConfig {
     let additional_deps: Array<any> = [
       // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
-      {src: 'bootstrap/dist/css/bootstrap.min.css', inject: true},
+      {src: 'bootstrap/dist/css/bootstrap.min.css', inject: true}
     ];
 
     this.DEV_NPM_DEPENDENCIES = this.DEV_DEPENDENCIES.concat(normalizeDependencies(additional_deps));

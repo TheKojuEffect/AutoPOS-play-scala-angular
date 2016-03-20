@@ -1,0 +1,9 @@
+<select (change)="changeBrand($event.target.value)">
+  <option value="">-- Select --</option>
+  <option
+    *ngFor="#b of brands | async"
+    [value]="b.id"
+    [selected]="b.id == brandId">
+    {{b.name}}
+  </option>
+</select>
