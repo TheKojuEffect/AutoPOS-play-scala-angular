@@ -28,7 +28,7 @@
           <span>Marked Price</span>
         </td>
         <td>
-          <input type="text" class="input-sm form-control" [value]="item.markedPrice" readonly>
+          <input type="number" class="input-sm form-control" [value]="item.markedPrice" readonly>
         </td>
       </tr>
 
@@ -48,6 +48,16 @@
         </td>
         <td>
           <input type="text" class="input-sm form-control" [value]="item.brand?.name || ''" readonly>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td>
+          <span>Quantity</span>
+        </td>
+        <td>
+          <input type="number" class="input-sm form-control" [value]="item.quantity" readonly>
         </td>
       </tr>
 

@@ -1,23 +1,20 @@
-import {Component} from "angular2/core";
-import {ItemService} from "./item_service";
-import {Item} from "./item";
-import {AddItem} from "./add_item";
-import {ROUTER_DIRECTIVES} from "angular2/router";
-import {OnActivate} from "angular2/router";
-import {ComponentInstruction} from "angular2/router";
-import { PAGINATION_DIRECTIVES } from 'ng2-bootstrap/ng2-bootstrap';
-
-import "rxjs/Rx";
-import {PageMetadata} from "../../shared/PageMetadata";
-import {Page} from "../../shared/Page";
-import {Pager} from "../../shared/Pager";
-import {Pageable} from "../../shared/Pageable";
+import {Component} from 'angular2/core';
+import {ItemService} from './item_service';
+import {Item} from './item';
+import {AddItem} from './add_item';
+import {ROUTER_DIRECTIVES, OnActivate, ComponentInstruction} from 'angular2/router';
+import {PAGINATION_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {PageMetadata} from '../../shared/PageMetadata';
+import {Page} from '../../shared/Page';
+import {Pager} from '../../shared/Pager';
+import {Pageable} from '../../shared/Pageable';
+import 'rxjs/Rx';
 
 
 @Component({
   selector: "item-list",
   templateUrl: "./app/catalog/items/item_list.html",
-  directives: <any>[ROUTER_DIRECTIVES, PAGINATION_DIRECTIVES, AddItem]
+  directives: [ROUTER_DIRECTIVES, PAGINATION_DIRECTIVES, AddItem]
 })
 
 export class ItemList implements OnActivate {
