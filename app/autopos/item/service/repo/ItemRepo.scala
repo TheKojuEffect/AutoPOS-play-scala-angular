@@ -3,7 +3,6 @@ package autopos.item.service.repo
 import javax.inject.{Inject, Singleton}
 
 import autopos.item.model._
-import autopos.item.service.ItemCode
 import autopos.shared.service.repo.{BaseRepo, BaseRepoImpl}
 import autopos.shared.structure.{Page, PageImpl, Pageable}
 import com.google.inject.ImplementedBy
@@ -71,10 +70,16 @@ class ItemRepoImpl @Inject()(dbConfigProvider: DatabaseConfigProvider)
 
   override def update(id: Long, itemCommand: ItemCommand) = db.run {
     val item = itemCommand.toItem(id)
-    items.filter(_.id === id)
-      .update(item)
-    // Workaround to prevent item.code update
-    // https://github.com/slick/slick/issues/601
+
+    (for {
+      _ <- itemQuantities.filter(_.itemId === id)
+        .map(_.quantity)
+        .update(itemCommand.quantity)
+
+      rowsAffected <- items.filter(_.id === id)
+        .update(item)
+    } yield rowsAffected)
+      .transactionally
   }
 
   override def create(itemCommand: ItemCommand) = {
