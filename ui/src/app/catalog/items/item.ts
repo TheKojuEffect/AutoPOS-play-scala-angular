@@ -1,15 +1,17 @@
-import {Category} from "../categories/category";
-import {Brand} from "../brands/brand";
+import {Category} from '../categories/category';
+import {Brand} from '../brands/brand';
+
 export class Item {
 
-  public id:number;
-  public code:string;
-  public name:string;
-  public markedPrice:number;
-  public description:string;
-  public location:string;
-  public remarks:string;
-  public category:Category;
-  public brand:Brand;
+  id:number;
+  code:string;
+  name:string;
+  markedPrice:number;
+  quantity:number;
+  description:string;
+  location:string;
+  remarks:string;
+  category:Category;
+  brand:Brand;
 
 }

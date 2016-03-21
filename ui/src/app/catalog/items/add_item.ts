@@ -1,11 +1,9 @@
 import {Component} from 'angular2/core';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {ItemService} from './item_service';
-import {Item} from './item';
-import {Brand} from '../brands/brand';
-import {Category} from '../categories/category';
 import {BrandSelect} from '../brands/brand_select';
 import {CategorySelect} from '../categories/category_select';
+import {ItemCommand} from './item_command';
 
 @Component({
   selector: "add-item",
@@ -17,18 +15,10 @@ export class AddItem {
 
   title = "Add Item";
 
-  item = new Item();
+  item = new ItemCommand();
 
   constructor(private itemService:ItemService,
               private router:Router) {
-  }
-
-  changeCategory(categoryId) {
-    this.item.category = categoryId ? new Category(categoryId, "", "") : null;
-  }
-
-  changeBrand(brandId) {
-    this.item.brand = brandId ? new Brand(brandId, "") : null;
   }
 
   onSubmit() {

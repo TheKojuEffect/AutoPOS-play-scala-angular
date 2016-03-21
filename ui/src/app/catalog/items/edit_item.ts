@@ -1,11 +1,10 @@
 import {Component, OnInit} from 'angular2/core';
 import {RouterLink, RouteParams, Router} from 'angular2/router';
 import {ItemService} from './item_service';
-import {Item} from './item';
-import {Brand} from '../brands/brand';
-import {Category} from '../categories/category';
 import {BrandSelect} from '../brands/brand_select';
 import {CategorySelect} from '../categories/category_select';
+import {ItemCommand} from './item_command';
+import {Item} from './item';
 
 @Component({
   selector: "edit-item",
@@ -17,29 +16,21 @@ export class EditItem implements OnInit {
 
   title = "Edit Item";
 
-  item:Item;
+  item:ItemCommand;
 
   constructor(private itemService:ItemService,
               private routeParams:RouteParams,
               private router:Router) {
-
   }
 
   ngOnInit() {
     let id = this.routeParams.get("id");
     this.itemService.getItem(parseInt(id))
       .subscribe(item => {
-        this.item = item.json();
-        this.title += " [" + this.item.code + "]";
+        const i:Item = item.json();
+        this.item = ItemCommand.fromItem(i);
+        this.title += " [" + i.code + "]";
       });
-  }
-
-  changeCategory(categoryId) {
-    this.item.category = categoryId ? new Category(categoryId, "", "") : null;
-  }
-
-  changeBrand(brandId:number) {
-    this.item.brand = brandId ? new Brand(brandId, "") : null;
   }
 
   onSubmit() {

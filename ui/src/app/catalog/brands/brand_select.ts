@@ -27,7 +27,7 @@ export class BrandSelect implements OnInit {
   }
 
   changeBrand(brandId) {
-    this.select.emit(+brandId);
+    this.select.emit(+brandId || null);
   }
 
 }

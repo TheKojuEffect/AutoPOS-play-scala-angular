@@ -27,7 +27,7 @@ export class CategorySelect implements OnInit {
   }
 
   changeCategory(categoryId) {
-    this.select.emit(+categoryId);
+    this.select.emit(+categoryId || null);
   }
 
 }

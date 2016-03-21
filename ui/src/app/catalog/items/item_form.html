@@ -28,18 +28,30 @@
     <div class="form-group">
       <label>Category</label>
       <category-select
-        [categoryId]="item.category?.id"
-        (select)="changeCategory($event)">
+        [categoryId]="item.categoryId"
+        (select)="item.categoryId = $event">
       </category-select>
     </div>
 
     <div class="form-group">
       <label>Brand</label>
       <brand-select
-        [brandId]="item.brand?.id"
-        (select)="changeBrand($event)">
+        [brandId]="item.brandId"
+        (select)="item.brandId = $event">
       </brand-select>
+    </div>
 
+
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" min="0" step="1" required
+             id="quantity" class="form-control"
+             placeholder="Quantity"
+             [(ngModel)]="item.quantity"
+             ngControl="quantity" #quantity="ngForm">
+    </div>
+    <div [hidden]="quantity.valid || quantity.untouched" class="alert alert-danger">
+      Quantity is required
     </div>
 
 
